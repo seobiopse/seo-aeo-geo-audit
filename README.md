@@ -73,14 +73,7 @@ shell:
 
 Restart Claude Code when prompted.
 
-Installing from a local clone instead (cloned with GitHub Desktop or `git clone`)?
-The repo is its own marketplace — add the cloned folder as a marketplace, then
-install from it. Use the full path to the folder you cloned into:
-
-```bash
-/plugin marketplace add C:/path/to/advanced-seo-plugin-for-claude-code
-/plugin install seo-audit@seo-audit-marketplace
-```
+Cloned the repo locally instead? See **Local clone via GitHub Desktop** below.
 
 #### VS Code or terminal user (CLI) — follow these
 
@@ -92,20 +85,38 @@ claude plugin marketplace add seobiopse/advanced-seo-plugin-for-claude-code
 claude plugin install seo-audit@seo-audit-marketplace
 ```
 
-From a local clone (GitHub Desktop / `git clone`) — point `marketplace add` at the
-cloned folder's full path:
+#### Local clone via GitHub Desktop — follow these
 
-```bash
-claude plugin marketplace add "C:/path/to/advanced-seo-plugin-for-claude-code"
-claude plugin install seo-audit@seo-audit-marketplace
-```
+1. In GitHub Desktop: **File → Clone repository → URL**, paste
+   `https://github.com/seobiopse/advanced-seo-plugin-for-claude-code`, pick a
+   local folder, **Clone**.
+2. Get the folder path: **Repository → Show in Explorer / Finder**, then copy the
+   full path from the address bar
+   (e.g. `E:\Git Clone\advanced-seo-plugin-for-claude-code`).
+3. Add that folder as a marketplace and install the plugin. The repo carries its
+   own `marketplace.json`, so `marketplace add` points at the cloned folder, not
+   a GitHub slug.
+
+   In a Claude Code session:
+
+   ```bash
+   /plugin marketplace add E:/Git Clone/advanced-seo-plugin-for-claude-code
+   /plugin install seo-audit@seo-audit-marketplace
+   ```
+
+   Or in your shell (quote paths that contain spaces):
+
+   ```bash
+   claude plugin marketplace add "E:/Git Clone/advanced-seo-plugin-for-claude-code"
+   claude plugin install seo-audit@seo-audit-marketplace
+   ```
+
+4. To update later: **Fetch origin → Pull** in GitHub Desktop, then
+   `claude plugin marketplace update seo-audit-marketplace`.
 
 Restart Claude Code (or start a new session) so the slash commands and skill
 register. Verify with `claude plugin list` — `seo-audit@seo-audit-marketplace`
 should show `Status: enabled`.
-
-To pick up upstream changes later: pull the repo (GitHub Desktop or `git pull`),
-then run `claude plugin marketplace update seo-audit-marketplace`.
 
 **Requirements:** Claude Code installed and working (`claude` opens the prompt). If
 `claude` is "not recognized", reinstall from <https://docs.claude.com/claude-code>
