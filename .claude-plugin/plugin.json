@@ -1,8 +1,8 @@
 {
   "name": "seo-audit",
   "displayName": "SEO Audit Plugin",
-  "version": "1.8.0",
-  "description": "Engineering-grade SEO, AEO, and GEO audits for any website — React, Next.js, WordPress, Shopify, static HTML, Angular, PHP, Wix, Webflow, and more. Auto-detects site archetype and tech stack, then produces Markdown tickets and interactive HTML reports with before/after code, confidence scores, interactive checklists, and 0-100 scoring (SEO Quality + E-E-A-T). Fully optimized for Agentic Browsing (SXO / AXO).",
+  "version": "1.9.0",
+  "description": "Engineering-grade SEO, AEO, GEO, and AI Citation audits for any website — React, Next.js, WordPress, Shopify, static HTML, Angular, PHP, Wix, Webflow, and more. Auto-detects site archetype and tech stack, then produces Markdown tickets and interactive HTML reports with before/after code, confidence scores, interactive checklists, and 0-100 scoring (SEO Quality + E-E-A-T + AI Citation Readiness). Fully optimized for Agentic Browsing (SXO / AXO).",
   "author": {
     "name": "Girish Kumar G",
     "url": "https://in.linkedin.com/in/girisshgk"
@@ -15,6 +15,7 @@
     "core-web-vitals", "schema", "structured-data", "json-ld",
     "robots.txt", "sitemap", "llms.txt",
     "ai-overviews", "chatgpt", "perplexity", "claude", "gemini", "copilot",
+    "ai-citation", "chunk-score", "retrievability", "extractable-units", "bing-indexation",
     "react", "nextjs", "wordpress", "shopify", "angular", "php", "wix", "webflow",
     "static-html", "jamstack", "eleventy", "jekyll", "hugo", "astro",
     "crawlability", "rendering", "programmatic-seo",

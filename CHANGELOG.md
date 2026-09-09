@@ -4,6 +4,28 @@ All notable changes to the SEO Audit Plugin are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] — 2026-09-09
+
+### Added
+
+- **AI Citation Audit mode & reference guide (`references/ai-citation-audit.md`)** — A quantitative audit for AI citation readiness, built from published retrieval research and field data:
+  - **The three numbers** — chunk density (chunks per 1,000 words), chunk relevance score (n-gram overlap + question→passage embedding similarity, per *"What Evidence Do Language Models Find Convincing?"*, Wan et al., ACL 2024), and extractable units per chunk (statistic / attributed quotation / cited source; ~+41% citation lift for a quotation, ~−8% for keyword stuffing per the GEO research line).
+  - **Prerequisite: indexation, not ranking** — Bing Webmaster vs GSC indexed-count comparison; rank and AI citation are close to statistically independent.
+  - **0–100 AI Citation Readiness score** — emitted under `scores.ai_citation` on `/full-audit` and `/ai-citation-audit`.
+  - **Content-refresh playbook** — the 7-step per-page loop (add ~3 H2 sections, rewrite weak sections for n-gram/relevance, add FAQ, update title/meta, add 3–5 internal links, cut fluff) and the ~10-week effect-lag / model-rollout-volatility expectations.
+  - **AIC-1 … AIC-16 checklist.**
+- **AI Citation Audit command (`commands/ai-citation-audit.md`)** — Registered `/ai-citation-audit` (mode = `ai-citation`).
+
+### Changed
+
+- **`commands/full-audit.md`** — AI Citation is now a fourth pillar of the full audit: reads `ai-citation-audit.md`, gathers raw (no-JS) HTML + Bing/Google indexed counts, and includes the per-chunk table and readiness roll-up. Summary rollup is now SEO / AEO / GEO / AI Citation.
+- **`SKILL.md`** — "seven modes" → "eight modes" (new `ai-citation` row); `full` mode now also reads `ai-citation-audit.md`; registered `ai-citation-audit.md` in the reference catalog, the deep-dive load list, and the "When to read which deep-dive" table; Step 6b now documents the `scores.ai_citation` grader; frontmatter description updated with AI Citation / chunk-score triggers.
+- **`README.md`** — Version → `1.9.0`; "Six slash commands" → "Eight slash commands" (added `/ai-citation-audit` and the previously-unlisted `/vds-audit`); reference count 35 → 37; plugin file tree updated; installation section corrected to `/plugin install seo-audit@seo-audit-marketplace` with a Requirements note.
+- **Marketplace manifest moved to `.claude-plugin/marketplace.json`** (was at repo root, where Claude Code does not look) and expanded to the full schema (`owner`, `metadata`). Version bumped to reference plugin `1.9.0`.
+- **`.claude-plugin/plugin.json`** — Version bump to `1.9.0`; added `ai-citation`, `chunk-score`, `retrievability`, `extractable-units`, `bing-indexation` keywords.
+
+---
+
 ## [1.8.0] — 2026-06-15
 
 ### Added

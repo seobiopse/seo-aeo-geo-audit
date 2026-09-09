@@ -611,13 +611,15 @@ def render_scores_block(data):
         parts.append(render_score_grader("SEO Quality Score", {**scores["seo_quality"], "name": "SEO Quality Score"}, pillar_field="breakdown"))
     if "eeat" in scores:
         parts.append(render_score_grader("E-E-A-T Score", {**scores["eeat"], "name": "E-E-A-T Score"}, pillar_field="breakdown"))
+    if "ai_citation" in scores:
+        parts.append(render_score_grader("AI Citation Readiness", {**scores["ai_citation"], "name": "AI Citation Readiness"}, pillar_field="breakdown"))
     if not parts:
         return ""
     return f"""
 <div class="scores-wrap" id="scores">
   <span class="section-eyebrow" style="padding:0 40px;">Scorecards</span>
-  <h2 class="section-h2" style="padding:0 40px;">Quality &amp; E-E-A-T Grades</h2>
-  <p class="section-intro" style="padding:0 40px;">Two scoring models: <strong>SEO Quality</strong> (NLP-driven content grade) + <strong>E-E-A-T</strong> (Google's Experience / Expertise / Authoritativeness / Trust). Both split by page type (Landing/Money or Blog/Article). Scores are summaries, not substitutes for the detailed findings below.</p>
+  <h2 class="section-h2" style="padding:0 40px;">Quality, E-E-A-T &amp; AI Citation Grades</h2>
+  <p class="section-intro" style="padding:0 40px;">Scoring models: <strong>SEO Quality</strong> (NLP-driven content grade), <strong>E-E-A-T</strong> (Google's Experience / Expertise / Authoritativeness / Trust), and <strong>AI Citation Readiness</strong> (chunk density, chunk relevance, extractable units, Bing indexation). Scores are summaries, not substitutes for the detailed findings below.</p>
   <div class="scores-grid">{"".join(parts)}</div>
 </div>"""
 

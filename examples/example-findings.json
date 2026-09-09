@@ -123,6 +123,29 @@
         "Publish 2-3 customer case studies with quantified outcomes — raises Experience from 12/25 to 19/25.",
         "Add 'Press' page collecting mentions in industry publications — raises Authoritativeness from 13/20 to 17/20."
       ]
+    },
+    "ai_citation": {
+      "page_type": "Landing / Money Page",
+      "overall": 54,
+      "grade": "Workable",
+      "breakdown": [
+        { "label": "Chunk density vs benchmark", "value": 14, "max": 25, "note": "9.6 chunks / 1,000 words vs benchmark median 22 — wall-of-text sections dilute retrieval at-bats" },
+        { "label": "Chunk relevance on fan-out set", "value": 20, "max": 35, "note": "6 of 12 fan-out sub-queries have a chunk with >=4-gram overlap AND a first-sentence answer" },
+        { "label": "Extractable-unit coverage", "value": 9, "max": 25, "note": "5 of 14 chunks carry a statistic, attributed quote, or cited source" },
+        { "label": "Chunk self-containment", "value": 6, "max": 10, "note": "4 chunks open with a pronoun / relative reference — context lost on split" },
+        { "label": "Bing indexation", "value": 5, "max": 5, "note": "Homepage indexed in Bing Webmaster Tools" }
+      ],
+      "chunk_density_per_1000_words": 9.6,
+      "benchmark_chunk_density_median": 22,
+      "chunks_total": 14,
+      "chunks_with_extractable_unit": 5,
+      "avg_ngram_overlap_on_fanout": 3.1,
+      "bing_indexed": true,
+      "top_improvements": [
+        "Break the 3 sections over 300 words with descriptive H3 sub-headings — raises chunk density from 9.6 to ~18 per 1,000 words.",
+        "Add one statistic, attributed quote, or linked source to every chunk — raises extractable-unit coverage from 9/25 to 20/25.",
+        "Rewrite the 6 weak chunks so the heading is the literal fan-out question and the first sentence answers it — raises fan-out relevance from 20/35 to 30/35."
+      ]
     }
   },
 

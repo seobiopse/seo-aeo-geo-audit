@@ -1,6 +1,6 @@
 ---
 name: seo-audit
-description: Run engineering-grade SEO, AEO (Answer Engine Optimization), GEO (Generative Engine Optimization), and VDS (Visibility-to-Demand System) audits on any web page or site — React, Next.js, WordPress, Shopify, static HTML (Eleventy, Jekyll, Hugo, Astro), Angular, PHP (Laravel, Symfony, CodeIgniter), Wix, Webflow, or any other stack. Use this skill whenever the user mentions an SEO audit, AEO, GEO, VDS, Visibility-to-Demand System, VDS Signature, AI search visibility, schema validation, Core Web Vitals, crawlability, indexation, meta tag review, robots.txt, sitemap review, structured data, llms.txt, Google AI Overviews, ChatGPT citations, Perplexity visibility, programmatic SEO, job posting schema, Google for Jobs, or asks to "check the SEO" / "audit the site" / "review this page" / "is this ready to ship" — even when they don't say the word "audit." Covers all 10 site archetypes (Marketing, Blog, E-commerce, SaaS, Job board, Staffing services, Course platform, Documentation, Multi-product conglomerate, Personal site) across all major tech stacks. Produces both a Markdown report (for tickets) and an interactive HTML report (side-by-side broken-vs-fixed code with copy buttons) engineers can action directly.
+description: Run engineering-grade SEO, AEO (Answer Engine Optimization), GEO (Generative Engine Optimization), AI Citation, and VDS (Visibility-to-Demand System) audits on any web page or site — React, Next.js, WordPress, Shopify, static HTML (Eleventy, Jekyll, Hugo, Astro), Angular, PHP (Laravel, Symfony, CodeIgniter), Wix, Webflow, or any other stack. Use this skill whenever the user mentions an SEO audit, AEO, GEO, AI Citation Audit, VDS, Visibility-to-Demand System, VDS Signature, AI search visibility, chunk density / chunk score / retrievability, schema validation, Core Web Vitals, crawlability, indexation, meta tag review, robots.txt, sitemap review, structured data, llms.txt, Google AI Overviews, ChatGPT citations, Perplexity visibility, programmatic SEO, job posting schema, Google for Jobs, or asks to "check the SEO" / "audit the site" / "review this page" / "is this ready to ship" — even when they don't say the word "audit." Covers all 10 site archetypes (Marketing, Blog, E-commerce, SaaS, Job board, Staffing services, Course platform, Documentation, Multi-product conglomerate, Personal site) across all major tech stacks. Produces both a Markdown report (for tickets) and an interactive HTML report (side-by-side broken-vs-fixed code with copy buttons) engineers can action directly.
 ---
 
 # SEO / AEO / GEO Engineering Audit
@@ -29,13 +29,14 @@ Trigger on any of:
 
 If the request touches SEO/AEO/GEO even loosely, prefer this skill over answering from general knowledge. The skill produces a consistent, standardized, engineer-actionable report.
 
-## The seven modes
+## The eight modes
 
 | Mode | When to use | Reference | Command |
 |---|---|---|---|
 | **seo** | Full technical SEO: crawl, index, render, meta, schema, performance, on-page | `references/seo-audit.md` | `/seo-audit` |
 | **aeo** | AI Overviews, featured snippets, voice answers | `references/aeo.md` | `/aeo-audit` |
 | **geo** | ChatGPT, Perplexity, Claude, Gemini citation readiness | `references/geo.md` | `/geo-audit` |
+| **ai-citation** | The three numbers that decide AI citation — chunk density, chunk relevance (n-gram + embedding), extractable units — plus Bing indexation eligibility | `references/ai-citation-audit.md` | `/ai-citation-audit` |
 | **vds** | Visibility-to-Demand System (VDS) framework: review mapping crawl visibility to conversion and authority metrics | `references/vds-audit.md` | `/vds-audit` |
 | **agentic-browsing** | Agentic Browsing (SXO / AXO) readiness | `references/agentic-browsing.md` | `/agentic-browsing-audit` |
 | **full** | All pillars in sequence (pre-ship sign-off) | All reference guides | `/full-audit` |
@@ -87,7 +88,7 @@ See `references/domain-discovery.md` Section 3 for the per-archetype audit-scope
 If mode or input method isn't specified, ask (one AskUserQuestion call).
 
 ### Step 2: Detect stack and load the relevant reference file(s)
-`Read` the reference(s) that match BOTH (a) the mode the user picked AND (b) the archetype you detected in Step 0. For `full` mode, read `seo-audit.md`, `aeo.md`, AND `geo.md` PLUS archetype-appropriate deep-dives. Always read `issue-framework.md` before writing findings.
+`Read` the reference(s) that match BOTH (a) the mode the user picked AND (b) the archetype you detected in Step 0. For `full` mode, read `seo-audit.md`, `aeo.md`, `geo.md`, AND `ai-citation-audit.md` PLUS archetype-appropriate deep-dives. Always read `issue-framework.md` before writing findings.
 
 **Detect the tech stack** from URL patterns, response headers, page source signals, and user context, then load the matching stack profile:
 
@@ -108,6 +109,7 @@ Also load deep-dives when context calls for them:
 - Schema beyond basics → `structured-data-advanced.md`
 - AI-assisted content → `ai-content-safety.md`
 - Any `/jobs/` URL or job board → `pseo-playbook.md`
+- AI citation readiness (chunking, n-gram overlap, extractable units, Bing indexation) → `ai-citation-audit.md` (+ `query-fanout.md`, `rag-optimization.md`)
 
 ### Step 3: Gather data
 Collect what the checklists require. For live URLs, in parallel: rendered HTML + raw HTML, headers, `robots.txt`, `sitemap.xml`, `llms.txt`, screenshot, JSON-LD blocks, meta tags, OpenGraph, Twitter cards, hreflang, canonical, H1/H2/H3 tree, alt-text coverage, internal link count, page weight, request count.
@@ -144,6 +146,8 @@ When running `/full-audit`, also produce two numeric grades:
 
 Both scores include a `top_improvements` list — 2–3 specific changes that would raise the score most. These are added to the JSON under `scores.seo_quality` and `scores.eeat`. The generator renders them as visual scorecards at the top of the HTML report.
 
+On `/full-audit` and on `/ai-citation-audit`, also emit an **AI Citation Readiness score (0–100)** under `scores.ai_citation` using the rubric in `references/ai-citation-audit.md` (chunk density vs benchmark, chunk relevance on the fan-out set, extractable-unit coverage, chunk self-containment, Bing indexation). Include its own `top_improvements` list.
+
 **Rules:**
 - Score ONE representative page per template — not every page. Scoring 50 pages produces noise.
 - Never fabricate sub-signals. If a signal isn't on the page, score 0.
@@ -179,6 +183,7 @@ Both scores include a `top_improvements` list — 2–3 specific changes that wo
 - `references/seo-audit.md` — full SEO checklist (informative + transaction both)
 - `references/aeo.md` — AEO checklist for **informative** content (blogs, articles, guides)
 - `references/geo.md` — GEO checklist for **informative** content
+- `references/ai-citation-audit.md` — quantitative AI citation audit: Bing indexation, chunk density, chunk relevance (n-gram overlap + embedding similarity), extractable units per chunk, content-refresh playbook
 - `references/vds-audit.md` — VDS (Visibility-to-Demand System) audit checklist mapping crawl presence to organic conversions
 - `references/agentic-browsing.md` — Agentic Browsing (SXO / AXO) checklist
 - `references/signature.md` — VDS & SEO audit mandatory signature block guide
@@ -252,6 +257,7 @@ Both scores include a `top_improvements` list — 2–3 specific changes that wo
 | Setup for browser automation, MCP servers, and public analytics | `tools-to-use.md` |
 | Fact-checking, QA validation, and report data integrity rules | `quality-assurance.md` |
 | Query Fan-Out semantic clustering and authority audits | `query-fanout.md` |
+| AI citation readiness — chunk density, n-gram overlap, extractable units, Bing indexation, content refresh | `ai-citation-audit.md` |
 | RAG optimization, vector chunk-friendly text and layout layouts | `rag-optimization.md` |
 | Stateful AI memory architectures, /llms.txt profiles, and SAM-C | `rag-to-memory.md` |
 

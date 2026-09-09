@@ -1,0 +1,66 @@
+{
+  "name": "seo-audit-marketplace",
+  "owner": {
+    "name": "Girish Kumar G",
+    "url": "https://in.linkedin.com/in/girisshgk"
+  },
+  "metadata": {
+    "description": "Marketplace for the SEO Audit Plugin — engineering-grade SEO / AEO / GEO / AI Citation audits for Claude Code.",
+    "version": "1.9.0"
+  },
+  "plugins": [
+    {
+      "name": "seo-audit",
+      "source": "./",
+      "description": "Engineering-grade SEO, AEO, GEO, and AI Citation audits for any website. Produces Markdown tickets + interactive HTML reports with before/after code, confidence scores, interactive checklists, and 0-100 scoring (SEO Quality + E-E-A-T + AI Citation Readiness). Site-architecture-driven: auto-detects 10 domain archetypes and 7 tech stacks and tailors audit scope accordingly.",
+      "version": "1.9.0",
+      "author": {
+        "name": "Girish Kumar G",
+        "url": "https://in.linkedin.com/in/girisshgk"
+      },
+      "homepage": "https://github.com/seobiopse/advanced-seo-plugin-for-claude-code",
+      "repository": "https://github.com/seobiopse/advanced-seo-plugin-for-claude-code",
+      "license": "MIT-Commons-Clause",
+      "keywords": [
+        "seo",
+        "aeo",
+        "geo",
+        "ai-citation",
+        "chunk-score",
+        "retrievability",
+        "extractable-units",
+        "bing-indexation",
+        "audit",
+        "e-e-a-t",
+        "core-web-vitals",
+        "schema",
+        "structured-data",
+        "json-ld",
+        "robots.txt",
+        "sitemap",
+        "llms.txt",
+        "ai-overviews",
+        "chatgpt",
+        "perplexity",
+        "claude",
+        "gemini",
+        "copilot",
+        "query-fanout",
+        "rag",
+        "react",
+        "nextjs",
+        "wordpress",
+        "shopify",
+        "angular",
+        "php",
+        "wix",
+        "webflow",
+        "programmatic-seo",
+        "agentic-browsing",
+        "axo",
+        "sxo",
+        "webmcp"
+      ]
+    }
+  ]
+}

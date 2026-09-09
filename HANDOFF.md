@@ -1,6 +1,6 @@
 # SEO Audit Plugin — Engineering Handoff Guide
 
-**Version:** 1.8.0
+**Version:** 1.9.0
 **Maintainer:** [Girish Kumar G](https://in.linkedin.com/in/girisshgk) — Father of SEO
 **For questions:** DM on LinkedIn, or ping in the team Slack / Linear channel for SEO work.
 
@@ -24,24 +24,27 @@ The plugin is a **Claude Code plugin** — a bundle of instructions that teaches
 
 ## What's in the plugin
 
-### Five slash commands
+### Eight slash commands
 | Command | Use when you want to… |
 |---|---|
 | `/seo-audit` | Full technical SEO audit (~80 checks): crawl, index, render, meta, schema, performance. |
 | `/aeo-audit` | Check if a page is ready to appear in Google AI Overviews + featured snippets. |
 | `/geo-audit` | Check if a page is citable by ChatGPT, Perplexity, Claude, Gemini, Copilot. |
-| `/full-audit` | All three pillars in one pass (~230 checks). Use before shipping to production. |
+| `/ai-citation-audit` | Measure the three numbers that decide AI citation — chunk density, chunk relevance, extractable units — plus Bing indexation. |
+| `/agentic-browsing-audit` | Check if autonomous AI browser agents can crawl, render, navigate, and act on the page (SXO / AXO). |
+| `/vds-audit` | Map crawl presence to conversion, trust, and scalability targets (Visibility-to-Demand System). |
+| `/full-audit` | All pillars in one pass. Use before shipping to production. |
 | `/crawl-check` | Fast 14-check rendering-only audit. Use during active dev for quick sanity checks. |
 
-### Thirty-Five reference files
+### Thirty-Seven reference files
 These are the "brain" of the plugin. Claude reads them as it runs the audit. They're in `skills/seo-audit/references/`:
 
-- **Core checklists** — `issue-framework.md`, `seo-audit.md`, `aeo.md`, `geo.md`, `vds-audit.md`
+- **Core checklists** — `issue-framework.md`, `seo-audit.md`, `aeo.md`, `geo.md`, `ai-citation-audit.md`, `vds-audit.md`
 - **Stack profiles** — `react-nextjs-architecture-profile.md`, `wordpress-architecture-profile.md`, `shopify-architecture-profile.md`, `static-html-architecture-profile.md`, `angular-architecture-profile.md`, `php-architecture-profile.md`, `wix-webflow-architecture-profile.md`
 - **Technical playbooks** — `crawlability-react.md`, `structured-data-advanced.md`, `robots-llms-txt-playbook.md`, `sitemap-playbook.md`
 - **Content safety & Optimization** — `ai-content-safety.md`, `image-optimization.md`, `product-experience-audit.md`, `agentic-browsing.md`
 - **Programmatic & Commercial** — `pseo-playbook.md`, `transaction-intent-playbook.md`, `aeo-transaction.md`, `geo-transaction.md`
-- **AI Overview & RAG** — `ai-overview-playbook.md`, `llm-citation-playbook.md`, `query-fanout.md`, `rag-optimization.md`, `rag-to-memory.md`
+- **AI Overview & RAG** — `ai-overview-playbook.md`, `llm-citation-playbook.md`, `ai-citation-audit.md`, `query-fanout.md`, `rag-optimization.md`, `rag-to-memory.md`
 - **Tools, QA & Tracking** — `tools-to-use.md`, `quality-assurance.md`, `signature.md`, `tracking-validation.md`
 
 You don't need to read them upfront. Claude loads the relevant ones when running your audit.
@@ -64,13 +67,13 @@ You don't need to read them upfront. Claude loads the relevant ones when running
 If your team has committed the plugin to a marketplace repo:
 
 ```
-/plugin marketplace add <org>/<repo>
-/plugin install seo-audit
+/plugin marketplace add seobiopse/advanced-seo-plugin-for-claude-code
+/plugin install seo-audit@seo-audit-marketplace
 ```
 
 ### Verify it's installed
 
-In a Claude Code session, type `/` and start typing `seo`. You should see the 5 slash commands autocomplete. If not, restart Claude Code and try again.
+In a Claude Code session, type `/` and start typing `seo`. You should see the 8 slash commands autocomplete. If not, restart Claude Code and try again.
 
 ---
 
@@ -399,6 +402,7 @@ This plugin exists because SEO audits are mostly the same work done badly, over 
 
 ## Version history
 
+- **v1.9.0 (2026-09-09)** — AI Citation Audit. New `ai-citation-audit.md` reference + `/ai-citation-audit` command (chunk density, chunk relevance via n-gram overlap + embedding similarity, extractable units per chunk, Bing indexation, content-refresh playbook). Folded into `/full-audit`. Marketplace manifest moved to `.claude-plugin/marketplace.json`.
 - **v1.8.0 (2026-06-15)** — Quality Assurance & Data Integrity Guide. Added `quality-assurance.md` reference checklist for sub-agents to fact-check audit data and verify output layout formatting.
 - **v1.7.0 (2026-06-15)** — Audit Integration Guide. Added `tools-to-use.md` reference mapping Playwright browser automation setup, MCP integration connectors (Ahrefs, Semrush, Screaming Frog), and public SEO site analytics scraping protocols.
 - **v1.6.0 (2026-06-15)** — VDS Audit Integration. Added VDS (Visibility-to-Demand System) audit checklists, command hooks, examples, and updated audit templates with Telegram collaboration CTA.
