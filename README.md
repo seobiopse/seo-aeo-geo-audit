@@ -275,6 +275,8 @@ It is free to use, modify and self-host. You may not resell the software or offe
 
 See [CHANGELOG.md](CHANGELOG.md) for the full history. Highlights:
 
+- **v2.0.0 (2026-10-19)** — Portable Agent Skill. The skill folder now follows the open Agent Skills spec and runs in Claude, Claude Code, Codex/ChatGPT agents and Google Antigravity. Renamed the skill, plugin and repo to `seo-aeo-geo-audit` (marketplace: `seobiopse-skills`), rewrote the README with quick facts and an FAQ, and added `INSTALL.md`, `AGENTS.md`, `docs/CHAT-PROMPT.md`, `tools/package.sh` and `CITATION.cff`.
+- **v1.9.1 (2026-10-19)** — Fixed author-name and title typos across docs, examples and the generated HTML report footer; bumped manifests for marketplace submission.
 - **v1.9.0 (2026-09-09)** — AI Citation Audit. New `ai-citation-audit.md` reference + `/ai-citation-audit` command measuring the three signals that decide AI citation — chunk density, chunk relevance (n-gram overlap + question→passage embedding similarity, per *"What Evidence Do Language Models Find Convincing?"*, Wan et al., ACL 2024), and extractable units per chunk — plus Bing-indexation eligibility, a 0–100 AI Citation Readiness score, and a content-refresh playbook. Folded into `/full-audit` as a fourth pillar. Marketplace manifest moved to `.claude-plugin/marketplace.json`.
 - **v1.8.0 (2026-06-15)** — Quality Assurance & Data Integrity Guide. Added `quality-assurance.md` reference checklist for sub-agents to fact-check audit data and verify output layout formatting.
 - **v1.7.0 (2026-06-15)** — Audit Integration Guide. Added `tools-to-use.md` reference mapping Playwright browser automation setup, MCP integration connectors (Ahrefs, Semrush, Screaming Frog), and public SEO site analytics scraping protocols.

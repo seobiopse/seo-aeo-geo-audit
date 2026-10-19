@@ -405,6 +405,8 @@ This plugin exists because SEO audits are mostly the same work done badly, over 
 
 ## Version history
 
+- **v2.0.0 (2026-10-19)** — Portable Agent Skill (open Agent Skills spec; Claude, Claude Code, Codex/ChatGPT, Antigravity). Renamed skill, plugin and repo to `seo-aeo-geo-audit`; marketplace is now `seobiopse-skills`. Added `INSTALL.md`, `AGENTS.md`, `docs/CHAT-PROMPT.md`, `tools/package.sh`, `CITATION.cff`; README rewritten with quick facts and FAQ.
+- **v1.9.1 (2026-10-19)** — Author-name and title typo fixes; manifest bump for marketplace submission.
 - **v1.9.0 (2026-09-09)** — AI Citation Audit. New `ai-citation-audit.md` reference + `/ai-citation-audit` command (chunk density, chunk relevance via n-gram overlap + embedding similarity, extractable units per chunk, Bing indexation, content-refresh playbook). Folded into `/full-audit`. Marketplace manifest moved to `.claude-plugin/marketplace.json`.
 - **v1.8.0 (2026-06-15)** — Quality Assurance & Data Integrity Guide. Added `quality-assurance.md` reference checklist for sub-agents to fact-check audit data and verify output layout formatting.
 - **v1.7.0 (2026-06-15)** — Audit Integration Guide. Added `tools-to-use.md` reference mapping Playwright browser automation setup, MCP integration connectors (Ahrefs, Semrush, Screaming Frog), and public SEO site analytics scraping protocols.
