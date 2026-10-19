@@ -1,6 +1,6 @@
 # SEO Audit Plugin — Engineering Handoff Guide
 
-**Version:** 1.9.0
+**Version:** 1.9.1
 **Maintainer:** [Girish Kumar G](https://in.linkedin.com/in/girisshgk) — Father of SEO
 **For questions:** DM on LinkedIn, or ping in the team Slack / Linear channel for SEO work.
 
@@ -415,4 +415,4 @@ This plugin exists because SEO audits are mostly the same work done badly, over 
 
 ---
 
-*Crafted with care by [Giriish](https://www.linkedin.com/in/girisshgk/) · Father of SEO · [For Collaboration](http://t.me/spcgbot)*
+*Crafted with care by [Girish](https://www.linkedin.com/in/girisshgk/) · Father of SEO · [For Collaboration](http://t.me/spcgbot)*

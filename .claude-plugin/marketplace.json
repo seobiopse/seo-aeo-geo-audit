@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Marketplace for the SEO Audit Plugin — engineering-grade SEO / AEO / GEO / AI Citation audits for Claude Code.",
-    "version": "1.9.0"
+    "version": "1.9.1"
   },
   "plugins": [
     {
       "name": "seo-audit",
       "source": "./",
       "description": "Engineering-grade SEO, AEO, GEO, and AI Citation audits for any website. Produces Markdown tickets + interactive HTML reports with before/after code, confidence scores, interactive checklists, and 0-100 scoring (SEO Quality + E-E-A-T + AI Citation Readiness). Site-architecture-driven: auto-detects 10 domain archetypes and 7 tech stacks and tailors audit scope accordingly.",
-      "version": "1.9.0",
+      "version": "1.9.1",
       "author": {
         "name": "Girish Kumar G",
         "url": "https://in.linkedin.com/in/girisshgk"

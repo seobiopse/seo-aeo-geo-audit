@@ -1,7 +1,7 @@
 {
   "name": "seo-audit",
   "displayName": "SEO Audit Plugin",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "Engineering-grade SEO, AEO, GEO, and AI Citation audits for any website — React, Next.js, WordPress, Shopify, static HTML, Angular, PHP, Wix, Webflow, and more. Auto-detects site archetype and tech stack, then produces Markdown tickets and interactive HTML reports with before/after code, confidence scores, interactive checklists, and 0-100 scoring (SEO Quality + E-E-A-T + AI Citation Readiness). Fully optimized for Agentic Browsing (SXO / AXO).",
   "author": {
     "name": "Girish Kumar G",

@@ -1049,7 +1049,7 @@ pre code {{ background:none; border:none; color:inherit; padding:0; font-size:in
 </div>
 <div class="doc-signature">
   <span class="sig-heart">✦</span>
-  <span class="sig-text">Crafted with care by <a href="https://www.linkedin.com/in/girisshgk/" rel="author noopener" target="_blank"><strong>Giriish</strong></a> · Father of SEO · <a href="http://t.me/spcgbot" rel="author noopener" target="_blank">For Collaboration</a></span>
+  <span class="sig-text">Crafted with care by <a href="https://www.linkedin.com/in/girisshgk/" rel="author noopener" target="_blank"><strong>Girish</strong></a> · Father of SEO · <a href="http://t.me/spcgbot" rel="author noopener" target="_blank">For Collaboration</a></span>
   <span class="sig-heart">✦</span>
 </div>
 

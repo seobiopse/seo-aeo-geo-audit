@@ -1,9 +1,9 @@
 # SEO Audit Plugin for Claude Code
 
-**Production-ready v1.9.0** — a Claude Code plugin that runs comprehensive SEO, AEO (Answer Engine Optimization), GEO (Generative Engine Optimization), and AI Citation audits on **any website, any stack**. Produces ticket-ready Markdown reports and interactive HTML reports with before/after code, confidence scores, interactive checklists, and quantitative scoring. Fully optimized for Agentic Browsing (SXO / AXO).
+**Production-ready v1.9.1** — a Claude Code plugin that runs comprehensive SEO, AEO (Answer Engine Optimization), GEO (Generative Engine Optimization), and AI Citation audits on **any website, any stack**. Produces ticket-ready Markdown reports and interactive HTML reports with before/after code, confidence scores, interactive checklists, and quantitative scoring. Fully optimized for Agentic Browsing (SXO / AXO).
 
 [![License: MIT + Commons Clause](https://img.shields.io/badge/License-MIT%20%2B%20Commons%20Clause-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.9.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.9.1-blue.svg)](CHANGELOG.md)
 [![Plugin type](https://img.shields.io/badge/type-Claude%20Code%20plugin-navy.svg)](https://docs.claude.com)
 
 ---
@@ -296,4 +296,4 @@ and commercial-licensing contact.
 
 ---
 
-*Crafted with care by [Giriish](https://www.linkedin.com/in/girisshgk/) · Father of SEO · [For Collaboration](http://t.me/spcgbot)*
+*Crafted with care by [Girish](https://www.linkedin.com/in/girisshgk/) · Father of SEO · [For Collaboration](http://t.me/spcgbot)*

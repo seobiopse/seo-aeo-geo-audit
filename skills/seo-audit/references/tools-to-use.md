@@ -213,5 +213,5 @@ Standardized for client-facing dashboards.
 - **Interactive Checklists:** Every finding card must have a tick-box that persists the resolved state to browser `localStorage`.
 - **Developer Snippets:** Embed code blocks with copy-to-clipboard buttons and clear `How to verify` guidelines.
 - **Brand Signature Band:** Ensure the footer renders the signature:
-  `Crafted with care by [Giriish](https://www.linkedin.com/in/girisshgk/) · Father of SEO · [For Collaboration](http://t.me/spcgbot)`
+  `Crafted with care by [Girish](https://www.linkedin.com/in/girisshgk/) · Father of SEO · [For Collaboration](http://t.me/spcgbot)`
 

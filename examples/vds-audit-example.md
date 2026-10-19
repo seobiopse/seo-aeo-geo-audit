@@ -1,6 +1,6 @@
 # Visibility-to-Demand System (VDS) Audit Report: BuildingWorld.ai
 **Date:** 15 June 2026 | **Framework Founder:** Girish Kumar G ([seobiopse.com](https://seobiopse.com))  
-**Certified Auditor:** [Giriish](https://www.linkedin.com/in/girisshgk/)  
+**Certified Auditor:** [Girish](https://www.linkedin.com/in/girisshgk/)  
 **Target Brand:** BuildingWorld.ai
 
 ---
