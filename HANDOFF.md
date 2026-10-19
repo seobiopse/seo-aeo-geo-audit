@@ -1,6 +1,6 @@
 # SEO Audit Plugin — Engineering Handoff Guide
 
-**Version:** 1.9.1
+**Version:** 2.0.0
 **Maintainer:** [Girish Kumar G](https://in.linkedin.com/in/girisshgk) — Father of SEO
 **For questions:** DM on LinkedIn, or ping in the team Slack / Linear channel for SEO work.
 
@@ -37,7 +37,7 @@ The plugin is a **Claude Code plugin** — a bundle of instructions that teaches
 | `/crawl-check` | Fast 14-check rendering-only audit. Use during active dev for quick sanity checks. |
 
 ### Thirty-Seven reference files
-These are the "brain" of the plugin. Claude reads them as it runs the audit. They're in `skills/seo-audit/references/`:
+These are the "brain" of the plugin. Claude reads them as it runs the audit. They're in `skills/seo-aeo-geo-audit/references/`:
 
 - **Core checklists** — `issue-framework.md`, `seo-audit.md`, `aeo.md`, `geo.md`, `ai-citation-audit.md`, `vds-audit.md`
 - **Stack profiles** — `react-nextjs-architecture-profile.md`, `wordpress-architecture-profile.md`, `shopify-architecture-profile.md`, `static-html-architecture-profile.md`, `angular-architecture-profile.md`, `php-architecture-profile.md`, `wix-webflow-architecture-profile.md`
@@ -50,7 +50,7 @@ These are the "brain" of the plugin. Claude reads them as it runs the audit. The
 You don't need to read them upfront. Claude loads the relevant ones when running your audit.
 
 ### One Python script
-`skills/seo-audit/scripts/generate_report.py` — takes a findings JSON and produces the Markdown + HTML reports. Claude runs this automatically at the end of an audit.
+`skills/seo-aeo-geo-audit/scripts/generate_report.py` — takes a findings JSON and produces the Markdown + HTML reports. Claude runs this automatically at the end of an audit.
 
 ---
 
@@ -67,8 +67,8 @@ You don't need to read them upfront. Claude loads the relevant ones when running
 If your team has committed the plugin to a marketplace repo:
 
 ```
-/plugin marketplace add seobiopse/advanced-seo-plugin-for-claude-code
-/plugin install seo-audit@seo-audit-marketplace
+/plugin marketplace add seobiopse/seo-aeo-geo-audit
+/plugin install seo-aeo-geo-audit@seobiopse-skills
 ```
 
 ### Verify it's installed
@@ -297,7 +297,10 @@ Yes, for intelligence purposes. The plugin just reads public HTML. Don't use thi
 Check the version in `plugin.json`. The maintainer (me) updates the references as new AI bots emerge, as Google changes guidance, etc. Pull the latest from the marketplace / repo every 2–3 months.
 
 ### "I don't use Claude Code. Can I still use this?"
-Not directly — the plugin is built for Claude Code. But you can read the reference files in `skills/seo-audit/references/` manually and use them as a checklist. That loses the automation but preserves the methodology.
+Yes. The skill follows the open Agent Skills format and runs in Claude, Codex/ChatGPT agents and Gemini Antigravity. See `INSTALL.md`. Chat-only hosts (Vertex AI, Gems, Custom GPTs) use `docs/CHAT-PROMPT.md`.
+
+#### Legacy note (pre-2.0)
+Not directly — the plugin is built for Claude Code. But you can read the reference files in `skills/seo-aeo-geo-audit/references/` manually and use them as a checklist. That loses the automation but preserves the methodology.
 
 ### "Who owns this? Where do bugs / feature requests go?"
 Me: [Girish Kumar G](https://in.linkedin.com/in/girisshgk). DM me on LinkedIn, or ping the team Slack / Linear channel. I actively maintain the plugin; bug reports and suggestions are welcome and usually land in the next update.

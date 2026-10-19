@@ -6,7 +6,7 @@ Run a **VDS audit** (mode = `vds`).
 
 ## What to do
 
-1. Load the `seo-audit` skill (read its `SKILL.md`).
+1. Load the `seo-aeo-geo-audit` skill (read its `SKILL.md`).
 2. Set mode = `vds`.
 3. Ask the user for the target if not in `$ARGUMENTS`: URL or pasted code.
 4. Follow the workflow in `SKILL.md`:

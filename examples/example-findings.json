@@ -1,5 +1,5 @@
 {
-  "$comment": "Minimal example of the findings JSON schema. Pass this to scripts/generate_report.py to produce MD + HTML reports. See skills/seo-audit/references/issue-framework.md for the full field reference.",
+  "$comment": "Minimal example of the findings JSON schema. Pass this to scripts/generate_report.py to produce MD + HTML reports. See skills/seo-aeo-geo-audit/references/issue-framework.md for the full field reference.",
 
   "audit": {
     "mode": "full",
@@ -200,5 +200,5 @@
     }
   ],
 
-  "additional_notes": "<strong>Sample findings JSON — use this as a template for your own audits.</strong> See <code>skills/seo-audit/references/issue-framework.md</code> for the full schema reference including optional fields."
+  "additional_notes": "<strong>Sample findings JSON — use this as a template for your own audits.</strong> See <code>skills/seo-aeo-geo-audit/references/issue-framework.md</code> for the full schema reference including optional fields."
 }

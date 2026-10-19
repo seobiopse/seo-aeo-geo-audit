@@ -8,7 +8,7 @@ Run a **fast crawlability check** — scoped subset of `/seo-audit` that ONLY ru
 
 ## What this command does
 
-1. Load the `seo-audit` skill (read its `SKILL.md`).
+1. Load the `seo-aeo-geo-audit` skill (read its `SKILL.md`).
 2. Set mode = `crawl-check`.
 3. Read `references/crawlability-react.md` — the 14 CR-* checks.
 4. Ask for the target (URL strongly preferred for this check):

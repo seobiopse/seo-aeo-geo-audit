@@ -6,7 +6,7 @@ Run a **GEO audit** (mode = `geo`).
 
 ## What to do
 
-1. Load the `seo-audit` skill.
+1. Load the `seo-aeo-geo-audit` skill.
 2. Set mode = `geo`.
 3. Ask for target, plus `robots.txt` and `llms.txt` if available.
 4. Follow SKILL.md workflow:

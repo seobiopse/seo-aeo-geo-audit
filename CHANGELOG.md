@@ -4,6 +4,22 @@ All notable changes to the SEO Audit Plugin are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] — 2026-10-19
+
+### Changed
+
+- **Portable Agent Skill.** The skill folder now follows the open Agent Skills spec (name matches directory, description under 1024 characters, license and compatibility fields) so it loads in Claude, Claude Code, Codex/ChatGPT agents and Gemini Antigravity.
+- **Renamed** skill, plugin and repo to `seo-aeo-geo-audit`; marketplace renamed to `seobiopse-skills`. Install: `/plugin install seo-aeo-geo-audit@seobiopse-skills`.
+- Removed Claude-only wording from `SKILL.md` (host-specific question tool, hard-coded output path). Slash commands remain as optional Claude Code shortcuts.
+
+### Added
+
+- `AGENTS.md`, `INSTALL.md` (per-platform install and capability matrix), `docs/CHAT-PROMPT.md` (for Vertex AI, Gems, Custom GPTs), `tools/package.sh` (zip for Claude upload), `.gitignore`.
+
+### Fixed
+
+- Removed a committed `__pycache__` file.
+
 ## [1.9.1] — 2026-10-19
 
 ### Fixed

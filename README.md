@@ -1,9 +1,9 @@
-# SEO Audit Plugin for Claude Code
+# SEO + AEO + GEO Audit Skill
 
-**Production-ready v1.9.1** — a Claude Code plugin that runs comprehensive SEO, AEO (Answer Engine Optimization), GEO (Generative Engine Optimization), and AI Citation audits on **any website, any stack**. Produces ticket-ready Markdown reports and interactive HTML reports with before/after code, confidence scores, interactive checklists, and quantitative scoring. Fully optimized for Agentic Browsing (SXO / AXO).
+**Production-ready v2.0.0** — a portable Agent Skill (also packaged as a Claude Code plugin) that runs comprehensive SEO, AEO (Answer Engine Optimization), GEO (Generative Engine Optimization), and AI Citation audits on **any website, any stack**. Produces ticket-ready Markdown reports and interactive HTML reports with before/after code, confidence scores, interactive checklists, and quantitative scoring. Fully optimized for Agentic Browsing (SXO / AXO).
 
 [![License: MIT + Commons Clause](https://img.shields.io/badge/License-MIT%20%2B%20Commons%20Clause-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.9.1-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](CHANGELOG.md)
 [![Plugin type](https://img.shields.io/badge/type-Claude%20Code%20plugin-navy.svg)](https://docs.claude.com)
 
 ---
@@ -26,14 +26,14 @@ This plugin fixes that by:
 ## Is this plugin right for you?
 
 **Yes if:**
-- Your team uses Claude Code for development.
+- Your team uses an AI coding or chat agent: Claude, Claude Code, Codex/ChatGPT, Gemini Antigravity, or any host that supports Agent Skills.
 - You have at least one web property to audit — any architecture (React / Next.js / WordPress / Shopify / Wix / Webflow / static HTML / Angular / PHP / etc.).
 - You want a repeatable, standards-based SEO / AEO / GEO audit workflow.
 - You want engineering to own technical SEO, and marketing to own strategy.
 
 **Probably not if:**
 - You need automated daily crawling with dashboards (use Ahrefs / Semrush / Screaming Frog for that).
-- You want a drop-in audit UI for non-technical users (this one requires the Claude Code CLI).
+- You want a drop-in audit UI for non-technical users (it runs inside an AI agent, not as a standalone app).
 
 ---
 
@@ -59,72 +59,22 @@ The core audit methodology (SEO/AEO/GEO checklists, scoring, issue framework) is
 
 ### Installation (end users)
 
-Pick the path that matches how you run Claude Code.
+One skill folder (`skills/seo-aeo-geo-audit/`) follows the open [Agent Skills](https://agentskills.io/specification) format, so it runs on several platforms. Full steps, Windows commands and a capability matrix are in [INSTALL.md](INSTALL.md).
 
-#### Claude Code user (in-session) — follow these
+| Platform | Quick install |
+|---|---|
+| Claude Code | `/plugin marketplace add seobiopse/seo-aeo-geo-audit` then `/plugin install seo-aeo-geo-audit@seobiopse-skills` |
+| Claude (web / desktop) | Upload `seo-aeo-geo-audit.zip` (GitHub Releases or `tools/package.sh`) under Settings, Capabilities, Skills |
+| Codex / ChatGPT agents | Copy the skill folder to `~/.agents/skills/` or `<repo>/.agents/skills/` |
+| Google Antigravity | Copy the skill folder to `<project>/.agents/skills/` or `~/.gemini/config/skills/` |
+| Any agent | `npx skills add seobiopse/seo-aeo-geo-audit` |
+| Vertex AI, Gemini Gems, Custom GPTs | Use [docs/CHAT-PROMPT.md](docs/CHAT-PROMPT.md) plus the reference files as knowledge |
 
-Run these **inside** a running Claude Code session (type `/plugin`), not in your
-shell:
-
-```bash
-/plugin marketplace add seobiopse/advanced-seo-plugin-for-claude-code
-/plugin install seo-audit@seo-audit-marketplace
-```
-
-Restart Claude Code when prompted.
-
-Cloned the repo locally instead? See **Local clone via GitHub Desktop** below.
-
-#### VS Code or terminal user (CLI) — follow these
-
-Run these in your shell (VS Code integrated terminal, Windows Terminal, iTerm,
-etc.):
-
-```bash
-claude plugin marketplace add seobiopse/advanced-seo-plugin-for-claude-code
-claude plugin install seo-audit@seo-audit-marketplace
-```
-
-#### Local clone via GitHub Desktop — follow these
-
-1. In GitHub Desktop: **File → Clone repository → URL**, paste
-   `https://github.com/seobiopse/advanced-seo-plugin-for-claude-code`, pick a
-   local folder, **Clone**.
-2. Get the folder path: **Repository → Show in Explorer / Finder**, then copy the
-   full path from the address bar
-   (e.g. `E:\Git Clone\advanced-seo-plugin-for-claude-code`).
-3. Add that folder as a marketplace and install the plugin. The repo carries its
-   own `marketplace.json`, so `marketplace add` points at the cloned folder, not
-   a GitHub slug.
-
-   In a Claude Code session:
-
-   ```bash
-   /plugin marketplace add E:/Git Clone/advanced-seo-plugin-for-claude-code
-   /plugin install seo-audit@seo-audit-marketplace
-   ```
-
-   Or in your shell (quote paths that contain spaces):
-
-   ```bash
-   claude plugin marketplace add "E:/Git Clone/advanced-seo-plugin-for-claude-code"
-   claude plugin install seo-audit@seo-audit-marketplace
-   ```
-
-4. To update later: **Fetch origin → Pull** in GitHub Desktop, then
-   `claude plugin marketplace update seo-audit-marketplace`.
-
-Restart Claude Code (or start a new session) so the slash commands and skill
-register. Verify with `claude plugin list` — `seo-audit@seo-audit-marketplace`
-should show `Status: enabled`.
-
-**Requirements:** Claude Code installed and working (`claude` opens the prompt). If
-`claude` is "not recognized", reinstall from <https://docs.claude.com/claude-code>
-and open a new terminal.
+Restart your agent after installing. In Claude Code, verify with `claude plugin list`.
 
 ### Your first audit
 
-In Claude Code:
+In Claude Code (other hosts: ask "run a full SEO/AEO/GEO audit on https://your-domain.com/"):
 
 ```
 /full-audit https://your-domain.com/
@@ -157,7 +107,11 @@ Open the HTML. Tick off findings as you ship fixes. A "Ready to re-run" panel ap
 ### Plugin structure
 
 ```
-advanced-seo-plugin-for-claude-code/
+seo-aeo-geo-audit/
+├── AGENTS.md                           # Universal agent instructions
+├── INSTALL.md                          # Per-platform install + capability matrix
+├── docs/CHAT-PROMPT.md                 # System prompt for chat-only hosts
+├── tools/package.sh                    # Builds the zip for Claude upload
 ├── .claude-plugin/
 │   ├── plugin.json                     # Plugin manifest (MUST be here, not at root)
 │   └── marketplace.json                # Marketplace manifest (MUST be here, not at root)
@@ -177,7 +131,7 @@ advanced-seo-plugin-for-claude-code/
 │   ├── full-audit.md
 │   └── crawl-check.md
 └── skills/
-    └── seo-audit/
+    └── seo-aeo-geo-audit/
         ├── SKILL.md                    # The skill's "brain"
         ├── assets/
         │   ├── report-template.md

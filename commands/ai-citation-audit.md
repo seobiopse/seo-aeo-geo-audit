@@ -6,7 +6,7 @@ Run an **AI Citation Audit** (mode = `ai-citation`).
 
 ## What to do
 
-1. Load the `seo-audit` skill (read its `SKILL.md`).
+1. Load the `seo-aeo-geo-audit` skill (read its `SKILL.md`).
 2. Set mode = `ai-citation`.
 3. Ask for the target if not in `$ARGUMENTS`: URL(s) or pasted content, plus the
    target root query if the user has one.

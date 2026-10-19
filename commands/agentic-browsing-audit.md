@@ -6,7 +6,7 @@ Run an **Agentic Browsing audit** (mode = `agentic-browsing`).
 
 ## What to do
 
-1. Load the `seo-audit` skill.
+1. Load the `seo-aeo-geo-audit` skill.
 2. Set mode = `agentic-browsing`.
 3. Ask for the target URL or templates.
 4. Follow the SKILL.md workflow:

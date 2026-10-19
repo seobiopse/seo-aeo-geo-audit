@@ -1,6 +1,12 @@
 ---
-name: seo-audit
-description: Run engineering-grade SEO, AEO (Answer Engine Optimization), GEO (Generative Engine Optimization), AI Citation, and VDS (Visibility-to-Demand System) audits on any web page or site — React, Next.js, WordPress, Shopify, static HTML (Eleventy, Jekyll, Hugo, Astro), Angular, PHP (Laravel, Symfony, CodeIgniter), Wix, Webflow, or any other stack. Use this skill whenever the user mentions an SEO audit, AEO, GEO, AI Citation Audit, VDS, Visibility-to-Demand System, VDS Signature, AI search visibility, chunk density / chunk score / retrievability, schema validation, Core Web Vitals, crawlability, indexation, meta tag review, robots.txt, sitemap review, structured data, llms.txt, Google AI Overviews, ChatGPT citations, Perplexity visibility, programmatic SEO, job posting schema, Google for Jobs, or asks to "check the SEO" / "audit the site" / "review this page" / "is this ready to ship" — even when they don't say the word "audit." Covers all 10 site archetypes (Marketing, Blog, E-commerce, SaaS, Job board, Staffing services, Course platform, Documentation, Multi-product conglomerate, Personal site) across all major tech stacks. Produces both a Markdown report (for tickets) and an interactive HTML report (side-by-side broken-vs-fixed code with copy buttons) engineers can action directly.
+name: seo-aeo-geo-audit
+description: Run SEO, AEO, GEO and AI-citation audits on any website or page, on any stack (React, Next.js, WordPress, Shopify, static, Angular, PHP, Wix, Webflow). Checks crawlability, indexation, schema, Core Web Vitals, robots.txt, sitemap, llms.txt, Google AI Overviews and ChatGPT/Perplexity/Claude/Gemini citation readiness, plus VDS visibility-to-demand mapping. Detects site archetype and stack, then outputs ticket-ready Markdown and an interactive HTML report with broken-vs-fixed code, confidence scores and 0-100 scoring. Use when asked to audit SEO, check a page before shipping, or review schema, crawlability, indexation, AI Overviews, AI search visibility, citations or programmatic SEO.
+license: MIT-Commons-Clause (see LICENSE; no resale without a commercial license)
+compatibility: Works in any Agent Skills host (Claude, Claude Code, Codex/ChatGPT, Antigravity). Live-site checks need web or browser access; report script needs Python 3.8+.
+metadata:
+  author: Girish Kumar G
+  version: "2.0.0"
+  homepage: https://seobiopse.com
 ---
 
 # SEO / AEO / GEO Engineering Audit
@@ -31,7 +37,7 @@ If the request touches SEO/AEO/GEO even loosely, prefer this skill over answerin
 
 ## The eight modes
 
-| Mode | When to use | Reference | Command |
+| Mode | When to use | Reference | Claude Code command (optional) |
 |---|---|---|---|
 | **seo** | Full technical SEO: crawl, index, render, meta, schema, performance, on-page | `references/seo-audit.md` | `/seo-audit` |
 | **aeo** | AI Overviews, featured snippets, voice answers | `references/aeo.md` | `/aeo-audit` |
@@ -85,7 +91,7 @@ Not every domain has the same shape. A staffing subdomain has `JobPosting`. A bo
 See `references/domain-discovery.md` Section 3 for the per-archetype audit-scope mapping (10 common archetypes covered: Marketing, Blog, E-commerce, SaaS, Job board, Staffing services, Course platform, Documentation, Multi-product conglomerate, Personal site).
 
 ### Step 1: Clarify scope
-If mode or input method isn't specified, ask (one AskUserQuestion call).
+If mode or input method isn't specified, ask (one short question, using your host's question tool if it has one).
 
 ### Step 2: Detect stack and load the relevant reference file(s)
 `Read` the reference(s) that match BOTH (a) the mode the user picked AND (b) the archetype you detected in Step 0. For `full` mode, read `seo-audit.md`, `aeo.md`, `geo.md`, AND `ai-citation-audit.md` PLUS archetype-appropriate deep-dives. Always read `issue-framework.md` before writing findings.
@@ -121,7 +127,7 @@ For each item, decide `pass` / `warn` / `fail`. Every `warn` and `fail` becomes 
 Use `references/issue-framework.md` exactly. Each issue MUST include: severity badge (Critical/High/Medium/Low/Info), pillar tags (SEO/AEO/GEO — one to three), summary, why flagged (with standards reference), impact bullets (SEO/AEO/GEO — all three, even if "no direct impact"), benefits, broken code, fixed code, how to verify.
 
 ### Step 6: Generate both reports
-Output paths (use the workspace folder the engineer shares, default to `/mnt/Core Tickets/` or the current project folder):
+Output paths (use the workspace folder the engineer shares, default to the current project folder):
 - `seo-audit-{mode}-{date}.md`
 - `seo-audit-{mode}-{date}.html`
 

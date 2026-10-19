@@ -6,7 +6,7 @@ Run an **AEO audit** (mode = `aeo`).
 
 ## What to do
 
-1. Load the `seo-audit` skill.
+1. Load the `seo-aeo-geo-audit` skill.
 2. Set mode = `aeo`.
 3. Ask for target (URL or code) if not in `$ARGUMENTS`.
 4. Follow SKILL.md workflow:
