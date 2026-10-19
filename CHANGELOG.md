@@ -10,6 +10,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 - **Portable Agent Skill.** The skill folder now follows the open Agent Skills spec (name matches directory, description under 1024 characters, license and compatibility fields) so it loads in Claude, Claude Code, Codex/ChatGPT agents and Gemini Antigravity.
 - **Renamed** skill, plugin and repo to `seo-aeo-geo-audit`; marketplace renamed to `seobiopse-skills`. Install: `/plugin install seo-aeo-geo-audit@seobiopse-skills`.
+- README rewritten with quick facts, FAQ and keyword-researched headings (Ahrefs, US); skill, plugin and marketplace descriptions and keywords updated; added `CITATION.cff` and `docs/RELEASE-v2.0.0.md`.
 - Removed Claude-only wording from `SKILL.md` (host-specific question tool, hard-coded output path). Slash commands remain as optional Claude Code shortcuts.
 
 ### Added

@@ -1,10 +1,28 @@
-# SEO + AEO + GEO Audit Skill
+# SEO Audit Skill for AI Agents: Technical SEO + AEO + GEO + AI Search Optimization
 
-**Production-ready v2.0.0** — a portable Agent Skill (also packaged as a Claude Code plugin) that runs comprehensive SEO, AEO (Answer Engine Optimization), GEO (Generative Engine Optimization), and AI Citation audits on **any website, any stack**. Produces ticket-ready Markdown reports and interactive HTML reports with before/after code, confidence scores, interactive checklists, and quantitative scoring. Fully optimized for Agentic Browsing (SXO / AXO).
+**v2.0.0** — a free, open Agent Skill that runs a complete search-engine-ready audit on any website: **technical SEO audit**, **answer engine optimization (AEO)**, **generative engine optimization (GEO)** and **AI citation readiness** (ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews, Bing Copilot). It works in Claude, Claude Code, Codex/ChatGPT agents and Google Antigravity, and outputs a ticket-ready Markdown **SEO audit report** plus an interactive HTML report with before/after code.
 
 [![License: MIT + Commons Clause](https://img.shields.io/badge/License-MIT%20%2B%20Commons%20Clause-yellow.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](CHANGELOG.md)
-[![Plugin type](https://img.shields.io/badge/type-Claude%20Code%20plugin-navy.svg)](https://docs.claude.com)
+[![Agent Skills](https://img.shields.io/badge/format-Agent%20Skills-navy.svg)](https://agentskills.io/specification)
+
+## Quick facts
+
+| | |
+|---|---|
+| **What it is** | An AI-agent SEO audit tool: a skill folder that tells your agent how to audit a site, plus a report generator |
+| **Audits** | Technical SEO (~80 checks), AEO, GEO, AI citation readiness, agentic-browsing readiness, VDS (visibility-to-demand) |
+| **Scores** | SEO Quality (0-100), E-E-A-T (0-100), AI Citation Readiness (0-100) |
+| **Stacks** | React, Next.js, WordPress, Shopify, static HTML, Angular, PHP, Wix, Webflow |
+| **Site types** | 10 archetypes: marketing, blog, e-commerce, SaaS, job board, staffing, course platform, docs, multi-product, personal |
+| **Output** | Markdown (for tickets) + interactive HTML SEO audit report with copy-ready fixes |
+| **Platforms** | Claude, Claude Code, Codex/ChatGPT agents, Google Antigravity, Vertex AI / Gems / Custom GPTs (prompt mode) |
+| **Cost** | Free to use and modify. Resale needs a commercial license (Commons Clause) |
+| **Author** | [Girish Kumar G](https://seobiopse.com), SEOBiopse |
+
+## What is an AI SEO audit, and why audit for AEO and GEO?
+
+Search now has three layers. **SEO** gets pages crawled, indexed and ranked. **Answer engine optimization (AEO)** gets answers pulled into Google AI Overviews, featured snippets and Bing Copilot. **Generative engine optimization (GEO)** gets your pages cited by ChatGPT, Perplexity, Claude and Gemini. A site can pass a classic technical SEO audit and still be invisible in AI answers, so this skill audits all three in one pass and scores each. Use it for AI search optimization, AI search visibility and pre-launch checks.
 
 ---
 
@@ -223,6 +241,35 @@ Every finding has broken-code and fixed-code examples, tied to the specific file
 Engineers don't edit the plugin directly. Changes go through Marketing Director / AVP / Manager review via the `NEW-CHECK-REQUEST-TEMPLATE.md` form. Maintainer has sole commit access. See `CONTRIBUTING.md`.
 
 ---
+
+## Frequently asked questions
+
+### What is the best way to run an SEO audit with an AI agent?
+Install this skill, point your agent at a URL or codebase, and ask for a "full SEO, AEO and GEO audit". The agent detects your stack and site type, loads the matching checklists, and writes findings with severity, evidence, broken-vs-fixed code and a verification step.
+
+### What is generative engine optimization (GEO)?
+GEO is the practice of making content easy for large language models to find, trust and cite. This skill checks the signals that drive citation: chunk density, chunk relevance, extractable units (statistics, attributed quotes, cited sources), Bing indexation, and AI-crawler access in robots.txt and llms.txt.
+
+### What is answer engine optimization (AEO)?
+AEO is optimizing pages so answer engines such as Google AI Overviews, featured snippets and Bing Copilot can lift a direct answer. The AEO mode checks question-led headings, concise answer blocks, FAQ and HowTo schema, and entity clarity.
+
+### AEO vs SEO vs GEO: what is the difference?
+SEO targets rankings in classic results, AEO targets answer boxes and AI Overviews, and GEO targets citations inside chat assistants. They share a foundation (crawlability, indexation, structured data, content quality), so one audit can cover all three.
+
+### How often should you do an SEO audit?
+Run a full audit before every major launch and after migrations or redesigns, and a lighter technical audit quarterly. The `crawl-check` mode gives a fast rendering check after component or route changes.
+
+### Does it work as a technical SEO audit tool for React and Next.js?
+Yes. It includes a 14-check rendering and crawlability pass for client-rendered sites, plus stack profiles for seven platforms.
+
+### Can I use it for ChatGPT SEO or Claude SEO?
+Yes. The GEO and AI-citation modes target ChatGPT, Perplexity, Claude, Gemini and Copilot, and the skill itself installs into Claude, Codex/ChatGPT agents and Antigravity.
+
+### Is it a replacement for Ahrefs, Semrush or Screaming Frog?
+No. It does not run scheduled crawls or dashboards. It audits and explains, and it can use those tools through MCP when you connect them (see `references/tools-to-use.md`).
+
+### Is it free? Can I sell it or offer it as a service?
+It is free to use, modify and self-host. You may not resell the software or offer it as a paid product without a commercial license. Using it for your own or your clients' audits is fine.
 
 ## Version history
 

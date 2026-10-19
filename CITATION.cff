@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this skill in your work, please cite it."
+title: "SEO + AEO + GEO Audit Skill for AI Agents"
+abstract: "A free Agent Skill that runs technical SEO, answer engine optimization (AEO), generative engine optimization (GEO) and AI citation readiness audits on any website, with Markdown and interactive HTML reports."
+type: software
+version: 2.0.0
+date-released: 2026-10-19
+authors:
+  - family-names: "Kumar G"
+    given-names: "Girish"
+    website: "https://seobiopse.com"
+repository-code: "https://github.com/seobiopse/seo-aeo-geo-audit"
+url: "https://seobiopse.com"
+keywords:
+  - seo audit
+  - technical seo audit
+  - answer engine optimization
+  - generative engine optimization
+  - ai search optimization
+  - agent skill

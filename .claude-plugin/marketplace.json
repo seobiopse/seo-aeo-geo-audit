@@ -12,7 +12,7 @@
     {
       "name": "seo-aeo-geo-audit",
       "source": "./",
-      "description": "Engineering-grade SEO, AEO, GEO, and AI Citation audits for any website. Produces Markdown tickets + interactive HTML reports with before/after code, confidence scores, interactive checklists, and 0-100 scoring (SEO Quality + E-E-A-T + AI Citation Readiness). Site-architecture-driven: auto-detects 10 domain archetypes and 7 tech stacks and tailors audit scope accordingly.",
+      "description": "SEO audit skill for AI agents: technical SEO, AEO, GEO and AI search optimization audits for any website. Markdown + interactive HTML reports with before/after code and 0-100 scoring.",
       "version": "2.0.0",
       "author": {
         "name": "Girish Kumar G",
@@ -59,7 +59,17 @@
         "agentic-browsing",
         "axo",
         "sxo",
-        "webmcp"
+        "webmcp",
+        "seo-audit",
+        "technical-seo-audit",
+        "ai-seo",
+        "answer-engine-optimization",
+        "generative-engine-optimization",
+        "ai-search-optimization",
+        "seo-audit-tool",
+        "chatgpt-seo",
+        "claude-seo",
+        "agent-skill"
       ]
     }
   ]
