@@ -639,7 +639,7 @@ def render_scores_block(data):
 <div class="scores-wrap" id="scores">
   <span class="section-eyebrow" style="padding:0 40px;">Scorecards</span>
   <h2 class="section-h2" style="padding:0 40px;">Quality, E-E-A-T &amp; AI Citation Grades</h2>
-  <p class="section-intro" style="padding:0 40px;">Scoring models: <strong>SEO Quality</strong> (NLP-driven content grade), <strong>E-E-A-T</strong> (Google's Experience / Expertise / Authoritativeness / Trust), and <strong>AI Citation Readiness</strong> (chunk density, chunk relevance, extractable units, Bing indexation). Scores are summaries, not substitutes for the detailed findings below.</p>
+  <p class="section-intro" style="padding:0 40px;">Scoring models (the plugin's own heuristics, not Google metrics): <strong>SEO Quality</strong> (NLP-driven content grade), <strong>E-E-A-T</strong> (a proxy for the Experience / Expertise / Authoritativeness / Trust signals in Google's quality guidance; Google states E-E-A-T is not itself a ranking factor), and <strong>AI Citation Readiness</strong> (chunk density, chunk relevance, extractable units, Bing indexation). Scores are summaries, not substitutes for the detailed findings below.</p>
   <div class="scores-grid">{"".join(parts)}</div>
 </div>"""
 

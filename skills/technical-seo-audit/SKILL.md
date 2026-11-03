@@ -5,7 +5,7 @@ license: MIT-Commons-Clause (see LICENSE; no resale without a commercial license
 compatibility: Works in any Agent Skills host (Claude, Claude Code, Codex/ChatGPT, Antigravity). Needs web or browser access for live checks and Python 3.8+ for the probe script. Best with the sibling seo-aeo-geo-audit skill installed (stack profiles, report generator, PageSpeed runner); works without it.
 metadata:
   author: Girish Kumar G
-  version: "2.3.1"
+  version: "2.3.2"
   homepage: https://seobiopse.com
 ---
 

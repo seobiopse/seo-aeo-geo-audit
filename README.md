@@ -1,9 +1,9 @@
 # SEO Audit Skill for AI Agents: Technical SEO + AEO + GEO + AI Search Optimization
 
-**v2.3.1** — a free, open Agent Skill that runs a complete search-engine-ready audit on any website: **technical SEO audit**, **answer engine optimization (AEO)**, **generative engine optimization (GEO)** and **AI citation readiness** (ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews, Bing Copilot). It works in Claude, Claude Code, Codex/ChatGPT agents and Google Antigravity, and outputs a ticket-ready Markdown **SEO audit report** plus an interactive HTML report with before/after code.
+**v2.3.2** — a free, open Agent Skill that runs a complete search-engine-ready audit on any website: **technical SEO audit**, **answer engine optimization (AEO)**, **generative engine optimization (GEO)** and **AI citation readiness** (ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews, Bing Copilot). It works in Claude, Claude Code, Codex/ChatGPT agents and Google Antigravity, and outputs a ticket-ready Markdown **SEO audit report** plus an interactive HTML report with before/after code.
 
 [![License: MIT + Commons Clause](https://img.shields.io/badge/License-MIT%20%2B%20Commons%20Clause-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.3.1-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.3.2-blue.svg)](CHANGELOG.md)
 [![Agent Skills](https://img.shields.io/badge/format-Agent%20Skills-navy.svg)](https://agentskills.io/specification)
 
 ## Quick facts
@@ -256,10 +256,10 @@ Engineers don't edit the plugin directly. Changes go through Marketing Director 
 Install this skill, point your agent at a URL or codebase, and ask for a "full SEO, AEO and GEO audit". The agent detects your stack and site type, loads the matching checklists, and writes findings with severity, evidence, broken-vs-fixed code and a verification step.
 
 ### What is generative engine optimization (GEO)?
-GEO is the practice of making content easy for large language models to find, trust and cite. This skill checks the signals that drive citation: chunk density, chunk relevance, extractable units (statistics, attributed quotes, cited sources), Bing indexation, and AI-crawler access in robots.txt and llms.txt.
+GEO is the practice of making content easy for large language models to find, trust and cite. This skill checks retrieval-readiness signals for AI systems: chunk density, chunk relevance, extractable units (statistics, attributed quotes, cited sources), Bing indexation, and AI-crawler access in robots.txt (plus an optional llms.txt). These are the plugin's own heuristics. Google says its AI features (AI Overviews, AI Mode) need no special optimization, `llms.txt` or content "chunking"; see `skills/seo-aeo-geo-audit/references/google-guidance-alignment.md`.
 
 ### What is answer engine optimization (AEO)?
-AEO is optimizing pages so answer engines such as Google AI Overviews, featured snippets and Bing Copilot can lift a direct answer. The AEO mode checks question-led headings, concise answer blocks, FAQ and HowTo schema, and entity clarity.
+AEO is optimizing pages so answer engines such as Google AI Overviews, featured snippets and Bing Copilot can lift a direct answer. The AEO mode checks question-led headings, concise answer blocks, optional FAQ and HowTo markup (Google no longer shows those rich results), and entity clarity.
 
 ### AEO vs SEO vs GEO: what is the difference?
 SEO targets rankings in classic results, AEO targets answer boxes and AI Overviews, and GEO targets citations inside chat assistants. They share a foundation (crawlability, indexation, structured data, content quality), so one audit can cover all three.
@@ -283,6 +283,7 @@ It is free to use, modify and self-host. You may not resell the software or offe
 
 See [CHANGELOG.md](CHANGELOG.md) for the full history. Highlights:
 
+- **v2.3.2 (2026-11-03)** — Output-facing wording aligned with Google: the HTML report now labels the scores as plugin heuristics (E-E-A-T is not a Google ranking factor), and the README and `/aeo-audit` command no longer present FAQ/HowTo markup or `llms.txt` as Google features.
 - **v2.3.1 (2026-11-03)** — Completed the Google `/appearance` review (all pages read), added the migrated crawling docs and the full 2025-2026 Search Central changelog. New: crawler and fetcher categories, five more retired structured data types, AMP changes, back button hijacking spam policy, JavaScript canonical/noindex wording, paywall metering guidance.
 - **v2.3.0 (2026-11-03)** — Google guidance alignment. Re-checked about 140 Google Search Central pages and corrected outdated guidance: FAQ, HowTo and sitelinks-search-box markup are no longer Google features, `llms.txt` and "AI optimization" are not used by Google Search, E-E-A-T is not a ranking factor, title and description lengths are display heuristics, `changefreq`/`priority` are ignored, and robots.txt, sitemap, redirect, JavaScript and Core Web Vitals facts were updated. New `google-guidance-alignment.md` records what Google says, with sources.
 - **v2.2.0 (2026-11-03)** — Dedicated technical SEO audit skill (`technical-seo-audit`, `/technical-seo-audit`). 13-section TECH checklist, a probe script that samples sitemap pages and reports raw-HTML facts and tracking-tag coverage, a JavaScript/Next.js rendering method (raw vs rendered, App and Pages Router), and PageSpeed integration. Anything untested is reported as `not measured`.

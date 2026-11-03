@@ -12,7 +12,7 @@ Run an **AEO audit** (mode = `aeo`).
 4. Follow SKILL.md workflow:
    - Gather rendered HTML, JSON-LD, author bylines, visible dates.
    - Work through `references/aeo.md`.
-   - Also consult `references/structured-data-advanced.md` for FAQPage / HowTo / SpeakableSpecification recipes.
+   - Also consult `references/structured-data-advanced.md` for FAQPage / HowTo / SpeakableSpecification recipes (optional: Google no longer shows FAQ or HowTo rich results, and Speakable is beta; see `references/google-guidance-alignment.md`).
    - If AI-assisted content, read `references/ai-content-safety.md`.
    - Use `references/issue-framework.md` for findings.
    - Generate both reports via `scripts/generate_report.py`.
