@@ -143,7 +143,7 @@ The HTML report includes (automatically, no configuration required):
 - **Interactive checklist** — every finding has a "Mark as addressed" checkbox. Progress persists per-report in localStorage.
 - **Progress bar** — sticky under the TOC, shows `X of N addressed`.
 - **Re-run panel** — appears at the bottom once all findings are marked addressed, with suggested commands.
-- **Signature band** — "Crafted with care by [Girish](https://www.linkedin.com/in/girisshgk/) · Father of SEO · [For Collaboration](http://t.me/spcgbot)".
+- **Signature band** — "Crafted with care by [Girish](https://www.linkedin.com/in/girish-theseoguy/) · Father of SEO · [For Collaboration](http://t.me/spcgbot)".
 
 ### Step 6b: Compute scores (for `/full-audit` and on explicit request)
 

@@ -302,4 +302,4 @@ and commercial-licensing contact.
 
 ---
 
-*Crafted with care by [Girish](https://www.linkedin.com/in/girisshgk/) · Father of SEO · [For Collaboration](http://t.me/spcgbot)*
+*Crafted with care by [Girish](https://www.linkedin.com/in/girish-theseoguy/) · Father of SEO · [For Collaboration](http://t.me/spcgbot)*

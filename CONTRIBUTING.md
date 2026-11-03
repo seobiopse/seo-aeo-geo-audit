@@ -115,4 +115,4 @@ PRs without a linked approved request doc will be closed without review. This is
 
 ## Questions
 
-[Girish Kumar G](https://in.linkedin.com/in/girisshgk) — Father of SEO. DM on LinkedIn for anything urgent. For general discussion, use the team channel.
+[Girish Kumar G](https://in.linkedin.com/in/girish-theseoguy) — Father of SEO. DM on LinkedIn for anything urgent. For general discussion, use the team channel.

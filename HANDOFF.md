@@ -1,7 +1,7 @@
 # SEO Audit Plugin — Engineering Handoff Guide
 
 **Version:** 2.0.0
-**Maintainer:** [Girish Kumar G](https://in.linkedin.com/in/girisshgk) — Father of SEO
+**Maintainer:** [Girish Kumar G](https://in.linkedin.com/in/girish-theseoguy) — Father of SEO
 **For questions:** DM on LinkedIn, or ping in the team Slack / Linear channel for SEO work.
 
 ---
@@ -303,7 +303,7 @@ Yes. The skill follows the open Agent Skills format and runs in Claude, Codex/Ch
 Not directly — the plugin is built for Claude Code. But you can read the reference files in `skills/seo-aeo-geo-audit/references/` manually and use them as a checklist. That loses the automation but preserves the methodology.
 
 ### "Who owns this? Where do bugs / feature requests go?"
-Me: [Girish Kumar G](https://in.linkedin.com/in/girisshgk). DM me on LinkedIn, or ping the team Slack / Linear channel. I actively maintain the plugin; bug reports and suggestions are welcome and usually land in the next update.
+Me: [Girish Kumar G](https://in.linkedin.com/in/girish-theseoguy). DM me on LinkedIn, or ping the team Slack / Linear channel. I actively maintain the plugin; bug reports and suggestions are welcome and usually land in the next update.
 
 ---
 
@@ -385,7 +385,7 @@ Fine. Raise it with the Marketing Director / AVP / Manager. If the team collecti
 
 ### Maintainer contact
 
-[Girish Kumar G](https://in.linkedin.com/in/girisshgk) on LinkedIn. For anything urgent (broken audit, flag a regression), ping directly. For new-check requests, always go through the Director / AVP / Manager first.
+[Girish Kumar G](https://in.linkedin.com/in/girish-theseoguy) on LinkedIn. For anything urgent (broken audit, flag a regression), ping directly. For new-check requests, always go through the Director / AVP / Manager first.
 
 ---
 
@@ -420,4 +420,4 @@ This plugin exists because SEO audits are mostly the same work done badly, over 
 
 ---
 
-*Crafted with care by [Girish](https://www.linkedin.com/in/girisshgk/) · Father of SEO · [For Collaboration](http://t.me/spcgbot)*
+*Crafted with care by [Girish](https://www.linkedin.com/in/girish-theseoguy/) · Father of SEO · [For Collaboration](http://t.me/spcgbot)*
