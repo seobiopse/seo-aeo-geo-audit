@@ -4,6 +4,19 @@ All notable changes to the SEO Audit Plugin are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.1] — 2026-11-03
+
+### Changed
+
+- **Completed the Google `/appearance` review.** Every page in that section is now read (landing page, Flexible Sampling, Top Places List, translated results, Web Stories, regional and partner programs, package tracking, UGC Fresh Data Program, byline dates). `google-guidance-alignment.md` gains a coverage map for the section and notes on programs that are not general audit items.
+- **Verified the sidebar in Chrome.** The documentation sidebar was extracted from the live page (177 links) and diffed against the pages read; the only missing pages were `reduce-crawl-rate` and `verifying-googlebot` in the moved crawling docs, now read. Added the emergency crawl-rate guidance (500/503/429 with `Retry-After`, do not exceed 1-2 days) and the reverse-DNS masks per crawler category.
+- **Read the migrated crawling docs** (`developers.google.com/crawling`) and the full Search Central changelog for 2025-2026. Added crawler categories (common, special-case, user-triggered fetchers and which ignore robots.txt), verification by reverse DNS or Google's IP JSON files, the `Google-NotebookLM` to `Google-GeminiNotebook` rename, crawl-budget thresholds, and corrected the file-size wording: 15 MB default, Googlebot-specific 2 MB HTML / 64 MB PDF documented on the Googlebot page.
+- **More retired features recorded:** `course-info`, `estimated-salary`, `learning-video`, `special-announcement`, `vehicle-listing` structured data, Discover Follow, Page Annotations, online-event properties, AMP viewer/cache/signed exchange, and several retired crawlers. Dataset markup is noted as Dataset Search only.
+- **New items:** back button hijacking added to the technical checklist (TECH-10.6); JavaScript guidance on `noindex` and canonicals matches the Dec 2025 wording; review rating, shipping and return-policy changes; preferred sources and AI Mode notes.
+
+### Contributors
+
+- Claude (Anthropic) co-authored the review and updates.
 ## [2.3.0] — 2026-11-03
 
 ### Changed

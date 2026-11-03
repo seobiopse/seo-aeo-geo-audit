@@ -5,7 +5,7 @@ license: MIT-Commons-Clause (see LICENSE; no resale without a commercial license
 compatibility: Works in any Agent Skills host (Claude, Claude Code, Codex/ChatGPT, Antigravity). Live-site checks need web or browser access; report script needs Python 3.8+.
 metadata:
   author: Girish Kumar G
-  version: "2.3.0"
+  version: "2.3.1"
   homepage: https://seobiopse.com
 ---
 

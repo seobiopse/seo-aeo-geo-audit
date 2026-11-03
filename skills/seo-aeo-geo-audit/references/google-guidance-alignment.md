@@ -32,7 +32,12 @@ Base: `https://developers.google.com/search/docs/` (paths below are relative to 
 | Video sitemap `category`, `gallery_loc`, `autoplay`, `allow_embed`, `price`, `tvshow` | Removed. | Do not use. |
 | `duns`, `leiCode` on Organization | Discouraged; use `iso6523Code`. | Prefer `iso6523Code`. |
 | Dynamic rendering | "A workaround and not a long-term solution"; SSR, static rendering or hydration recommended. | Do not recommend as the fix. |
-| AMP | Not required; AMP pages are indexed like other pages. | Not a requirement. |
+| AMP | Not required; AMP pages are indexed like other pages. In Jul 2026 Google removed the AMP viewer, AMP Cache and signed-exchange references; Search links users directly to publisher AMP pages. | Not a requirement. |
+| `course-info`, `estimated-salary`, `learning-video`, `special-announcement`, `vehicle-listing` structured data | Documentation removed 9 Sep 2025; no longer shown (changelog). | Not recommended. |
+| Book actions, Dataset | Book actions is a partner-only feed (deprecation banner later removed). Dataset markup is used only by Dataset Search (changelog 5 Nov 2025). | Do not present as general rich results. |
+| Discover "Follow" feature, Page Annotations, "AI while browsing" paywall docs | Removed (Nov 2025, Mar 2025, Mar 2025). | Do not reference. |
+| Online-event properties on Event | Removed Jun 2025; events must be physical and open to the public. | Do not recommend virtual-event markup for Google. |
+| Crawlers `AdsBot-Google-Mobile-Apps`, `DuplexWeb-Google`, `googleweblight`; fetcher `google-speakr` | Retired or deprecated. `Google-NotebookLM` is superseded by `Google-GeminiNotebook`. | Do not list in robots.txt policy checks. |
 
 ## 2. Google AI features (AI Overviews, AI Mode)
 
@@ -68,9 +73,9 @@ Plugin treatment: `llms.txt`, chunk density, n-gram overlap, extractable units a
 ## 5. Crawling, robots.txt, sitemaps, redirects
 
 - **Technical requirements** (`essentials/technical`): Googlebot not blocked, page returns HTTP 200, page has indexable content.
-- **robots.txt** (`crawling-indexing/robots/robots_txt`): supported fields are `user-agent`, `allow`, `disallow`, `sitemap`; `*` and `$` wildcards. Size limit 500 KiB. Most specific group wins; longest rule wins; on a tie the least restrictive rule wins. `*` does not match the AdsBot crawlers. Cached up to about 24 hours; "Request a recrawl" in Search Console to refresh. Status handling: 2xx parsed; 3xx followed up to 5 hops then treated as 404; 4xx except 429 treated as no robots.txt; 5xx or network errors pause crawling for 12 hours, then the last good copy is used for up to 30 days.
+- **robots.txt** (`/crawling/docs/robots-txt/robots-txt-spec`; Google migrated crawler, robots.txt, crawl-budget and faceted-navigation docs from `/search/docs/` to `developers.google.com/crawling` in Nov-Dec 2025 with content unchanged): supported fields are `user-agent`, `allow`, `disallow`, `sitemap`; `*` and `$` wildcards. Size limit 500 KiB. Most specific group wins; longest rule wins; on a tie the least restrictive rule wins. `*` does not match the AdsBot crawlers. Cached up to about 24 hours; "Request a recrawl" in Search Console to refresh. Status handling: 2xx parsed; 3xx followed up to 5 hops then treated as 404; 4xx except 429 treated as no robots.txt; 5xx or network errors pause crawling for 12 hours, then the last good copy is used for up to 30 days.
 - `noindex` in robots.txt is not supported. A noindexed page must not be robots-blocked, or Google never sees the tag.
-- **Fetch limits:** Googlebot reads the first 2 MB of an HTML file (64 MB for a PDF). The default for Google's crawlers is 15 MB. Supports gzip, deflate, br; HTTP/2 supported.
+- **Fetch limits:** the default for Google's crawlers is the first 15 MB of a file (`/crawling/docs/crawlers-fetchers/overview-google-crawlers`). Googlebot's own, smaller limits are documented on `crawling-indexing/googlebot`: the first 2 MB of an HTML file and 64 MB of a PDF (the crawler overview mentions 2 MB only as an example of a smaller Googlebot limit). Supports gzip, deflate, br; HTTP/2 supported (a 421 response opts out).
 - **Status codes for crawling:** 4xx (not 429) dropped over time; 429 and 5xx slow crawling; 503/429 can be used briefly in an emergency (about 2 days before URLs may be dropped). Googlebot follows up to 10 redirect hops.
 - **Redirects** (`301-redirects`): permanent signals are 301, 308, and an instant (0 s) meta refresh or JavaScript location; temporary are 302, 303, 307 and delayed meta refresh. Server-side redirects preferred; JavaScript redirects are a last resort. Site moves: keep redirects at least a year; Change of Address only for domain/subdomain moves.
 - **Canonicals** (`consolidate-duplicate-urls`): redirects are the strongest signal, then `rel="canonical"`, then sitemap inclusion (weak). Absolute URLs; self-referencing is recommended; use the link element or the HTTP header, not both; `rel="canonical"` with `hreflang`/`lang`/`media`/`type` attributes is ignored; do not use robots.txt, the removal tool or noindex to choose a canonical.
@@ -116,6 +121,7 @@ Plugin treatment: `llms.txt`, chunk density, n-gram overlap, extractable units a
 
 ## 9. Spam policies and content
 
+- New in April 2026: **back button hijacking** is listed under malicious practices (changelog). Google may also use spam-report submissions to take manual action.
 - Policy names (`essentials/spam-policies`): cloaking, doorway abuse, expired domain abuse, hacked content, hidden text and link abuse, keyword stuffing, link spam, machine-generated traffic, malicious practices, misleading functionality, scaled content abuse, scraping, site reputation abuse, sneaky redirects, thin affiliation, user-generated spam. The scope also covers manipulating generative AI responses in Search.
 - Scaled content abuse explicitly includes generative AI tools used to create many pages without adding value. AI use itself is not banned; purpose and value decide.
 - Site reputation abuse: EEA-specific handling differs (separate categorisation instead of a manual action); outside the EEA a manual action is possible.
@@ -130,6 +136,44 @@ Plugin treatment: `llms.txt`, chunk density, n-gram overlap, extractable units a
 - Language ISO 639-1, region ISO 3166-1 Alpha 2, script optional (`zh-Hant`). A country code alone is invalid. `es-419` is not supported.
 - Google ignores geo meta tags and the `lang` attribute for language detection; it uses visible content. Do not auto-redirect by language. Googlebot sends no `Accept-Language`; do not block it by IP location.
 
-## 11. Pages not read (out of scope for this plugin)
+## 11. Crawlers and fetchers (`/crawling/docs/crawlers-fetchers/`, checked 2026-11-03)
 
-AMP validation and removal pages, Web Stories (3), aggregator and supplier units, ecosystem carousel, South Africa features, package tracking, UGC fresh data program, explicit-content guidelines, malware and Safe Browsing subpages, search operators for images, bubble chart analysis, social video analysis, pause-online-business, top places list, flexible sampling, ad networks and translation. FAQ, HowTo, special announcements and sitelinks search box feature pages no longer exist; their status above comes from the changelog (parts of which are summarised, not verbatim).
+- **Common crawlers** (always obey robots.txt for automatic crawls): Googlebot (Smartphone and Desktop, token `Googlebot`), Googlebot-Image, Googlebot-Video, Googlebot-News, Storebot-Google, Google-InspectionTool, GoogleOther (and -Image, -Video), Google-CloudVertexBot, and Google-Extended. `Google-Extended` is a robots.txt token only, with no separate user-agent string. Google says it intends to support the AIPREF signal (`__usage_ai-training`) in early 2027.
+- **Special-case crawlers** may ignore robots.txt. `AdsBot-Google`, `AdsBot-Google-Mobile`, `APIs-Google` and `Mediapartners-Google` ignore a global `*` group and must be named. `Google-Safety` ignores robots.txt.
+- **User-triggered fetchers** generally ignore robots.txt (a person asked for the fetch): `Google-CWS`, `FeedFetcher-Google`, `Google-GeminiNotebook`, `Google-Agent`, `GoogleMessages`, `Google-Pinpoint`, `GoogleProducer`, `Google-Read-Aloud`, `Google-Site-Verification`.
+- **Verification:** reverse DNS then forward DNS (`googlebot.com`, `google.com`, `googleusercontent.com`) or match IPs against Google's published JSON files (`common-crawlers.json`, `special-crawlers.json`, `user-triggered-fetchers.json`, `user-triggered-fetchers-google.json`, `user-triggered-agents.json`, `goog.json`). Do not trust a user-agent string alone.
+- **Reducing crawl rate** (`/crawling/docs/crawlers-fetchers/reduce-crawl-rate`): in an emergency, return 500, 503 or 429 for a short time (hours, 1-2 days). Google then lowers the crawl rate for the whole hostname and raises it again when errors stop. A `Retry-After` header (seconds or an absolute UTC date) can accompany 503 or 429. Doing this longer than 1-2 days can drop URLs from the index. A rate increase cannot be requested. Common causes of crawl spikes are faceted navigation, calendars with many date URLs, and Dynamic Search Ads targets.
+- **Verification** (`/crawling/docs/crawlers-fetchers/verify-google-requests`, the sidebar entry `verifying-googlebot` resolves to it): user-triggered fetchers ignore robots.txt because a user requested the fetch; special-case crawlers "may or may not" respect it. Reverse-DNS masks: `crawl-***.googlebot.com` / `geo-crawl-***.geo.googlebot.com` (common), `rate-limited-proxy-***.google.com` (special-case), `google-proxy-***.google.com` or `***.gae.googleusercontent.com` (user-triggered).
+- **Crawl budget** matters for about 1M+ pages changing weekly or 10,000+ changing daily (rough estimates). Do not use `noindex` to save budget; return 404/410 for removed pages. 5xx, 429, timeouts and DNS errors slow crawling; unreachable indexed URLs are removed within days. 401/403 do not limit crawl rate.
+
+## 12. Changelog highlights, Jan 2025 to Oct 2026 (read verbatim from `search/updates`)
+
+- 2026-10: `url-structure` clarifies hyphens vs underscores; `control-what-you-share` lists robots meta, `data-nosnippet`, `X-Robots-Tag` and the Search generative AI control; Indexing API quota page updated; `prevent-abuse` adds guidance on link-shared content.
+- 2026-09: Video structured data adds `creator` and documents supported `interactionStatistic` types. 2026-08: site reputation enforcement adjusted for the EEA; favicon formats listed explicitly (no change in support).
+- 2026-07: review snippet gets a guideline on fake and undisclosed incentivised reviews; merchant listing adds a "sale duration" section (`validFrom`, `validThrough`, `priceValidUntil`) and `Product.category` as Text or CategoryCode; package tracking stops accepting new partners; AMP viewer/cache/signed-exchange references removed.
+- 2026-06: `ai-optimization-guide` states Google Search does not need `llms.txt` (neither helps nor hurts); FAQ rich result documentation removed; third-party SEO guidance added.
+- 2026-05: `ai-optimization-guide` published; spam policies clarified to cover generative AI responses; FAQ deprecation notice (no longer shown from 7 May 2026); `hasAdultConsideration` added to merchant listing and product variants.
+- 2026-04: new spam policy item for **back button hijacking** (malicious practices); "read more" deep links documented; Google may use spam reports to take manual action.
+- 2026-03: robots meta processing outside `<head>` documented (behaviour unchanged); outdated JavaScript accessibility section removed; preferred-image guidance (Google uses schema.org markup and `og:image`).
+- 2026-02/01: Discover guidance tied to the February 2026 Discover core update; default file-size limits moved to the shared crawler page; practice-problem docs removed.
+- 2025-12: JavaScript canonical best practice (match the HTML canonical or omit it there); `noindex` in JavaScript-using pages is not well defined; non-200 pages may not be rendered; core updates doc adds smaller and continual updates between major core updates.
+- 2025-11: crawling docs migrated; `Google-Pinpoint`, `Google-CWS` fetchers added; shipping policy markup launched; review snippet nesting clarified; Dataset used only by Dataset Search.
+- 2025 earlier: five structured data types removed (Sep); JavaScript paywall guidance (Aug); loyalty program and separate return policy docs (Jun); `returnPolicyCountry` required for MerchantReturnPolicy (Mar); AI Mode data counted in Search Console totals (Jun); breadcrumbs shown on desktop results only (Jan); review ratings should include a review comment and author name (Jan).
+
+## 13. Coverage map: `/appearance` section (all pages read 2026-11-03)
+
+Search-appearance topics: AI features, business details, byline dates, favicons, featured snippets, Flexible Sampling, Google Discover, images, preferred sources, regional differences (aggregator features), search profiles, site names, sitelinks, snippets, title links, Top Places List, translated results, videos, Visual Elements gallery, Web Stories. Structured data: list of markup, intro, JavaScript generation, general guidelines, enriched results, and every feature page in the search gallery. Early-adopter programs: package tracking, structured data carousels (beta).
+
+- **Flexible Sampling (paywalls):** monthly metering preferred over daily; news publishers should expect roughly 6-10 free articles per user per month; show the first few sentences after the meter ends; paywalls shown more than about 10% of the time degrade satisfaction. Wrap paywalled content in paywalled-content structured data to avoid cloaking concerns.
+- **Translated results:** machine translation of titles and snippets in many languages; opt out with `notranslate` (meta tag or `X-Robots-Tag`).
+- **Top Places List:** third-party lists of physical businesses must be curated, genuine, independent and not sponsored; no markup.
+- **Regional, interest-form or partner programs (not general audit items):** aggregator and supplier units, ecosystem carousel, job sites (EEA), places sites (Türkiye), South Africa badge and chip, structured data carousels beta, UGC Fresh Data Program, package tracking (closed to new partners from Jul 2026). Do not report their absence.
+- **Web Stories:** must be valid AMP with a self-referencing canonical and required metadata (`publisher-logo-src`, `poster-portrait-src`, `title`, `publisher`); not blocked by robots.txt or `noindex`.
+- **Preferred sources:** the `publisher.js` button is optional; it works for domain or subdomain properties only; rolling out to AI Overviews and AI Mode.
+- **Translate hosts:** ad networks need a decoding routine for `translate.goog` hosts (niche).
+
+## 14. Sidebar verification and pages not read
+
+The documentation sidebar was extracted from the live page in Chrome on 2026-11-03 (177 distinct links). Every documentation page in it was read, apart from the out-of-scope groups below. The only pages the sidebar had that an earlier crawl missed were in the migrated crawling docs (`reduce-crawl-rate`, `verifying-googlebot`), now read. The sidebar also links the Search Console opt-out article (`support.google.com/webmasters/answer/3035947`): you can opt a domain out of display in Google Shopping, Flights, Hotels and vacation rentals, and local search results (applies per domain, not per subdomain or directory; removal within 30 days).
+
+AMP validation, enhancement and removal subpages, explicit-content (SafeSearch) guidelines, malware and Safe Browsing subpages, search operators for images, bubble chart analysis, social video analysis, pause-online-business, and the older `advanced/guidelines/*` pages linked from `get-started`. FAQ, HowTo, special announcements and sitelinks search box feature pages no longer exist; their status above comes from the changelog (parts of which are summarised, not verbatim).

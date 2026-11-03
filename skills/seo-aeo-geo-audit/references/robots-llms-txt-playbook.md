@@ -189,7 +189,8 @@ The `Sitemap:` directive isn't required, but including it lets bots discover you
 - Status handling: 2xx parsed; 3xx followed up to 5 hops, then treated as 404; 4xx except 429 treated as "no robots.txt"; 5xx or network failure pauses crawling for 12 hours, then the last good copy is used for up to 30 days.
 - Google caches robots.txt for up to about 24 hours. Use "Request a recrawl" in the Search Console robots.txt report to refresh sooner.
 - robots.txt blocks crawling, not indexing. A blocked URL can still appear without a description if it is linked. To keep a page out of the index, allow crawling and use `noindex`.
-- Fetch limits: Googlebot processes the first 2 MB of an HTML file (64 MB for PDF); Google's crawlers default to 15 MB.
+- Fetch limits: Google's crawlers default to the first 15 MB of a file; Googlebot's own limits (first 2 MB of HTML, 64 MB of PDF) are on the Googlebot documentation page.
+- Crawler categories: common crawlers (Googlebot variants, GoogleOther, Google-CloudVertexBot, Google-Extended) obey robots.txt; special-case crawlers (`AdsBot-Google`, `Mediapartners-Google`, `APIs-Google`) can ignore a global `*` group and must be named; user-triggered fetchers (`Google-Read-Aloud`, `Google-Pinpoint`, `Google-GeminiNotebook`, `Google-CWS`, `FeedFetcher-Google`, `Google-Site-Verification`) generally ignore robots.txt because a person requested the fetch. `Google-NotebookLM` is superseded by `Google-GeminiNotebook`. Verify Googlebot by reverse DNS or Google's published IP JSON files, not by user-agent string.
 - `Google-Extended` limits use of content for AI training and grounding in other Google systems. It does not remove a page from Search or AI Overviews; use `nosnippet`, `data-nosnippet`, `max-snippet` or `noindex` to limit display.
 
 ## 5. llms.txt — the spec

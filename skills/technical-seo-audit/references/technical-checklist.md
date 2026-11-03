@@ -25,7 +25,7 @@ Identify the stack from live evidence, record the evidence and a confidence leve
 - **01.3** `noindex` (meta robots or `X-Robots-Tag`) is on private and thin pages and absent from money and content pages. Check the sample: every `noindex` found is intended. A noindexed URL must not be blocked in `robots.txt`, or Google never sees the tag.
 - **01.4** Private and transactional URLs (`/cart`, `/checkout`, `/login`, `/register`, `/account`, `/dashboard`) are `noindex` or disallowed and are not in the sitemap. Note `Disallow` stops crawling, not indexing.
 - **01.5** Staging, preview and development hosts return `noindex` or are behind auth.
-- **01.6** AI-crawler policy in `robots.txt` is intentional (GPTBot, ClaudeBot, PerplexityBot, CCBot, Google-Extended). Report what is blocked, not whether it should be.
+- **01.6** Google's user-triggered fetchers (Google-Read-Aloud, Google-Pinpoint, Google-GeminiNotebook and others) generally ignore robots.txt, and special-case crawlers such as AdsBot ignore a global `*` group. Do not report that as a robots.txt failure. AI-crawler policy in `robots.txt` is intentional (GPTBot, ClaudeBot, PerplexityBot, CCBot, Google-Extended). Report what is blocked, not whether it should be.
 - **01.7** Non-HTML endpoints (`/api/`, JSON, feeds) send `X-Robots-Tag: noindex` where they should not be indexed.
 
 ## TECH-02. Status codes and redirects
@@ -107,6 +107,7 @@ See `javascript-rendering.md` for the method and the Next.js specifics.
 - **10.3** Debug mode off in production: error pages show no stack traces (Laravel `APP_DEBUG`, framework dev overlays).
 - **10.4** `X-Powered-By`/`Server` do not disclose versions (`info`).
 - **10.5** Admin and login paths are not indexable and not linked from public pages.
+- **10.6** **(browser)** No back button hijacking: the browser Back button returns users to the previous page (Google added this to its malicious-practices spam policy in April 2026). Check pages that push history entries or redirect on Back.
 
 ## TECH-11. Tracking tags
 

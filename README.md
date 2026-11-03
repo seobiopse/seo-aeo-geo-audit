@@ -1,9 +1,9 @@
 # SEO Audit Skill for AI Agents: Technical SEO + AEO + GEO + AI Search Optimization
 
-**v2.3.0** — a free, open Agent Skill that runs a complete search-engine-ready audit on any website: **technical SEO audit**, **answer engine optimization (AEO)**, **generative engine optimization (GEO)** and **AI citation readiness** (ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews, Bing Copilot). It works in Claude, Claude Code, Codex/ChatGPT agents and Google Antigravity, and outputs a ticket-ready Markdown **SEO audit report** plus an interactive HTML report with before/after code.
+**v2.3.1** — a free, open Agent Skill that runs a complete search-engine-ready audit on any website: **technical SEO audit**, **answer engine optimization (AEO)**, **generative engine optimization (GEO)** and **AI citation readiness** (ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews, Bing Copilot). It works in Claude, Claude Code, Codex/ChatGPT agents and Google Antigravity, and outputs a ticket-ready Markdown **SEO audit report** plus an interactive HTML report with before/after code.
 
 [![License: MIT + Commons Clause](https://img.shields.io/badge/License-MIT%20%2B%20Commons%20Clause-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.3.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.3.1-blue.svg)](CHANGELOG.md)
 [![Agent Skills](https://img.shields.io/badge/format-Agent%20Skills-navy.svg)](https://agentskills.io/specification)
 
 ## Quick facts
@@ -283,6 +283,7 @@ It is free to use, modify and self-host. You may not resell the software or offe
 
 See [CHANGELOG.md](CHANGELOG.md) for the full history. Highlights:
 
+- **v2.3.1 (2026-11-03)** — Completed the Google `/appearance` review (all pages read), added the migrated crawling docs and the full 2025-2026 Search Central changelog. New: crawler and fetcher categories, five more retired structured data types, AMP changes, back button hijacking spam policy, JavaScript canonical/noindex wording, paywall metering guidance.
 - **v2.3.0 (2026-11-03)** — Google guidance alignment. Re-checked about 140 Google Search Central pages and corrected outdated guidance: FAQ, HowTo and sitelinks-search-box markup are no longer Google features, `llms.txt` and "AI optimization" are not used by Google Search, E-E-A-T is not a ranking factor, title and description lengths are display heuristics, `changefreq`/`priority` are ignored, and robots.txt, sitemap, redirect, JavaScript and Core Web Vitals facts were updated. New `google-guidance-alignment.md` records what Google says, with sources.
 - **v2.2.0 (2026-11-03)** — Dedicated technical SEO audit skill (`technical-seo-audit`, `/technical-seo-audit`). 13-section TECH checklist, a probe script that samples sitemap pages and reports raw-HTML facts and tracking-tag coverage, a JavaScript/Next.js rendering method (raw vs rendered, App and Pages Router), and PageSpeed integration. Anything untested is reported as `not measured`.
 - **v2.1.0 (2026-11-03)** — PageSpeed Insights + Laravel. New optional PageSpeed audit (`scripts/pagespeed.py`, `references/pagespeed.md`): asks for your API key, skips cleanly without one, keeps the key in memory only, and adds Lighthouse scores, Core Web Vitals field data and top fixes to the SEO and Full audit reports. The PHP profile gains Laravel live-site detection, Livewire/Inertia rendering checks and custom-store checks (PHP-21 to PHP-26).

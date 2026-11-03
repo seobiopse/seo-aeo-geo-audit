@@ -88,7 +88,7 @@ LLMs preferentially cite:
 
 Everything in the AEO schema checklist plus:
 
-- **7.1** `Dataset` schema on pages with original data.
+- **7.1** `Dataset` schema on pages with original data (Google uses it only for Dataset Search, not for web rich results).
 - **7.2** `SoftwareApplication` on software/tool pages.
 - **7.3** `Course` schema on educational content.
 - **7.4** `Review` schema with `author` and `reviewRating` both present.
