@@ -134,6 +134,49 @@ When a competitor page is given, report both scores, the per-aspect comparison, 
 
 Share the `.html` and `.md` files and summarise: overall score and grade, the weakest aspects, the top three additions, what the score cannot see, how many sub-queries were removed as branded or duplicate, and which data sources fed the sub-query set (agent estimate, Serper, a connector, or pasted queries). If the user wants the result inside a full audit report, copy the JSON's `scores_block` into `findings.json` as `scores.fanout`; `generate_report.py` renders it as a "Fan-Out Coverage" grader.
 
+## Reuse across commands
+
+- Save each run's `fanout.json` in the audit output folder (for example `<output>/fanout/<page-slug>/fanout.json`) so other commands can reuse it and no credits are spent twice. The Serper cache (`.fanout-serp-cache.json`) is shared the same way.
+- `/ai-citation-audit` takes its 8 to 20 sub-queries from an existing `fanout.json` (at least one per aspect, real-search aspects first) instead of building a second set. If none exists it uses `query-fanout.md`, and may offer to run `/fanout-map` first.
+- `/full-audit` offers a fan-out step after the reports are ready (see below). `/aeo-audit`, `/geo-audit` and `/seo-audit` suggest `/fanout-map` when the report shows content gaps, but never run it on their own.
+
+## Batch mode: pages from Search Console (used after a full audit)
+
+Use this to check several pages at once, starting from the pages that have high impressions but too few clicks. All steps are offered, never assumed.
+
+**1. Ask.** "Want a fan-out content-gap check on your pages with high impressions and low clicks? It needs Search Console data." If no, stop.
+
+**2. Get the data (the user's own).** Ask for the Search Console Performance export:
+- **Period:** use **28 days** by default (it smooths weekday swings and is recent). Use **3 months** if pages get only tens of impressions in 28 days. Use 7 days only to check a recent change. Search Console's presets are 7 days, 28 days and 3 months (the API accepts any range), and the data lags by about two days.
+- **How:** Search Console, Performance, Search results, set the date range, Pages tab, Export (CSV). Optional but useful: a page and query export (from Looker Studio, BigQuery or the API) so each page gets a seed query automatically.
+- **Or from a connected tool:** if Ahrefs (Search Console tools) or OpenRush (search performance) is connected with Search Console, offer to pull it, ask permission first, and request only the page rows needed. Never send Search Console data to a third-party service.
+
+**3. Find the right pages.** Run:
+
+```bash
+python3 scripts/gsc_opportunities.py --pages Pages.csv [--page-queries PageQueries.csv] \
+  --brand "<brands>" --period "last 28 days" --limit 10 --output opportunities.json
+```
+
+How to read it, and why "low CTR" is not enough on its own: CTR falls naturally as position falls, so a low CTR alone mostly finds pages ranking around position 12. The script builds the site's own CTR-by-position curve (impression-weighted, in position bands of at least 3 pages, never rising as position worsens) and flags pages whose CTR is well below the curve for their position. `opportunity_clicks` is the estimated clicks below that curve, not a forecast. A second flag, **striking distance** (average position 5 to 20 with high impressions), catches pages that are visible but not winning. If the data is too thin for a reliable curve (`curve_confidence: low`), the low-CTR test is switched off and only striking-distance pages are listed. Average position is an average over many queries, so check the query-level data before acting. Show the ranked list and let the user choose. Pages the user submits override the ranking.
+
+**4. Choose seeds.** Per page, use the highest-impression non-brand query (`seed`), confirmed with the user in one message. If there is no query data, use the page's main topic.
+
+**5. Pick the data source and how many pages to run (credits matter).**
+- **Serper key** (ask once, same pattern as Step 2a; never skip on your own): run a **sample of the top 5 pages**, one seed each (about one credit each, fewer with the cache). Share the roll-up, then ask whether to continue with the rest.
+- **Semrush, Ahrefs or OpenRush connected:** ask permission, tell the user the expected number of calls (pages times one or two), then run **all the pages the user submitted** (sanity cap 50) with minimal pulls per page.
+- **Neither:** run the top 5 with agent-generated sub-queries only (no cost), share, and offer the rest.
+
+**6. Build and run.** For each page: a `fanout.json` of 30 to 60 sub-queries in 6 to 10 aspects (smaller than a single-page run, to keep batches workable), enriched from the chosen source, then a manifest and:
+
+```bash
+python3 scripts/fanout_batch.py --manifest batch.json --output-dir <dir>
+```
+
+The manifest format is in the script's header. Put each page's Search Console numbers under `metrics` (copy the candidate from `opportunities.json`) so the roll-up ranks by opportunity.
+
+**7. Share and explain.** Give the user the roll-up (`fanout-batch-<date>.html` and `.md`) and the per-page reports it links to: which pages have the biggest gaps, the aspects that are weak across pages, missing words, and any page that needs a browser (follow `browser-access.md`). Recommend the smallest set of additions per page (Step 5 above) and say plainly that the coverage score is a plugin heuristic: low coverage on a page with a low CTR is a lead to investigate, not proof of the cause. A low CTR can also come from the title and snippet, SERP features, or position-level competition, so check those too. Ask whether to discard the key.
+
 ## Notes
 
 - The scorer reads only the pages you give it. Pasted content stays on the machine.

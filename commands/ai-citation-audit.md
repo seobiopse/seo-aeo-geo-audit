@@ -14,7 +14,7 @@ Run an **AI Citation Audit** (mode = `ai-citation`).
    - Gather rendered text AND raw (no-JS) text, Bing Webmaster vs GSC indexed
      counts (ask the user if not provided), and 3–5 benchmark pages currently
      cited for the target query.
-   - Derive the fan-out sub-query set (8–20) using `references/query-fanout.md`.
+   - Derive the fan-out sub-query set (8–20) from an existing `fanout.json` (made by `/fanout-map`, in the audit output folder) when one exists: take the best 8-20 across its aspects, and offer to run `/fanout-map` first if the user wants real-search data. Otherwise use `references/query-fanout.md`.
    - Work through `references/ai-citation-audit.md` — measure chunk density,
      per-sub-query chunk relevance (n-gram overlap + first-sentence answer), and
      extractable units per chunk.

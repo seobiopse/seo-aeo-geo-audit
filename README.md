@@ -1,9 +1,9 @@
 # SEO Audit Skill for AI Agents: Technical SEO + AEO + GEO + AI Search Optimization
 
-**v2.6.1** — a free, open Agent Skill that runs a complete search-engine-ready audit on any website: **technical SEO audit**, **answer engine optimization (AEO)**, **generative engine optimization (GEO)** and **AI citation readiness** (ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews, Bing Copilot). It works in Claude, Claude Code, Codex/ChatGPT agents and Google Antigravity, and outputs a ticket-ready Markdown **SEO audit report** plus an interactive HTML report with before/after code.
+**v2.7.0** — a free, open Agent Skill that runs a complete search-engine-ready audit on any website: **technical SEO audit**, **answer engine optimization (AEO)**, **generative engine optimization (GEO)** and **AI citation readiness** (ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews, Bing Copilot). It works in Claude, Claude Code, Codex/ChatGPT agents and Google Antigravity, and outputs a ticket-ready Markdown **SEO audit report** plus an interactive HTML report with before/after code.
 
 [![License: MIT + Commons Clause](https://img.shields.io/badge/License-MIT%20%2B%20Commons%20Clause-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.6.1-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.7.0-blue.svg)](CHANGELOG.md)
 [![Agent Skills](https://img.shields.io/badge/format-Agent%20Skills-navy.svg)](https://agentskills.io/specification)
 
 ## Quick facts
@@ -115,7 +115,7 @@ Open the HTML. Tick off findings as you ship fixes. A "Ready to re-run" panel ap
 | `/ai-citation-audit` | The three numbers that decide AI citation — chunk density, chunk relevance, extractable units — plus Bing indexation |
 | `/agentic-browsing-audit` | Agentic Browsing / SXO / AXO readiness audit (AI browser navigation) |
 | `/vds-audit` | Visibility-to-Demand System — maps crawl presence to conversion + authority |
-| `/full-audit` | All pillars + scoring + comprehensive deep-dives |
+| `/full-audit` | All pillars + scoring + comprehensive deep-dives. Afterwards it can offer a fan-out content-gap check on your high-impression, low-click pages from Search Console data |
 | `/crawl-check` | Fast 14-check rendering-only audit for React/Next.js/SPA sites |
 | `/technical-seo-audit` | Dedicated technical SEO audit: crawl/indexation, redirects, sitemaps, canonicals, JavaScript and Next.js rendering, tracking-tag coverage across sampled pages, optional PageSpeed |
 | `/fanout-map` | Fan-Out Mapper: score how well a page covers the related sub-queries behind a topic, list the content gaps and missing words, and compare against a competitor page (battle mode). Optional real Google data via your Serper key or connected Ahrefs/Semrush/SerpApi/OpenRush (asked first). HTML heat map + Markdown + JSON |
@@ -225,7 +225,9 @@ seo-aeo-geo-audit/
             ├── generate_report.py      # Findings JSON → MD + interactive HTML
             ├── pagespeed.py            # PageSpeed Insights API v5 runner (optional, needs your key)
             ├── fanout_coverage.py      # Fan-Out Mapper scorer (stdlib only, no key)
-            └── fanout_enrich.py        # Optional real-search data (Serper key or pasted queries)
+            ├── fanout_enrich.py        # Optional real-search data (Serper key or pasted queries)
+            ├── gsc_opportunities.py    # Rank Search Console pages by CTR gap vs your own curve
+            └── fanout_batch.py         # Batch fan-out scoring + roll-up report
 ```
 
 ---
@@ -287,6 +289,7 @@ It is free to use, modify and self-host. You may not resell the software or offe
 
 See [CHANGELOG.md](CHANGELOG.md) for the full history. Highlights:
 
+- **v2.7.0 (2026-11-03)** — Fan-out wired into the audits. After `/full-audit` the agent offers a content-gap check on pages with high impressions but low clicks: you share Search Console data, `gsc_opportunities.py` ranks pages by CTR below your own CTR-by-position curve (plus striking-distance pages), and `fanout_batch.py` scores them and writes one roll-up. Serper key means a sample of 5 pages; a connected Semrush, Ahrefs or OpenRush (permission first) runs every page you submit. `/ai-citation-audit` reuses an existing fan-out set; `/aeo-audit`, `/geo-audit` and `/seo-audit` suggest `/fanout-map`.
 - **v2.6.1 (2026-11-03)** — Credit-frugal real-search data. The Serper step now defaults to one request (the seed returns both People Also Ask and Related Searches), expands only when fewer than 20 distinct queries come back and stops as soon as it has enough (cap 3), and caches results for 7 days so re-runs are free. Connected Semrush, Ahrefs, OpenRush or SerpApi tools are usable too, with permission asked first and minimal pulls.
 - **v2.6.0 (2026-11-03)** — Real-search data for the Fan-Out Mapper. `/fanout-map` now asks for a Serper API key first (or "skip"); with a key it adds Google People Also Ask and Related Searches and suggests competitors for battle mode; without one it checks for connected Ahrefs, Semrush, SerpApi or OpenRush tools and asks permission before using any. Reports state where every sub-query came from. Also fixes a Windows bug where a key piped via PowerShell arrived corrupted (affected `--key-stdin` for PageSpeed too).
 - **v2.5.0 (2026-11-03)** — Fan-Out Mapper. New `/fanout-map` command and `fanout` mode: the agent builds a sub-query set around a topic, `scripts/fanout_coverage.py` (stdlib only, no key) scores a page passage by passage, and you get a score ring, aspect bars, a sub-query heat map, a gap list with where to add each section, missing words, and an optional competitor battle mode. The score is labelled as a plugin heuristic.

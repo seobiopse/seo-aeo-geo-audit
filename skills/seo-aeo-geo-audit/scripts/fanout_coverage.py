@@ -548,46 +548,37 @@ def render_md(fanout, page, res, comp, cres, bat, today):
     return "\n".join(L) + "\n"
 
 
-def main():
-    ap = argparse.ArgumentParser(description="Score a page against a fan-out sub-query set.")
-    ap.add_argument("--fanout", required=True, help="fanout.json built by the agent")
-    ap.add_argument("--url"); ap.add_argument("--html"); ap.add_argument("--text")
-    ap.add_argument("--competitor-url"); ap.add_argument("--competitor-html"); ap.add_argument("--competitor-text")
-    ap.add_argument("--brand", help="comma-separated brand terms; sub-queries containing them are removed")
-    ap.add_argument("--covered", type=float, default=COVERED); ap.add_argument("--partial", type=float, default=PARTIAL)
-    ap.add_argument("--output-dir", required=True); ap.add_argument("--name")
-    a = ap.parse_args()
-
+def run(fanout_path, brand=None, url=None, html=None, text=None, comp_url=None, comp_html=None, comp_text=None,
+        covered=COVERED, partial=PARTIAL, output_dir=".", name=None):
+    """Score one page. Returns (exit_code, result_dict). result_dict["status"] is ok, error or needs_browser."""
     try:
-        fanout = load_fanout(a.fanout, a.brand)
+        fanout = load_fanout(fanout_path, brand)
     except (OSError, ValueError) as e:
-        print(json.dumps({"status": "error", "error": f"fanout file: {e}"})); return 1
+        return 1, {"status": "error", "error": f"fanout file: {e}"}
     if not fanout["aspects"]:
-        print(json.dumps({"status": "error", "error": "no usable sub-queries in the fanout file"})); return 1
+        return 1, {"status": "error", "error": "no usable sub-queries in the fanout file"}
 
-    page, err = load_page(a.url, a.html, a.text)
+    page, err = load_page(url, html, text)
     if err or page["words"] < page["min_words"]:
         why = err or (f"only {page['words']} words of text found" + (" (likely a JavaScript shell or blocked page)" if page["min_words"] > 20 else ""))
-        print(json.dumps({"status": "needs_browser", "reason": why,
-                          "next": "Follow references/browser-access.md: open the page in Claude in Chrome, save the rendered text or HTML to a file, and re-run with --text or --html."}))
-        return 2
+        return 2, {"status": "needs_browser", "reason": why,
+                   "next": "Follow references/browser-access.md: open the page in Claude in Chrome, save the rendered text or HTML to a file, and re-run with --text or --html."}
     build_windows(page)
-    res = analyse(fanout, page, a.covered, a.partial)
+    res = analyse(fanout, page, covered, partial)
 
     comp = cres = bat = None
-    if a.competitor_url or a.competitor_html or a.competitor_text:
-        comp, cerr = load_page(a.competitor_url, a.competitor_html, a.competitor_text)
+    if comp_url or comp_html or comp_text:
+        comp, cerr = load_page(comp_url, comp_html, comp_text)
         if cerr or comp["words"] < comp["min_words"]:
-            print(json.dumps({"status": "needs_browser", "reason": "competitor page: " + (cerr or f"only {comp['words']} words found"),
-                              "next": "Follow references/browser-access.md for the competitor page."}))
-            return 2
+            return 2, {"status": "needs_browser", "reason": "competitor page: " + (cerr or f"only {comp['words']} words found"),
+                       "next": "Follow references/browser-access.md for the competitor page."}
         build_windows(comp)
-        cres = analyse(fanout, comp, a.covered, a.partial)
+        cres = analyse(fanout, comp, covered, partial)
         bat = battle(res, cres)
 
     today = date.today().isoformat()
-    outdir = Path(a.output_dir); outdir.mkdir(parents=True, exist_ok=True)
-    slug = a.name or ("fanout-map-" + re.sub(r"[^a-z0-9]+", "-", fanout["query"].lower()).strip("-")[:40] + "-" + today)
+    outdir = Path(output_dir); outdir.mkdir(parents=True, exist_ok=True)
+    slug = name or ("fanout-map-" + re.sub(r"[^a-z0-9]+", "-", fanout["query"].lower()).strip("-")[:40] + "-" + today)
     payload = {"status": "ok", "query": fanout["query"], "page": page.get("source"), "date": today,
                "sources": fanout["sources"], "sources_text": describe_sources(fanout),
                "removed_branded": fanout["removed_branded"], "removed_duplicates": fanout["removed_duplicates"],
@@ -599,12 +590,26 @@ def main():
     files["json"].write_text(json.dumps(payload, indent=2), encoding="utf-8")
     files["md"].write_text(render_md(fanout, page, res, comp, cres, bat, today), encoding="utf-8")
     files["html"].write_text(render_html(fanout, page, res, comp, cres, bat, today), encoding="utf-8")
-    print(json.dumps({"status": "ok", "score": res["overall"], "grade": grade(res["overall"]),
-                      "covered": res["covered"], "partial": res["partial"], "missing": res["missing"],
-                      "competitor_score": cres["overall"] if cres else None,
-                      "files": {k: str(v) for k, v in files.items()}}))
-    return 0
+    return 0, {"status": "ok", "score": res["overall"], "grade": grade(res["overall"]),
+               "covered": res["covered"], "partial": res["partial"], "missing": res["missing"],
+               "competitor_score": cres["overall"] if cres else None,
+               "files": {k: str(v) for k, v in files.items()}, "payload": payload}
 
+
+def main():
+    ap = argparse.ArgumentParser(description="Score a page against a fan-out sub-query set.")
+    ap.add_argument("--fanout", required=True, help="fanout.json built by the agent")
+    ap.add_argument("--url"); ap.add_argument("--html"); ap.add_argument("--text")
+    ap.add_argument("--competitor-url"); ap.add_argument("--competitor-html"); ap.add_argument("--competitor-text")
+    ap.add_argument("--brand", help="comma-separated brand terms; sub-queries containing them are removed")
+    ap.add_argument("--covered", type=float, default=COVERED); ap.add_argument("--partial", type=float, default=PARTIAL)
+    ap.add_argument("--output-dir", required=True); ap.add_argument("--name")
+    a = ap.parse_args()
+    code, out = run(a.fanout, a.brand, a.url, a.html, a.text, a.competitor_url, a.competitor_html, a.competitor_text,
+                    a.covered, a.partial, a.output_dir, a.name)
+    out.pop("payload", None)
+    print(json.dumps(out))
+    return code
 
 if __name__ == "__main__":
     sys.exit(main())

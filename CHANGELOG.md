@@ -4,6 +4,24 @@ All notable changes to the SEO Audit Plugin are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.0] — 2026-11-03
+
+### Added
+
+- **Post-report fan-out step in `/full-audit`.** After the reports are ready the agent offers (never assumes) a content-gap check on pages with high impressions but low clicks: it asks for the Search Console Pages export (28 days by default, 3 months for low-traffic sites, 7 days only to check a recent change), shows the ranked candidates, lets the user choose pages and seed queries, runs the check and shares a roll-up.
+- **`scripts/gsc_opportunities.py`.** Reads a Search Console export (CSV or JSON, optional page+query export for seeds). Because CTR falls naturally with position, a low CTR alone mostly finds pages at position ~12; the script builds the site's own CTR-by-position curve (bands of at least 3 pages, never rising as position worsens), flags pages well below it, estimates `opportunity_clicks`, and separately lists striking-distance pages (average position 5 to 20). With too little data it says so and switches the low-CTR test off.
+- **`scripts/fanout_batch.py`.** Scores many pages against their fan-out sets and writes per-page reports plus one roll-up (JSON, Markdown, HTML): pages ranked by opportunity, biggest gaps, aspects that are weak across pages, common missing words, and pages that need a browser.
+- **Credit rules for batches.** A Serper key runs a sample of the top 5 pages and asks before more; a connected Semrush, Ahrefs or OpenRush (permission first, with the expected call count) runs every page the user submitted; with neither, the top 5 run on agent-generated sub-queries.
+
+### Changed
+
+- `/ai-citation-audit` reuses an existing `fanout.json` (8 to 20 sub-queries across aspects, real-search aspects first) instead of building a second set.
+- `/aeo-audit`, `/geo-audit` and `/seo-audit` suggest `/fanout-map` after the report when content gaps show; they never run it on their own.
+- `fanout_coverage.py` exposes a reusable `run()` function (command-line behaviour unchanged).
+
+### Contributors
+
+- Claude (Anthropic) co-authored these changes.
 ## [2.6.1] — 2026-11-03
 
 ### Changed

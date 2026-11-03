@@ -184,7 +184,7 @@ page that gave it something to attribute.
   exist after JavaScript runs, flag it — most citation crawlers do not execute JS
   (cross-check `crawlability-react.md`).
 - The target **root query** and its **fan-out set**: derive 8–20 long-tail
-  sub-queries using `query-fanout.md` (PAA scrape, GSC/Bing query export,
+  sub-queries. If a `fanout.json` from `/fanout-map` already exists for this topic (look in the audit output folder), reuse it: take the best 8-20 across its aspects, at least one per aspect and real-search aspects first. Otherwise use `query-fanout.md` (PAA scrape, GSC/Bing query export,
   comparative / faceted / temporal expansions).
 - A **benchmark set**: 3–5 pages currently cited in AI Overviews / Perplexity /
   ChatGPT for the same root query.
@@ -337,7 +337,7 @@ minutes, one page per run, until all 98 were done.
 - [ ] **AIC-4** Chunk density within ±20% of the benchmark median or higher.
 - [ ] **AIC-5** Every section > 250 words is broken by a descriptive sub-heading.
 - [ ] **AIC-6** Lists and tables used for enumerable content (each = a chunk).
-- [ ] **AIC-7** Fan-out sub-query set derived (8–20 queries) via `query-fanout.md`.
+- [ ] **AIC-7** Fan-out sub-query set derived (8–20 queries) from an existing `/fanout-map` fanout.json when available, else via `query-fanout.md`.
 - [ ] **AIC-8** Each priority sub-query has a chunk with ≥ 4-gram heading/first-
       sentence overlap.
 - [ ] **AIC-9** Each such chunk answers the query in its first sentence, in the

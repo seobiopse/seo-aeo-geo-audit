@@ -15,6 +15,8 @@ Run a **fan-out coverage map** (mode = `fanout`).
 7. Turn the gaps into the smallest set of recommended additions (heading, where it goes, answer-first opener, supporting detail). Flag sub-queries that deserve their own page. Offer the competitor candidates for battle mode and never copy a competitor's wording.
 8. Share the `.html` and `.md` files. Summarise: score and grade, weakest aspects, top three additions, data sources used, limits of the score. Ask whether to discard the key. Label the score as a plugin heuristic, not a search-engine metric.
 
+For many pages at once (for example pages with high impressions and low clicks from Search Console), follow "Batch mode" in `references/fanout-mapper.md`.
+
 If the in-app browser or fetch tool cannot reach the site, follow `references/browser-access.md` in the skill you loaded: tell the user what failed, switch to Claude in Chrome, and if the extension is not installed give the install steps and wait.
 
 $ARGUMENTS

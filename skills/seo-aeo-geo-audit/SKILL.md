@@ -5,7 +5,7 @@ license: MIT-Commons-Clause (see LICENSE; no resale without a commercial license
 compatibility: Works in any Agent Skills host (Claude, Claude Code, Codex/ChatGPT, Antigravity). Live-site checks need web or browser access; report script needs Python 3.8+.
 metadata:
   author: Girish Kumar G
-  version: "2.6.1"
+  version: "2.7.0"
   homepage: https://seobiopse.com
 ---
 
@@ -171,6 +171,9 @@ On `/full-audit` and on `/ai-citation-audit`, also emit an **AI Citation Readine
 ### Step 7: Summarize for the user
 3–6 sentences: what was audited, total findings by severity, **both scores (Quality + E-E-A-T)**, top 3 urgent issues by name, `computer://` links to both reports.
 
+### Step 8 (full mode, optional): fan-out content gaps after the report
+After the reports are shared, offer a fan-out content-gap check on the pages with high impressions but low clicks, using the user's Search Console data. Follow "Batch mode" in `references/fanout-mapper.md`. Never start it without the user's yes; credits and key rules are in that section.
+
 ## Severity definitions
 
 - **Critical** — Page is effectively invisible or broken (noindex shipped, robots blocking, 5xx, missing `<title>`, server content hidden from bots).
@@ -247,6 +250,8 @@ On `/full-audit` and on `/ai-citation-audit`, also emit an **AI Citation Readine
 - `scripts/generate_report.py`
 - `scripts/pagespeed.py` — PageSpeed Insights API v5 runner (optional; skipped when no key)
 - `scripts/fanout_coverage.py` — fan-out coverage scorer (stdlib only; no key needed)
+- `scripts/gsc_opportunities.py` — ranks pages from a Search Console export by CTR below the site's own CTR-by-position curve plus striking-distance pages, and picks seed queries (reads local files only)
+- `scripts/fanout_batch.py` — scores several pages against their fan-out sets and writes one roll-up report
 - `scripts/fanout_enrich.py` — optional real-search data for the fan-out set: Google People Also Ask and Related Searches via the user's Serper key, or pasted queries (key asked first; skipped cleanly without one; spends one credit when that is enough and caches results for 7 days)
 
 ### When to read which deep-dive

@@ -22,6 +22,14 @@ Use when the user says "full audit", "pre-launch check", "is this ready to ship"
 5. Save reports; share `computer://` links.
 6. Summarise: findings-by-severity rollups per pillar (SEO / AEO / GEO / AI Citation) + the top issues blocking ship.
 
+## After the report is ready: optional fan-out content-gap check
+
+Once both reports are generated and summarised, offer this. Never start it without a yes.
+
+1. Ask: "Want a fan-out content-gap check on your pages with high impressions but low clicks? It needs your Search Console data."
+2. If yes, follow "Batch mode: pages from Search Console" in `references/fanout-mapper.md`: ask for the Search Console Pages export (28 days recommended; 3 months for low-traffic sites), run `scripts/gsc_opportunities.py` to rank pages by CTR below the site's own CTR-by-position curve plus striking-distance pages, and let the user choose pages (default the top 5) and confirm seed queries.
+3. Credit rules: with a Serper key, run a sample of the top 5 pages and ask before running more. With a connected Semrush, Ahrefs or OpenRush (permission first, with the expected call count), run all the pages the user submitted. With neither, run the top 5 with agent-generated sub-queries and offer the rest.
+4. Run `scripts/fanout_batch.py`, share the roll-up and per-page reports, and explain the findings and the limits of the score. If `fanout.json` files were created, the AI citation pass can reuse them.
 If the in-app browser or fetch tool cannot reach the site, follow `references/browser-access.md` in the skill you loaded: tell the user what failed, switch to Claude in Chrome, and if the extension is not installed give the install steps and wait.
 
 $ARGUMENTS

@@ -20,6 +20,8 @@ Run a **GEO audit** (mode = `geo`).
 5. Save reports; share `computer://` links.
 6. Summarise top issues.
 
+After the report, if it shows content gaps for a target topic, suggest `/fanout-map` for a sub-query coverage check. Do not run it unless the user agrees.
+
 If the in-app browser or fetch tool cannot reach the site, follow `references/browser-access.md` in the skill you loaded: tell the user what failed, switch to Claude in Chrome, and if the extension is not installed give the install steps and wait.
 
 $ARGUMENTS
