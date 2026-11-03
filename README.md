@@ -18,7 +18,7 @@
 | **Output** | Markdown (for tickets) + interactive HTML SEO audit report with copy-ready fixes |
 | **Platforms** | Claude, Claude Code, Codex/ChatGPT agents, Google Antigravity, Vertex AI / Gems / Custom GPTs (prompt mode) |
 | **Cost** | Free to use and modify. Resale needs a commercial license (Commons Clause) |
-| **Author** | [Girish Kumar G](https://seobiopse.com), SEOBiopse |
+| **Author** | [Girish Kumar G](https://girishkumarg.com/), [SEOBiopse](https://seobiopse.com/) |
 
 ## What is an AI SEO audit, and why audit for AEO and GEO?
 
