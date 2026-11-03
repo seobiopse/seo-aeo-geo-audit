@@ -2,6 +2,8 @@
 
 > **Calibration (checked 2026-11-03):** Google says its AI features (AI Overviews, AI Mode) need no special markup, `llms.txt`, AI text files, content "chunking" or rewriting for AI. Eligibility is normal indexing plus snippet eligibility. The methods in this file are heuristics for retrieval-readiness in non-Google systems and for general content quality. Do not present them as Google requirements, and do not promise citations. See `google-guidance-alignment.md`.
 
+To measure a page against a fan-out set, use the Fan-Out Mapper (`fanout-mapper.md`, `scripts/fanout_coverage.py`, `/fanout-map`).
+
 This reference guide details the concept of **Query Fan-Out** in search engines and AI retrieval architectures, and defines the auditing guidelines to ensure a site's content satisfies fanned-out query networks.
 
 ---

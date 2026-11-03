@@ -1,11 +1,11 @@
 ---
 name: seo-aeo-geo-audit
-description: SEO audit skill for AI agents: technical SEO, answer engine optimization (AEO), generative engine optimization (GEO) and AI search visibility audits for any website, on any stack (React, Next.js, WordPress, Shopify, static, Angular, PHP, Wix, Webflow). Checks crawlability, indexation, schema, Core Web Vitals, robots.txt, sitemap, llms.txt, Google AI Overviews and ChatGPT/Perplexity/Claude/Gemini citation readiness, plus VDS visibility-to-demand mapping. Outputs a ticket-ready Markdown SEO audit report and interactive HTML report with broken-vs-fixed code and 0-100 scores. Use when asked to audit SEO, run a technical SEO audit, check a page before launch, or optimize for AI Overviews, ChatGPT SEO or AI citations.
+description: SEO audit skill for AI agents: technical SEO, answer engine optimization (AEO), generative engine optimization (GEO) and AI search visibility audits for any website, on any stack (React, Next.js, WordPress, Shopify, static, Angular, PHP, Wix, Webflow). Checks crawlability, indexation, schema, Core Web Vitals, robots.txt, sitemap, llms.txt, Google AI Overviews and ChatGPT/Perplexity/Claude/Gemini citation readiness, plus VDS visibility-to-demand mapping. Outputs a ticket-ready Markdown SEO audit report and interactive HTML report with broken-vs-fixed code and 0-100 scores. Also maps a page's coverage of related sub-queries (fan-out) with a competitor battle mode. Use when asked to audit SEO, run a technical SEO audit, check a page before launch, or optimize for AI Overviews, ChatGPT SEO or AI citations.
 license: MIT-Commons-Clause (see LICENSE; no resale without a commercial license)
 compatibility: Works in any Agent Skills host (Claude, Claude Code, Codex/ChatGPT, Antigravity). Live-site checks need web or browser access; report script needs Python 3.8+.
 metadata:
   author: Girish Kumar G
-  version: "2.4.0"
+  version: "2.5.0"
   homepage: https://seobiopse.com
 ---
 
@@ -35,7 +35,7 @@ Trigger on any of:
 
 If the request touches SEO/AEO/GEO even loosely, prefer this skill over answering from general knowledge. The skill produces a consistent, standardized, engineer-actionable report.
 
-## The eight modes
+## The nine modes
 
 | Mode | When to use | Reference | Claude Code command (optional) |
 |---|---|---|---|
@@ -47,6 +47,9 @@ If the request touches SEO/AEO/GEO even loosely, prefer this skill over answerin
 | **agentic-browsing** | Agentic Browsing (SXO / AXO) readiness | `references/agentic-browsing.md` | `/agentic-browsing-audit` |
 | **full** | All pillars in sequence (pre-ship sign-off) | All reference guides | `/full-audit` |
 | **crawl-check** | Scoped to React/Next.js/SPA rendering — what each crawler actually sees | `references/crawlability-react.md` | `/crawl-check` |
+| **fanout** | Map how well a page covers the related sub-queries behind a topic, find content gaps, optionally compare with a competitor | `references/fanout-mapper.md` | `/fanout-map` |
+
+`fanout` is a lightweight mode: skip the archetype, stack and scoring steps and follow `references/fanout-mapper.md` end to end.
 
 For a technical-only audit (crawl, indexation, redirects, sitemaps, canonicals, JavaScript/Next.js rendering, tracking-tag coverage, optional PageSpeed), the sibling `technical-seo-audit` skill (`/technical-seo-audit`) is the focused option. This skill remains the choice for content, AEO, GEO, AI citation and VDS.
 
@@ -233,6 +236,7 @@ On `/full-audit` and on `/ai-citation-audit`, also emit an **AI Citation Readine
 - `references/tracking-validation.md` — GA4, GTM, Meta Pixel, Bing UET, LinkedIn, TikTok, consent mode
 - `references/robots-llms-txt-playbook.md` — robots.txt precedence, per-bot AI policies, llms.txt spec
 - `references/sitemap-playbook.md` — per-type sitemaps, correct changefreq/priority/lastmod, dynamic sitemap patterns
+- `references/fanout-mapper.md` — Fan-Out Mapper: build a sub-query set, score a page's coverage with `scripts/fanout_coverage.py`, find gaps, battle mode vs a competitor
 - `references/query-fanout.md` — Query Fan-Out optimization, semantic expansions, entity clustering, and topical authority mapping
 - `references/rag-optimization.md` — RAG (Retrieval-Augmented Generation) search engines, chunk-friendly formatting, and retrieval prompt-engineering optimization
 - `references/rag-to-memory.md` — Stateful AI Memory systems, brand knowledge graphs, and memory-synthesizable architecture structures
@@ -242,6 +246,7 @@ On `/full-audit` and on `/ai-citation-audit`, also emit an **AI Citation Readine
 - `assets/report-template.html`
 - `scripts/generate_report.py`
 - `scripts/pagespeed.py` — PageSpeed Insights API v5 runner (optional; skipped when no key)
+- `scripts/fanout_coverage.py` — fan-out coverage scorer (stdlib only; no key needed)
 
 ### When to read which deep-dive
 

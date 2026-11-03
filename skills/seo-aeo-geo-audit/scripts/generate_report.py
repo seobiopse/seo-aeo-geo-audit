@@ -290,6 +290,21 @@ def render_markdown(data):
                 out.append(f"- {imp}")
             out.append("")
 
+    fo = (data.get("scores") or {}).get("fanout")
+    if fo:
+        out.append("### Fan-Out Coverage")
+        out.append("")
+        out.append(f"Coverage score: **{fo.get('overall', '—')}%** ({fo.get('grade', '')}). Plugin heuristic, not a search-engine metric.")
+        out.append("")
+        out.append("| Aspect | Score | Detail |")
+        out.append("|---|---|---|")
+        for b in fo.get("breakdown") or []:
+            out.append(f"| {b.get('label', '')} | {b.get('value', '—')}% | {b.get('note', '') or ''} |")
+        out.append("")
+        for imp in fo.get("top_improvements") or []:
+            out.append(f"- {imp}")
+        out.append("")
+
     if data.get("overview"):
         out.append("### Overview")
         out.append("")
@@ -633,6 +648,8 @@ def render_scores_block(data):
         parts.append(render_score_grader("AI Citation Readiness", {**scores["ai_citation"], "name": "AI Citation Readiness"}, pillar_field="breakdown"))
     if "pagespeed" in scores:
         parts.append(render_score_grader("PageSpeed Insights", {**scores["pagespeed"], "name": "PageSpeed Insights"}, pillar_field="breakdown"))
+    if "fanout" in scores:
+        parts.append(render_score_grader("Fan-Out Coverage", {**scores["fanout"], "name": "Fan-Out Coverage"}, pillar_field="breakdown"))
     if not parts:
         return ""
     return f"""

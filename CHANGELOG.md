@@ -4,6 +4,18 @@ All notable changes to the SEO Audit Plugin are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] — 2026-11-03
+
+### Added
+
+- **Fan-Out Mapper** (`/fanout-map`, mode `fanout`). The agent builds a sub-query set (60 to 150 queries in 8 to 15 aspects) around a topic; `scripts/fanout_coverage.py` scores a page against it and writes JSON, Markdown and an HTML report with a score ring, aspect bars, a sub-query heat map, gaps (extend a named section or add a new one), missing words, every sub-query with its best passage, and an optional competitor **battle mode** ("they cover, you don't" / "you cover, they don't").
+- Scoring is passage-level (heading plus 1 to 3 passages), uses weighted word overlap so the shared topic word counts for little, light English stemming, brand-term filtering on word boundaries, and de-duplication. It accepts a URL, saved HTML or pasted text, and exits with code 2 when a page needs a real browser (then `references/browser-access.md` applies).
+- New `references/fanout-mapper.md` with the method, aspect families, rules and honest limits. The score is labelled as a plugin heuristic, not a search-engine metric.
+- `generate_report.py` renders `scores.fanout` as a "Fan-Out Coverage" grader (HTML) and table (Markdown).
+
+### Contributors
+
+- Claude (Anthropic) co-authored the Fan-Out Mapper.
 ## [2.4.0] — 2026-11-03
 
 ### Changed
