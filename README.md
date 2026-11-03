@@ -1,9 +1,9 @@
 # SEO Audit Skill for AI Agents: Technical SEO + AEO + GEO + AI Search Optimization
 
-**v2.3.2** — a free, open Agent Skill that runs a complete search-engine-ready audit on any website: **technical SEO audit**, **answer engine optimization (AEO)**, **generative engine optimization (GEO)** and **AI citation readiness** (ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews, Bing Copilot). It works in Claude, Claude Code, Codex/ChatGPT agents and Google Antigravity, and outputs a ticket-ready Markdown **SEO audit report** plus an interactive HTML report with before/after code.
+**v2.4.0** — a free, open Agent Skill that runs a complete search-engine-ready audit on any website: **technical SEO audit**, **answer engine optimization (AEO)**, **generative engine optimization (GEO)** and **AI citation readiness** (ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews, Bing Copilot). It works in Claude, Claude Code, Codex/ChatGPT agents and Google Antigravity, and outputs a ticket-ready Markdown **SEO audit report** plus an interactive HTML report with before/after code.
 
 [![License: MIT + Commons Clause](https://img.shields.io/badge/License-MIT%20%2B%20Commons%20Clause-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.3.2-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.4.0-blue.svg)](CHANGELOG.md)
 [![Agent Skills](https://img.shields.io/badge/format-Agent%20Skills-navy.svg)](https://agentskills.io/specification)
 
 ## Quick facts
@@ -283,6 +283,7 @@ It is free to use, modify and self-host. You may not resell the software or offe
 
 See [CHANGELOG.md](CHANGELOG.md) for the full history. Highlights:
 
+- **v2.4.0 (2026-11-03)** — PageSpeed key prompt is now a blocking first-message question in `/seo-audit`, `/full-audit` and `/technical-seo-audit` (never skipped silently, never "not available"), and the technical skill bundles its own PageSpeed runner. New live-site access fallback for every audit: if the built-in browser or fetch tool cannot reach the site, the agent switches to Claude in Chrome and, if the extension is missing, gives install steps. The probe flags blocked targets instead of implying the site is down.
 - **v2.3.2 (2026-11-03)** — Output-facing wording aligned with Google: the HTML report now labels the scores as plugin heuristics (E-E-A-T is not a Google ranking factor), and the README and `/aeo-audit` command no longer present FAQ/HowTo markup or `llms.txt` as Google features.
 - **v2.3.1 (2026-11-03)** — Completed the Google `/appearance` review (all pages read), added the migrated crawling docs and the full 2025-2026 Search Central changelog. New: crawler and fetcher categories, five more retired structured data types, AMP changes, back button hijacking spam policy, JavaScript canonical/noindex wording, paywall metering guidance.
 - **v2.3.0 (2026-11-03)** — Google guidance alignment. Re-checked about 140 Google Search Central pages and corrected outdated guidance: FAQ, HowTo and sitelinks-search-box markup are no longer Google features, `llms.txt` and "AI optimization" are not used by Google Search, E-E-A-T is not a ranking factor, title and description lengths are display heuristics, `changefreq`/`priority` are ignored, and robots.txt, sitemap, redirect, JavaScript and Core Web Vitals facts were updated. New `google-guidance-alignment.md` records what Google says, with sources.

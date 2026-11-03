@@ -10,4 +10,6 @@ When the user asks for an SEO, AEO, GEO, AI-citation or VDS audit, a pre-ship pa
 
 For a technical-only request (technical SEO audit, indexation or crawl problems, JavaScript/Next.js SEO, redirects, sitemaps, canonicals, tracking-tag coverage), read `skills/technical-seo-audit/SKILL.md` instead and follow it. It uses `skills/technical-seo-audit/scripts/tech_probe.py` for sampled page checks and, when present, the first skill's report generator.
 
+For `seo`, `full` and `technical` audits of a live public URL, ask the user for a PageSpeed API key in your first message (they can say "skip"; never skip on your own). If the browser or fetch tool cannot reach the site, follow `references/browser-access.md` in the skill you are using: switch to Claude in Chrome, or give the user the install steps.
+
 Works with any agent that reads `AGENTS.md` or Agent Skills (`SKILL.md`). See `INSTALL.md` for per-platform setup.

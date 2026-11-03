@@ -11,7 +11,7 @@ Run an **SEO audit** (mode = `seo`).
 3. Ask the user for the target if not in `$ARGUMENTS`: URL or pasted code.
 4. Follow the workflow in `SKILL.md`:
    - Gather rendered HTML, headers, robots.txt, sitemap, schema JSON-LD, headings, etc.
-   - For a live public URL, ask for a PageSpeed API key (the user may skip it) and follow `references/pagespeed.md`; feed the results into section 9 (Performance & Core Web Vitals).
+   - For a live public URL, ask for the PageSpeed API key in your FIRST message, together with the target, and wait for the answer (the user may say "skip"; never skip on your own and never say PageSpeed is "not available"). Follow `references/pagespeed.md`; feed the results into section 9 (Performance & Core Web Vitals).
    - Work through `references/seo-audit.md`.
    - If React / Next.js, also read `references/crawlability-react.md`.
    - If the audit involves job pages, also read `references/pseo-jobs-playbook.md`.
@@ -19,5 +19,7 @@ Run an **SEO audit** (mode = `seo`).
    - Generate both reports via `scripts/generate_report.py`.
 5. Save reports to the user's workspace folder; share `computer://` links.
 6. Summarise: what was audited, findings by severity, top 3 issues by name.
+
+If the in-app browser or fetch tool cannot reach the site, follow `references/browser-access.md` in the skill you loaded: tell the user what failed, switch to Claude in Chrome, and if the extension is not installed give the install steps and wait.
 
 $ARGUMENTS

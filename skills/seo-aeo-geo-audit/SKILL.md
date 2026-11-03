@@ -5,7 +5,7 @@ license: MIT-Commons-Clause (see LICENSE; no resale without a commercial license
 compatibility: Works in any Agent Skills host (Claude, Claude Code, Codex/ChatGPT, Antigravity). Live-site checks need web or browser access; report script needs Python 3.8+.
 metadata:
   author: Girish Kumar G
-  version: "2.3.2"
+  version: "2.4.0"
   homepage: https://seobiopse.com
 ---
 
@@ -54,7 +54,7 @@ For a technical-only audit (crawl, indexation, redirects, sitemaps, canonicals, 
 
 ### Method A: Live URL via Chrome
 Use when the page is reachable (including localhost / staging / prod).
-- Navigate via Chrome browser tool.
+- Navigate via the browser tool. If it cannot reach the site (error, 403, bot challenge, empty page), follow `references/browser-access.md`: say what failed, switch to Claude in Chrome, and if the extension is missing give the user the install steps and wait.
 - Capture rendered HTML, raw response headers (via `read_network_requests`), Core Web Vitals, full-page screenshot.
 - Use `javascript_tool` to extract: `document.title`, meta tags, canonical, hreflang, robots, schema JSON-LD, headings tree, alt-text coverage, internal link count.
 - Use `get_page_text` for rendered text (for AEO/GEO analysis).
@@ -93,10 +93,10 @@ Not every domain has the same shape. A staffing subdomain has `JobPosting`. A bo
 See `references/domain-discovery.md` Section 3 for the per-archetype audit-scope mapping (10 common archetypes covered: Marketing, Blog, E-commerce, SaaS, Job board, Staffing services, Course platform, Documentation, Multi-product conglomerate, Personal site).
 
 ### Step 1: Clarify scope
-If mode or input method isn't specified, ask (one short question, using your host's question tool if it has one).
+If mode or input method isn't specified, ask (one short question, using your host's question tool if it has one). For `seo` and `full` audits of a live public URL, put the PageSpeed key question (Step 1b) in the same first message and wait for the answer.
 
-### Step 1b: PageSpeed Insights (optional, needs the user's API key)
-For live public URLs in `seo` and `full` modes (not `crawl-check`, `aeo`, `geo` or code-only audits), ask the user for a PageSpeed API key (one short question; they can say "skip"). No key = skip the PageSpeed test and note it in the overview; never invent CWV numbers. Treat the key as a session-only credential: never write it to files, reports or memory, pass it via stdin/env var, and ask the user at the end whether to discard it. Read `references/pagespeed.md` first, then run `scripts/pagespeed.py`.
+### Step 1b: PageSpeed Insights key (the question is BLOCKING; the test is optional)
+For live public URLs in `seo` and `full` modes (not `crawl-check`, `aeo`, `geo` or code-only audits), ask the user for a PageSpeed API key in your FIRST message and wait for the answer before other steps (one short question; they can say "skip"). Never skip on your own and never say PageSpeed is "not available"; only the user's "skip", or a target that is not publicly reachable, ends the step. If you cannot run Python, use the `curl` fallback in `references/pagespeed.md`. Skipped = note it in the overview and mark Core Web Vitals items `not measured`; never invent CWV numbers. Treat the key as a session-only credential: never write it to files, reports or memory, pass it via stdin/env var, and ask the user at the end whether to discard it. Read `references/pagespeed.md` first, then run `scripts/pagespeed.py`.
 
 ### Step 2: Detect stack and load the relevant reference file(s)
 `Read` the reference(s) that match BOTH (a) the mode the user picked AND (b) the archetype you detected in Step 0. For `full` mode, read `seo-audit.md`, `aeo.md`, `geo.md`, AND `ai-citation-audit.md` PLUS archetype-appropriate deep-dives. Always read `issue-framework.md` before writing findings.
@@ -200,6 +200,7 @@ On `/full-audit` and on `/ai-citation-audit`, also emit an **AI Citation Readine
 - `references/ai-citation-audit.md` — quantitative AI citation audit: Bing indexation, chunk density, chunk relevance (n-gram overlap + embedding similarity), extractable units per chunk, content-refresh playbook
 - `references/vds-audit.md` — VDS (Visibility-to-Demand System) audit checklist mapping crawl presence to organic conversions
 - `references/agentic-browsing.md` — Agentic Browsing (SXO / AXO) checklist
+- `references/browser-access.md` — what to do when the site cannot be reached: Claude in Chrome fallback and install steps
 - `references/pagespeed.md` — optional PageSpeed Insights test: asking for the API key, handling it safely, running `scripts/pagespeed.py`, mapping results to findings
 - `references/signature.md` — VDS & SEO audit mandatory signature block guide
 - `references/tools-to-use.md` — browser automation, MCP tools, public URLs, and output templates guide

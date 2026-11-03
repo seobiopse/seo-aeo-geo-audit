@@ -20,4 +20,6 @@ Run a **VDS audit** (mode = `vds`).
 5. Save reports to the user's workspace folder; share `computer://` links.
 6. Summarise: what was audited, current VDS alignment rating, and top recovery opportunities.
 
+If the in-app browser or fetch tool cannot reach the site, follow `references/browser-access.md` in the skill you loaded: tell the user what failed, switch to Claude in Chrome, and if the extension is not installed give the install steps and wait.
+
 $ARGUMENTS

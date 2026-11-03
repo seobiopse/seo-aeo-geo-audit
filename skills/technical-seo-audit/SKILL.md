@@ -2,10 +2,10 @@
 name: technical-seo-audit
 description: Dedicated technical SEO audit for any website or codebase. Checks crawl and indexation controls, status codes and redirects, sitemaps, canonicals, document head, structured-data validity, JavaScript rendering (raw vs rendered HTML, Next.js App and Pages Router), performance (optional PageSpeed Insights), security hygiene, stack detection (React, Next.js, Laravel, WordPress, Shopify and more) and tracking-tag coverage across pages (GTM, GA4, Meta, Ads, UET). Samples pages from the sitemap with a probe script, marks anything untested as not measured, and outputs a ticket-ready Markdown and HTML report. Use for technical SEO audits, pre-launch checks, JavaScript SEO, Next.js SEO, indexation problems and tracking-tag checks. Not for content, E-E-A-T, AEO or GEO.
 license: MIT-Commons-Clause (see LICENSE; no resale without a commercial license)
-compatibility: Works in any Agent Skills host (Claude, Claude Code, Codex/ChatGPT, Antigravity). Needs web or browser access for live checks and Python 3.8+ for the probe script. Best with the sibling seo-aeo-geo-audit skill installed (stack profiles, report generator, PageSpeed runner); works without it.
+compatibility: Works in any Agent Skills host (Claude, Claude Code, Codex/ChatGPT, Antigravity). Needs web or browser access for live checks and Python 3.8+ for the probe script. Bundles its own PageSpeed runner and browser-access fallback; the sibling seo-aeo-geo-audit skill adds stack profiles and the report generator when installed.
 metadata:
   author: Girish Kumar G
-  version: "2.3.2"
+  version: "2.4.0"
   homepage: https://seobiopse.com
 ---
 
@@ -21,6 +21,8 @@ Engineering-only scope: what can be fixed in code, config or infrastructure so t
 4. **Only audit what the user is authorised to test.** One request per page, small sample, no crawling beyond the target host.
 5. **Credentials stay out of files.** See the PageSpeed step.
 6. **Calibrate claims about Google.** Limits, retired features and thresholds were checked against Google Search Central on 2026-11-03. When the sibling skill is installed, read `../seo-aeo-geo-audit/references/google-guidance-alignment.md` before attributing anything to Google. Features Google no longer shows (FAQ and HowTo rich results, sitelinks search box) and optional files Google does not use (`llms.txt`) are `Info`, never defects. Google says heading order and count do not affect Search, so heading findings are `Low`.
+7. **Ask before you skip.** The PageSpeed question in Step 1 is mandatory for any live public URL. Never decide to skip PageSpeed yourself and never tell the user it is "not available". This skill bundles the runner. The only valid reasons to skip are the user saying "skip" or a target that is not publicly reachable.
+8. **Live-site access.** If the built-in browser or fetch tool cannot reach the site, follow `references/browser-access.md`: say what failed, use Claude in Chrome, and if the extension is missing give the user the install steps and wait.
 
 ## Inputs
 
@@ -29,8 +31,12 @@ Engineering-only scope: what can be fixed in code, config or infrastructure so t
 
 ## Workflow
 
-### Step 1: Scope
-Get the target. Ask one short question only if it is unclear whether it is a single page or the whole site. Note the environment (production, staging, localhost, preview).
+### Step 1: Scope and PageSpeed key (blocking)
+In your FIRST message, get the target and ask for the PageSpeed key together, then wait for the answer before Step 2:
+
+> Which URL (or pasted code) should I audit? Also, want a PageSpeed Insights test (Lighthouse scores + real-user Core Web Vitals)? Paste a PageSpeed API key, or say "skip".
+
+Ask the single/whole-site question only if it is unclear. Note the environment (production, staging, localhost, preview). Skip the key question only if the user already gave a key or said "skip", or the target is not publicly reachable. Details and the key-safety rules are in `references/pagespeed.md`.
 
 ### Step 2: Probe (live sites)
 Run:
@@ -39,7 +45,7 @@ Run:
 python3 scripts/tech_probe.py --url <target> --sample 15 --output probe.json
 ```
 
-Use `--urls-file` to add templates the sitemap omits (checkout, thank-you, 404). The probe returns framework signals, per-page raw-HTML facts, robots.txt and sitemap sanity, tracking coverage, and rule-based `hints` that cite checklist ids. Treat `hints` as leads: confirm each with `curl` or a browser before it becomes a finding. If the probe cannot run (no Python, blocked), do the same checks by hand with `curl` and the browser tools.
+Use `--urls-file` to add templates the sitemap omits (checkout, thank-you, 404). The probe returns framework signals, per-page raw-HTML facts, robots.txt and sitemap sanity, tracking coverage, and rule-based `hints` that cite checklist ids. Treat `hints` as leads: confirm each with `curl` or a browser before it becomes a finding. If the probe cannot run (no Python, blocked), do the same checks by hand with `curl` and the browser tools. If the target is blocked or unreachable (403, bot challenge, empty page, tool error), do not conclude anything yet: follow `references/browser-access.md` (use Claude in Chrome, or give the install steps if the extension is missing).
 
 ### Step 3: Stack and architecture (TECH-07)
 Name the stack from the probe's `frameworks_seen` and headers, with evidence and confidence. Never infer a stack from URL shapes alone. If the sibling skill is installed, read the matching profile from `../seo-aeo-geo-audit/references/` (React/Next.js, WordPress, Shopify, static, Angular, PHP/Laravel, Wix/Webflow) and add its stack-specific checks.
@@ -50,13 +56,12 @@ Read `references/javascript-rendering.md`. Compare raw HTML (probe/`curl`, also 
 ### Step 5: Tracking tags (TECH-11)
 Read `references/tracking-tags.md`. Use the probe's `tracking_coverage` for tags present in raw HTML, then verify in the browser (Network panel, console snippets, route changes, consent) because tag managers inject tags the probe cannot see.
 
-### Step 6: Performance, with an optional PageSpeed key (TECH-09)
-Ask once:
+### Step 6: Performance with PageSpeed (TECH-09)
+Use the answer from Step 1. Do not ask again, and do not skip on your own.
 
-> Want a PageSpeed Insights test (Lighthouse scores + real-user Core Web Vitals)? Paste a PageSpeed API key, or say "skip".
-
-- No key: skip. Mark TECH-09.1 `not measured` and say so in the report. Do not substitute remembered numbers.
-- Key given: handle it as a session-only credential. Never write it to a file, report, memory or git. Pass it by stdin or an environment variable scoped to the command, and ask the user at the end whether to discard it. Full rules and commands are in `../seo-aeo-geo-audit/references/pagespeed.md`. Run `../seo-aeo-geo-audit/scripts/pagespeed.py`. If the sibling skill is not installed, skip PageSpeed and mark TECH-09.1 `not measured`.
+- Key given: run `scripts/pagespeed.py` (bundled in this skill; commands and fallbacks in `references/pagespeed.md`). Handle the key as a session-only credential: never write it to a file, report, memory or git, pass it by stdin or an environment variable scoped to the command, and at the end ask the user whether to discard it. If Python cannot run, use the `curl` fallback in `references/pagespeed.md`.
+- User said "skip" (or the target is not publicly reachable): mark TECH-09.1 `not measured` and say why in the report. Do not substitute remembered numbers.
+- If the question was never asked, ask it now before Step 7.
 
 ### Step 7: Work the checklist
 Read `references/technical-checklist.md`. Go through TECH-01 to TECH-13 in order, deciding pass / warn / fail / not measured for each item, citing the evidence. Skip TECH-12 if the site is single-language. Skip items that do not apply to the stack and say which.
@@ -100,4 +105,6 @@ Fallback without the generator: write `technical-seo-audit-<date>.md` with these
 - `references/javascript-rendering.md`: raw versus rendered method, framework anti-patterns, Next.js App/Pages Router checks
 - `references/tracking-tags.md`: tag coverage method, browser verification, how to judge results
 - `scripts/tech_probe.py`: sampled raw-HTML probe (stdlib only)
-- Sibling skill `seo-aeo-geo-audit` (optional): `references/google-guidance-alignment.md`, stack profiles, `references/issue-framework.md`, `scripts/generate_report.py`, `pagespeed.py`, `pagespeed.md`, `tracking-validation.md`
+- `scripts/pagespeed.py` and `references/pagespeed.md`: PageSpeed Insights runner and key handling (identical copies ship in `seo-aeo-geo-audit`)
+- `references/browser-access.md`: what to do when the site cannot be reached (Claude in Chrome fallback and install steps)
+- Sibling skill `seo-aeo-geo-audit` (optional): `references/google-guidance-alignment.md`, stack profiles, `references/issue-framework.md`, `scripts/generate_report.py`, `tracking-validation.md`

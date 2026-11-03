@@ -30,6 +30,8 @@ Run a **fast crawlability check** — scoped subset of `/seo-audit` that ONLY ru
 - `/crawl-check` — single component change, routing change, testing SSR vs CSR, quick sanity check during dev
 - `/seo-audit` — before merging a PR, before shipping a feature, as part of a real audit
 
+If the in-app browser or fetch tool cannot reach the site, follow `references/browser-access.md` in the skill you loaded: tell the user what failed, switch to Claude in Chrome, and if the extension is not installed give the install steps and wait.
+
 ## Arguments
 
 $ARGUMENTS

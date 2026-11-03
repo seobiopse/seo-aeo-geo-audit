@@ -4,6 +4,22 @@ All notable changes to the SEO Audit Plugin are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] — 2026-11-03
+
+### Changed
+
+- **PageSpeed key is a blocking question.** `/seo-audit`, `/full-audit`, `/technical-seo-audit` and both skills now ask for the key in the first message together with the target, and wait. The agent may not skip on its own or say PageSpeed is "not available"; only the user's "skip" or a non-public target ends the step. Previously the technical skill asked late (Step 6) and told the agent to skip when the sibling skill was missing.
+- **`technical-seo-audit` bundles the PageSpeed runner** (`scripts/pagespeed.py`, `references/pagespeed.md`), so it no longer depends on the sibling folder. Added a `curl` fallback for hosts that cannot run Python. `tools/package.sh` refuses to build if the shared copies drift apart.
+
+### Added
+
+- **Live-site access fallback for all audits** (`references/browser-access.md` in both skills, referenced by every command, `AGENTS.md` and `docs/CHAT-PROMPT.md`): when the built-in browser or fetch tool fails (403, bot challenge, empty page, tool error, login wall), the agent says what failed, switches to Claude in Chrome, and if the extension is not installed gives the user the install steps and waits. Alternatives (paste source/headers, run the probe locally) are offered if installing is not possible.
+- `tech_probe.py` returns `access_problem` and an `access-blocked` hint when the target itself cannot be read (401, 403, 429, 503 or a network error), warning against concluding the site is down.
+
+### Contributors
+
+- Claude (Anthropic) co-authored these changes.
+
 ## [2.3.2] — 2026-11-03
 
 ### Changed

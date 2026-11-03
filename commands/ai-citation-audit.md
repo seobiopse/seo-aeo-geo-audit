@@ -27,4 +27,6 @@ Run an **AI Citation Audit** (mode = `ai-citation`).
 6. Summarise: indexation gap, chunk-density band vs benchmark, % chunks with an
    extractable unit, and the top 3 fixes.
 
+If the in-app browser or fetch tool cannot reach the site, follow `references/browser-access.md` in the skill you loaded: tell the user what failed, switch to Claude in Chrome, and if the extension is not installed give the install steps and wait.
+
 $ARGUMENTS

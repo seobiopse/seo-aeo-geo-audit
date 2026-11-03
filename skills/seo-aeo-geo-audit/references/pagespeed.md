@@ -2,9 +2,15 @@
 
 Adds Lighthouse lab data and Chrome UX Report (CrUX) field data from Google's PageSpeed Insights API v5 (https://developers.google.com/speed/docs/insights/v5/get-started). It requires a user-provided API key. **No key means no PageSpeed test: skip it, say so in the report overview, and continue the audit.**
 
-## 1. Ask for the key
+## 1. Ask for the key (blocking, mandatory)
 
-Ask once, near Step 1 (scope), in one short message:
+Ask in your FIRST message, together with the scope or target question, and wait for the answer before running any other step. The question is mandatory for every `seo`, `full` and `technical` audit of a live public URL.
+
+- Never decide to skip PageSpeed yourself, and never tell the user it is "not available". The only valid reasons to skip are the user saying "skip" (or giving no key after being asked) and a target that is not publicly reachable (localhost, staging behind auth, code-only audit).
+- If the user already gave a key or said "skip" in the request, do not ask again.
+- If the host cannot wait for an answer (non-interactive run), put the question at the top of your first message, finish the other steps, and run PageSpeed as soon as a key arrives.
+
+The question:
 
 > Want a PageSpeed Insights test (Lighthouse scores + real-user Core Web Vitals)? If so, paste a PageSpeed API key. If you'd rather skip it, say "skip" and I'll continue without it.
 
@@ -46,6 +52,16 @@ python3 scripts/pagespeed.py --url <page-url> --key-stdin --strategy both --outp
 - One representative page per template (the API runs a real Lighthouse test and takes 10–60 s per strategy). Run mobile and desktop (`both`, default). Mobile is the headline number.
 - Exit codes: 0 = ok or skipped, 1 = every strategy failed. If one strategy fails, `errors` lists it and the other is still returned. On `429` or quota errors, report it and carry on without PageSpeed data; don't retry in a loop.
 - Test the public URL. PSI can't reach localhost or staging behind auth; for those, skip it and say why.
+
+### If Python cannot run
+
+If the host has no code execution, call the API with a fetch tool or `curl`, passing the key from an environment variable (never typed into a file):
+
+```bash
+curl -s "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=<URL-ENCODED-PAGE>&strategy=mobile&category=performance&category=seo&category=accessibility&category=best-practices&key=$PAGESPEED_API_KEY"
+```
+
+Read `lighthouseResult.categories.<name>.score` (multiply by 100), `lighthouseResult.audits` for FCP/LCP/TBT/CLS/Speed Index, and `loadingExperience` / `originLoadingExperience` for field data. Repeat with `strategy=desktop`. The same key rules apply: do not store it or echo it back.
 
 ## 4. Read the output
 

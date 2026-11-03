@@ -11,7 +11,7 @@ Two skill folders, `skills/seo-aeo-geo-audit/` (full suite) and `skills/technica
 | **Any agent via CLI** | `npx skills add seobiopse/seo-aeo-geo-audit` installs into `~/.agents/skills`, which Codex and Antigravity read. |
 | **Vertex AI, Gemini Gems, ChatGPT Custom GPTs / Projects** (no skill folders) | Use `docs/CHAT-PROMPT.md` as the system instruction and upload the files in `skills/seo-aeo-geo-audit/references/` as knowledge. You lose the automatic report script; the model writes the report in Markdown directly. |
 
-Install both folders together. `technical-seo-audit` works alone, but borrows the stack profiles, report generator and PageSpeed runner from `seo-aeo-geo-audit` when it sits beside it. `tools/package.sh` builds one zip per skill. The Claude Code plugin install includes both, plus the `/technical-seo-audit` command.
+Install both folders together. `technical-seo-audit` works alone (it bundles its own PageSpeed runner and browser-access fallback) but borrows the stack profiles and report generator from `seo-aeo-geo-audit` when it sits beside it. `tools/package.sh` builds one zip per skill. The Claude Code plugin install includes both, plus the `/technical-seo-audit` command.
 
 Manual copy works everywhere:
 

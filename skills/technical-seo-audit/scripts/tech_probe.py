@@ -443,6 +443,14 @@ def build_hints(pages, robots, rtxt_status, sm_entries, sm_info, tracking_cov, o
         hints.append({"id": id_, "severity": sev, "message": msg, "pages": (urls or [])[:15], "checklist": ref})
     ok = [p for p in pages if is_content_page(p)]
 
+    first = pages[0] if pages else {}
+    if first.get("error") or first.get("status") in (401, 403, 429, 503):
+        why = first.get("error") or f"HTTP {first.get('status')}"
+        hint("access-blocked", "high",
+             f"The probe could not read the target ({why}). This says nothing about how Google sees the site: bot protection, a login wall, rate limiting or a network block can all cause it. "
+             "Do not report the site as down. Follow references/browser-access.md: switch to Claude in Chrome, or ask the user for the page source, headers, robots.txt and sitemap.",
+             [first.get("url", "")], None)
+
     if rtxt_status != 200:
         hint("robots-missing", "medium", f"robots.txt returned {rtxt_status}", ref="TECH-01")
     elif robots["blanket_disallow"]:
@@ -630,6 +638,7 @@ def main():
     fw = Counter(s["framework"] for p in ok for s in p.get("frameworks", []))
     result = {
         "status": "ok",
+        "access_problem": bool(results and (results[0].get("error") or results[0].get("status") in (401, 403, 429, 503))),
         "target": target,
         "pages_fetched": len(results),
         "sitemap_urls_found": len(entries),
