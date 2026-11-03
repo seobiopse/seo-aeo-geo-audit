@@ -1,9 +1,9 @@
 # SEO Audit Skill for AI Agents: Technical SEO + AEO + GEO + AI Search Optimization
 
-**v2.6.0** — a free, open Agent Skill that runs a complete search-engine-ready audit on any website: **technical SEO audit**, **answer engine optimization (AEO)**, **generative engine optimization (GEO)** and **AI citation readiness** (ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews, Bing Copilot). It works in Claude, Claude Code, Codex/ChatGPT agents and Google Antigravity, and outputs a ticket-ready Markdown **SEO audit report** plus an interactive HTML report with before/after code.
+**v2.6.1** — a free, open Agent Skill that runs a complete search-engine-ready audit on any website: **technical SEO audit**, **answer engine optimization (AEO)**, **generative engine optimization (GEO)** and **AI citation readiness** (ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews, Bing Copilot). It works in Claude, Claude Code, Codex/ChatGPT agents and Google Antigravity, and outputs a ticket-ready Markdown **SEO audit report** plus an interactive HTML report with before/after code.
 
 [![License: MIT + Commons Clause](https://img.shields.io/badge/License-MIT%20%2B%20Commons%20Clause-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.6.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.6.1-blue.svg)](CHANGELOG.md)
 [![Agent Skills](https://img.shields.io/badge/format-Agent%20Skills-navy.svg)](https://agentskills.io/specification)
 
 ## Quick facts
@@ -287,6 +287,7 @@ It is free to use, modify and self-host. You may not resell the software or offe
 
 See [CHANGELOG.md](CHANGELOG.md) for the full history. Highlights:
 
+- **v2.6.1 (2026-11-03)** — Credit-frugal real-search data. The Serper step now defaults to one request (the seed returns both People Also Ask and Related Searches), expands only when fewer than 20 distinct queries come back and stops as soon as it has enough (cap 3), and caches results for 7 days so re-runs are free. Connected Semrush, Ahrefs, OpenRush or SerpApi tools are usable too, with permission asked first and minimal pulls.
 - **v2.6.0 (2026-11-03)** — Real-search data for the Fan-Out Mapper. `/fanout-map` now asks for a Serper API key first (or "skip"); with a key it adds Google People Also Ask and Related Searches and suggests competitors for battle mode; without one it checks for connected Ahrefs, Semrush, SerpApi or OpenRush tools and asks permission before using any. Reports state where every sub-query came from. Also fixes a Windows bug where a key piped via PowerShell arrived corrupted (affected `--key-stdin` for PageSpeed too).
 - **v2.5.0 (2026-11-03)** — Fan-Out Mapper. New `/fanout-map` command and `fanout` mode: the agent builds a sub-query set around a topic, `scripts/fanout_coverage.py` (stdlib only, no key) scores a page passage by passage, and you get a score ring, aspect bars, a sub-query heat map, a gap list with where to add each section, missing words, and an optional competitor battle mode. The score is labelled as a plugin heuristic.
 - **v2.4.0 (2026-11-03)** — PageSpeed key prompt is now a blocking first-message question in `/seo-audit`, `/full-audit` and `/technical-seo-audit` (never skipped silently, never "not available"), and the technical skill bundles its own PageSpeed runner. New live-site access fallback for every audit: if the built-in browser or fetch tool cannot reach the site, the agent switches to Claude in Chrome and, if the extension is missing, gives install steps. The probe flags blocked targets instead of implying the site is down.

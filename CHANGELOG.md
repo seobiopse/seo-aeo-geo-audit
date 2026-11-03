@@ -4,6 +4,17 @@ All notable changes to the SEO Audit Plugin are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.1] — 2026-11-03
+
+### Changed
+
+- **Serper usage is credit-frugal by default.** One request for the seed (it returns both People Also Ask and Related Searches). Follow-up requests happen only when fewer than `--target` (default 20) distinct queries came back, one at a time, and stop as soon as the target is reached or `--max-requests` (default 3, max 10) is spent. Previously the default was 6 requests.
+- **7-day result cache** (`.fanout-serp-cache.json` next to `fanout.json`; queries and parsed results only, never the key; `--no-cache` to disable). A re-run costs zero requests. `--dry-run` reports the minimum and maximum requests and whether the seed is cached; results report `credits_used`, `cache_hits` and `stopped_early`.
+- **Connected tools are usable alongside or instead of a key.** Semrush, Ahrefs, OpenRush and SerpApi connectors are offered (permission asked first) when there is no key, and mentioned as an optional extra when a key was used. Pulls are minimal: one or two calls, about 50 rows, keyword text only, nothing already obtained elsewhere.
+
+### Contributors
+
+- Claude (Anthropic) co-authored these changes.
 ## [2.6.0] — 2026-11-03
 
 ### Added

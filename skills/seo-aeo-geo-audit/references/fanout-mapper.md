@@ -68,25 +68,26 @@ The question in Step 1 offered a Serper key. Follow this order.
 
 **1. Key given: use it.** [Serper](https://serper.dev) is a third-party Google results API with a free allowance (2,500 queries, no card at the time of writing). The script adds Google's "People also ask" and "Related searches" for the seed, plus a few second-level expansions, as extra aspects. Handle the key as a session-only credential, exactly like the PageSpeed key:
 - Never write it to a file, report, memory or git, and never echo it back. Pass it by stdin or an environment variable scoped to the command.
-- Show the plan first with `--dry-run`: it uses about 6 requests (roughly 6 credits; the user can confirm in their Serper dashboard).
+- **Spend as little as possible.** The seed alone returns both People Also Ask and Related Searches, so the default is one request (about one credit). The script expands with follow-up requests only if fewer than 20 distinct queries came back, one at a time, and stops as soon as it has enough or has made 3 requests in total. Do not raise `--target` or `--max-requests` unless the user asks for a wider set. Results are cached for 7 days next to `fanout.json` (`.fanout-serp-cache.json`: queries and results only, never the key; safe to delete, do not commit it), so a re-run after a page edit costs nothing.
+- Show the plan first with `--dry-run` (it reports the minimum and maximum requests and whether the seed is already cached), then report `credits_used`, `cache_hits` and `stopped_early` from the result. The user can confirm credits in their Serper dashboard.
 - Tell the user what is sent: only the seed query and a few related queries, to Serper. Confidential text must not be used as the seed. Serper is a separate service with its own terms and privacy policy.
 - Run it after `fanout.json` exists:
 
 ```bash
 printf '%s' "$KEY" | python3 scripts/fanout_enrich.py --provider serper --key-stdin \
-  --query "<seed>" --gl us --hl en --max-requests 6 \
+  --query "<seed>" --gl us --hl en \
   --exclude-domain <user-domain> --brand "<brands>" --merge fanout.json
 ```
 ```powershell
-$env:SERPER_API_KEY = '<key>'; python scripts/fanout_enrich.py --provider serper --query "<seed>" --max-requests 6 --exclude-domain <user-domain> --merge fanout.json; Remove-Item Env:SERPER_API_KEY
+$env:SERPER_API_KEY = '<key>'; python scripts/fanout_enrich.py --provider serper --query "<seed>" --exclude-domain <user-domain> --merge fanout.json; Remove-Item Env:SERPER_API_KEY
 ```
 - The result lists `competitor_candidates` (top-ranking domains, the user's own excluded). Offer them for battle mode and ask which to compare; never pick one silently.
 - At the end ask whether to discard the key, and recommend deleting or rotating it in the Serper dashboard if the transcript will be shared.
 - Exit status `error` with a hint means the key was rejected or the credits ran out. Say so, do not retry in a loop, and continue with the agent-generated set.
 
-**2. No key (user said "skip" or gave none): check for connected data tools, and ask first.** Look through the tools you have for connectors named Ahrefs, Semrush, SerpApi/SERP API or OpenRush. If at least one is connected:
+**2. Connected tools (Semrush, Ahrefs, OpenRush, SerpApi): use them when the user has them, and ask first.** This is the route when there is no key (the user said "skip" or gave none). If a key was used and a connector is also connected, mention the connector as an optional extra and use it only if the user wants more queries than the key returned. Look through the tools you have for connectors named Ahrefs, Semrush, SerpApi/SERP API or OpenRush. If at least one is connected:
 - Ask permission before any call, naming the connector and what you will pull (related and question keywords for the seed, People Also Ask and related searches, top-ranking URLs). Mention it may use the user's credits or quota. Wait for a clear yes. Never use a connector the user declined or did not answer.
-- After a yes, pull a limited amount (about 100 rows at most). Typical sources: Ahrefs keyword explorer (matching terms, related terms, search suggestions) and SERP overview; Semrush keyword research reports (related keywords, questions); OpenRush keyword research and SERP inspection; SerpApi Google results (`related_questions`, `related_searches`). Call a connector's own schema or doc tool first when it has one.
+- After a yes, pull only what is necessary, because every call uses the user's credits or quota: one or two calls in total, rows limited to about 50, only the keyword text (skip volume, difficulty, CPC and other columns, or the fields the tool lets you leave out), no looping over keywords, and nothing already returned by another source. Typical sources: Ahrefs keyword explorer (matching terms, related terms, search suggestions) and SERP overview; Semrush keyword research reports (related keywords, questions); OpenRush keyword research and SERP inspection; SerpApi Google results (`related_questions`, `related_searches`). Call a connector's own schema or doc tool first when it has one.
 - Add the queries to `fanout.json` as an aspect named "From real searches (<connector>)" and append a source entry such as `{"type": "connector", "label": "Ahrefs related terms", "date": "<today>"}` to its `sources` list, so the report states where they came from. Do not show volumes unless the tool returned them.
 - If a connector is listed but needs authorization, tell the user to authorize it (in Claude Code with `/mcp`, or in the host's connector settings) and either wait or continue without it.
 
