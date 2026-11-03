@@ -1,5 +1,7 @@
 # AEO Audit Checklist — Answer Engine Optimization
 
+> **Calibration (checked 2026-11-03):** Google says its AI features (AI Overviews, AI Mode) need no special markup, `llms.txt`, AI text files, content "chunking" or rewriting for AI. Eligibility is normal indexing plus snippet eligibility. The methods in this file are heuristics for retrieval-readiness in non-Google systems and for general content quality. Do not present them as Google requirements, and do not promise citations. See `google-guidance-alignment.md`.
+
 AEO is about being *the extracted answer* in an answer-engine result: Google AI Overviews, Featured Snippets, Bing Copilot, voice assistants.
 
 Mark each `pass`, `warn`, or `fail`. Use the issue framework for findings not a pass.
@@ -40,10 +42,10 @@ Extractors scan `<h2>` and `<h3>` for question patterns.
 
 For schema recipes, read `structured-data-advanced.md`.
 
-- **3.1** `FAQPage` schema where FAQ visible — every Q/A matches visible text.
-- **3.2** `HowTo` schema on step-by-step content; steps match visible page.
+- **3.1** `FAQPage` markup is optional: Google no longer shows FAQ rich results. If present, every Q/A matches visible text. Absence is `Info`.
+- **3.2** `HowTo` markup is optional: Google removed the HowTo rich result. If present, steps match the visible page. Absence is `Info`.
 - **3.3** `Article`/`NewsArticle` with typed `author`, `datePublished`, `dateModified`, `publisher`.
-- **3.4** `SpeakableSpecification` inside `Article` pointing to the answer-first paragraph.
+- **3.4** `SpeakableSpecification` is optional and niche (beta; US English, Google Assistant news). Absence is `Info`.
 - **3.5** `QAPage` if the page is a single-question Q&A.
 - **3.6** All schema passes Google's Rich Results Test with no errors.
 

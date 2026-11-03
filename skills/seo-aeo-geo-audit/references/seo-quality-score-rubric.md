@@ -1,5 +1,7 @@
 # SEO Quality Score Rubric
 
+> **Calibration (checked 2026-11-03):** this is a plugin heuristic, not a Google metric. Google says content length and keyword counts are not ranking factors and that keyword stuffing is a spam violation, so rows that mention keyword use or depth are guards against thin or stuffed copy, not targets to hit. See `google-guidance-alignment.md`.
+
 A 0–100 numeric grade of a page's content quality from an NLP-and-intent-aware perspective. Scored on four content signals plus topical coverage, with distinct rubrics for **Landing / Money pages** and **Blog / Article pages**.
 
 Read whenever the audit mode is `/full-audit` or the user explicitly asks for a "quality score" / "content grade" / "NLP audit". The scoring sits on top of the checklist audit — it's not a replacement, it's the summary.
@@ -53,7 +55,7 @@ For pricing, service-detail, product-detail, signup, landing-page-for-paid-campa
 | Named entities | 15 | Concrete named things (competitors, partners, locations served, product names) |
 | Content depth | 20 | Word count + unique content ratio + section structure (headers per 500 words) |
 | Sentiment alignment | 10 | Confident / neutral / cautious distribution matches commercial-intent expectations |
-| Keyword targeting discipline | 10 | Primary keyword used 3–8× (not stuffed); H1 + title + meta description aligned |
+| Keyword targeting discipline | 10 | Primary keyword used naturally, no density target (Google has none); avoid stuffing; H1 + title + meta description aligned |
 | Trust signal density | 5 | Named testimonials + real reviews + customer logos present in body text |
 | **Total** | **100** | |
 

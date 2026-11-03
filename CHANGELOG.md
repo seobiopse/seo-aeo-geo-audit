@@ -4,6 +4,21 @@ All notable changes to the SEO Audit Plugin are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] — 2026-11-03
+
+### Changed
+
+- **Aligned with Google Search Central** (about 140 pages re-read on 2026-11-03). New `references/google-guidance-alignment.md` records what Google says, the date checked, and how the plugin treats each point. The plugin's own heuristics (E-E-A-T score, chunk density, n-gram overlap, extractable units) are now labelled as heuristics and not Google metrics.
+- **Retired features.** FAQ rich results (no longer shown), HowTo rich results (removed), the sitelinks search box (`SearchAction`), special announcements and practice problems are no longer recommended. Their absence is `Info`; presence is harmless. `Speakable` is marked beta and niche. `rel=next/prev` and `noarchive` are noted as unused by Google.
+- **AI features.** Google states AI Overviews and AI Mode need no special markup, `llms.txt`, AI text files, "chunking" or rewriting. `llms.txt` checks are now optional (`Info`), AEO/GEO/AI-citation files carry a calibration note, and the AI Overview playbook no longer claims a page must rank in the top 10 or that AIO triggers on a fixed share of queries. Added Search Console measurement notes and an open conflict between two Google pages.
+- **E-E-A-T** is described as a heuristic proxy; Google says it is not a ranking factor.
+- **Titles, descriptions and headings.** Length limits are display heuristics (Google sets none); heading order/count findings are `Low`; a missing H1 is `Medium`.
+- **Sitemaps.** `changefreq` and `priority` are ignored (severity lowered to `Info`); added limits and the deprecated/removed image and video tags. **robots.txt:** added Google's supported fields, 500 KiB limit, status handling, `crawl-delay`/`noindex` not supported, and the 2 MB HTML fetch limit. **JavaScript:** canonical/robots rules, dynamic rendering as a workaround, permissions/storage/WebSocket limits. **Structured data:** required-property table rewritten to match current Google pages. **Core Web Vitals:** no single page-experience signal.
+- Technical skill: checklist and JavaScript reference updated; the probe adds hints for retired markup, `Noindex:`/`Crawl-delay` in robots.txt, robots.txt over 500 KiB and HTML over 2 MB, and rates a missing H1 `Medium`.
+
+### Contributors
+
+- Claude (Anthropic) co-authored the Google guidance review and updates.
 ## [2.2.0] — 2026-11-03
 
 ### Added

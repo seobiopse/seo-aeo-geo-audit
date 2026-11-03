@@ -48,6 +48,14 @@ Public stance: AI content isn't banned. Content quality and purpose are what Goo
 
 Spam systems are tuned to detect low-effort AI patterns (generic openers, predictable structure, no specific details, no first-hand claims).
 
+### 1.5 Current Google wording (checked 2026-11-03)
+
+- The spam-policy scope now also covers manipulating generative AI responses in Search. Scaled content abuse explicitly names generative AI tools used to make many pages without adding value.
+- Site reputation abuse: outside the EEA a manual action is possible; in the EEA the affected pages may instead be categorised separately from the main domain. Noindexing the content is not an obligation outside the EEA.
+- Helpful-content framing is "Who, How, Why": bylines are encouraged, automation or AI use should be disclosed where readers would expect it, and fabricated authors (AI headshots, invented credentials) are called deception.
+- Fact-check AI output, including titles, meta descriptions, structured data and alt text. For Merchant Center, AI-generated images need IPTC `DigitalSourceType` metadata and AI-generated product text must be labelled.
+- The Helpful Content system is part of core ranking since March 2024. E-E-A-T is not a ranking factor; trust is the most important element when quality is evaluated.
+
 ## 2. Copyright basics
 
 ### 2.1 Paraphrasing is not a defense

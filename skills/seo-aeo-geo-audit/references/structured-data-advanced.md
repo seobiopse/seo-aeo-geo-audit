@@ -2,7 +2,7 @@
 
 Use when an audit goes beyond basic `<meta>` tags into entity-level structured data. Goal: make content machine-readable for search engines AND LLMs, using `@graph` so entities connect across pages and subdomains.
 
-Google's official recommendation is JSON-LD over Microdata/RDFa. It's decoupled from HTML, renders cleanly from Server Components, supports `@graph`, and LLM retrieval systems prioritise it.
+Google recommends JSON-LD; Microdata and RDFa are equally acceptable if valid. JSON-LD is decoupled from HTML, renders cleanly from Server Components and supports `@graph`. Google states that no special structured data is needed to appear in its AI features (see `google-guidance-alignment.md`); structured data is for rich results and entity clarity.
 
 ## Table of contents
 
@@ -112,9 +112,9 @@ Curate to authoritative sources; avoid listing every social profile.
 
 ## 3. Per-page-type schema recipes
 
-### 3.1 Homepage — Organization + WebSite + SearchAction
+### 3.1 Homepage — Organization + WebSite
 
-Required for Sitelinks Search Box and LLM entity grounding.
+`WebSite` with `name`, optional `alternateName` and `url` on the home page drives Google site names (one name per domain or subdomain). Google reads these `Organization` properties: `name`, `logo` (at least 112x112 px), `sameAs`, `address`, `contactPoint`, `legalName`. **The Sitelinks Search Box was removed from Google Search, so `SearchAction` no longer produces a Google feature.** It is harmless to keep for on-site search consumers; do not flag its absence.
 
 ```json
 {
@@ -158,22 +158,18 @@ Required for Sitelinks Search Box and LLM entity grounding.
 ```json
 {
   "@type": "Article",
-  "headline": "Title (≤ 110 chars for Google)",
+  "headline": "Concise title (Google sets no required length)",
   "description": "155-char summary.",
   "image": [ "https://example.com/hero-1200x630.jpg" ],
   "datePublished": "2026-04-01T09:00:00+05:30",
   "dateModified": "2026-04-18T14:00:00+05:30",
   "author": { "@type": "Person", "@id": "...", "name": "..." },
   "publisher": { "@id": "https://example.com/#organization" },
-  "mainEntityOfPage": "https://example.com/blog/slug/",
-  "speakable": {
-    "@type": "SpeakableSpecification",
-    "cssSelector": [".article-summary"]
-  }
+  "mainEntityOfPage": "https://example.com/blog/slug/"
 }
 ```
 
-Google requires: `headline` ≤ 110 chars, `image` ≥ 1200×675 absolute URL, `datePublished` ISO 8601 with timezone.
+Google lists no required properties for Article. Recommended: `author` (with `name` and `url`), `datePublished`, `dateModified`, `headline`, `image` (16:9, 4:3 and 1:1 versions, at least 50K pixels each). Use ISO 8601 dates with a timezone. `speakable` is beta (US, English, Google Assistant news) and is intentionally left out of the default recipe.
 
 ### 3.3 JobPosting
 
@@ -253,9 +249,9 @@ Required: `name`, `description`, `provider`, `hasCourseInstance` with `courseMod
 }
 ```
 
-### 3.6 FAQPage — visibility requirement
+### 3.6 FAQPage — no longer a Google rich result (optional)
 
-Every Q/A in schema MUST also appear visibly on the page. Google's guideline.
+Every Q/A in schema must also appear visibly on the page.
 
 ```json
 {
@@ -270,11 +266,11 @@ Every Q/A in schema MUST also appear visibly on the page. Google's guideline.
 }
 ```
 
-Google reduced FAQ rich-result eligibility in Aug 2023 to authoritative government/health sites. Schema still helps LLM extraction + AEO.
+Google stopped showing FAQ rich results (deprecation notice May 2026, documentation removed June 2026; since Aug 2023 they were limited to government and health sites). `FAQPage` is still valid schema.org markup, but it earns no Google rich result and Google says special markup is not needed for its AI features. Keep it only when it mirrors visible Q&A. Do not recommend it as a Google visibility fix, and report its absence at most as `Info`.
 
-### 3.7 HowTo
+### 3.7 HowTo — rich result retired (optional)
 
-Every step must appear on page.
+Google removed the HowTo rich result (documentation removed Sep 2023). Valid schema.org markup, no Google feature. Every step must appear on the page. Absence is `Info`.
 
 ```json
 {
@@ -327,16 +323,20 @@ Final item (current page) omits `item`.
 
 | Type | Google-required |
 |---|---|
-| Article | `headline` (≤110), `image` (≥1200px), `datePublished`, typed `author` |
-| JobPosting | `title`, `description`, `datePosted`, `hiringOrganization`, location |
-| Product | `name`, `image`, `offers.price` + `priceCurrency` + `availability` |
-| Course | `name`, `description`, `provider`, `hasCourseInstance` with `courseMode` |
-| Event | `name`, `startDate`, `location`, `offers` (if ticketed) |
-| Recipe | `name`, `image`, `recipeIngredient`, `recipeInstructions` |
-| LocalBusiness | `name`, `address`, `telephone`, `url`, `openingHoursSpecification` |
-| HowTo | `name`, `step` with `name` + `text` |
-| FAQPage | `mainEntity` array with Q/A, each visibly on page |
-| VideoObject | `name`, `description`, `thumbnailUrl`, `uploadDate` |
+| Article | none required. Recommended: `author`, `datePublished`, `dateModified`, `headline`, `image` |
+| JobPosting | `title`, `description`, `datePosted`, `hiringOrganization`, `jobLocation` (Indexing API recommended) |
+| Product snippet | `name` + one of `review`, `aggregateRating`, `offers` |
+| Merchant listing | `name`, `image`, `offers` with `price` (above zero) + `priceCurrency` |
+| Course | `name`, `description` (English only; `provider` recommended) |
+| Event | `name`, `startDate`, `location` with `address` (physical, public events) |
+| Recipe | `name`, `image` (`recipeIngredient`, `recipeInstructions` recommended) |
+| LocalBusiness | `name`, `address` (others recommended) |
+| Organization | none required (see 3.1 for the properties Google reads) |
+| VideoObject | `name`, `thumbnailUrl`, `uploadDate` (`description` recommended) |
+| HowTo | retired: no Google rich result |
+| FAQPage | retired: no Google rich result |
+
+Requirements change; confirm the feature page before quoting (see `google-guidance-alignment.md` section 8).
 
 Validate with https://search.google.com/test/rich-results before shipping.
 
@@ -354,12 +354,12 @@ Validate with https://search.google.com/test/rich-results before shipping.
 
 ## 6. How structured data helps LLM citation
 
-Measurable effects:
+Possible effects. Google does not document these for its own AI features, so treat them as hypotheses to test, not guarantees:
 
 1. **Entity disambiguation** — `sameAs` to Wikipedia/Wikidata tells LLMs this is a known entity. More confident citations.
 2. **Authorship clarity** — typed `Person` with `sameAs` lets LLMs cite "according to Jane Doe of your brand".
 3. **Freshness signals** — `dateModified` helps retrieval filter for recent sources.
-4. **Content structure** — `HowTo` steps and `FAQPage` Q/A give retrieval chunks clean boundaries.
+4. **Content structure** — Q&A and step blocks give retrieval chunks clean boundaries in non-Google retrieval systems. Google says no "chunking" is needed for its AI features.
 5. **Trust scoring** — consistent, valid, connected schema weighted more heavily in retrieval.
 
 ---

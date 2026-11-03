@@ -1,6 +1,6 @@
 # Sitemap Playbook
 
-Proper sitemap strategy. Most teams ship a single `sitemap.xml` with `<changefreq>weekly</changefreq>` and `<priority>0.8</priority>` on every URL — that's worse than no sitemap, because Google learns to ignore the hints.
+Proper sitemap strategy. Most teams ship a single `sitemap.xml` with `<changefreq>weekly</changefreq>` and `<priority>0.8</priority>` on every URL. Google ignores both fields, so they are noise: omit them.
 
 Read whenever an audit targets a site with a sitemap (every site should have one).
 
@@ -63,7 +63,7 @@ Split into multiple sitemaps when any of:
 
 ## 3. `<lastmod>` — the only freshness signal that matters
 
-`<lastmod>` is the single most important field in a sitemap entry. Google literally documents that `<lastmod>` is the primary freshness signal and that `<changefreq>` and `<priority>` are secondary.
+`<lastmod>` is the single most important field in a sitemap entry. Google uses `<lastmod>` only when it is consistently and verifiably accurate, and ignores `<changefreq>` and `<priority>`.
 
 ### Rules
 
@@ -109,9 +109,20 @@ Split into multiple sitemaps when any of:
 </url>
 ```
 
+## 3b. Google limits and field support (verified 2026-11-03)
+
+- 50,000 URLs or 50 MB uncompressed per sitemap; UTF-8; fully qualified absolute URLs. A sitemap index can list up to 50,000 sitemaps, which must be on the same site and in the index's directory or deeper.
+- Formats: XML, RSS 2.0/Atom 1.0, or a text file with one URL per line. Submit in Search Console, via the API, or with a `Sitemap:` line in `robots.txt`. Submission is a hint, not a guarantee.
+- A sitemap only affects URLs in its directory and below unless submitted in Search Console, so place it at the root.
+- Image sitemap: up to 1,000 images per URL; `image:loc` may be on another verified domain. `image:caption`, `image:geo_location`, `image:title` and `image:license` are deprecated.
+- Video sitemap: required `video:thumbnail_loc`, `video:title`, `video:description` (max 2,048 chars), and `video:content_loc` or `video:player_loc`. `video:category`, `gallery_loc`, `autoplay`/`allow_embed` attributes, `price` and `tvshow` were removed.
+- News sitemap: only articles from the last two days, up to 1,000 per file; `news:name` must match the name on Google News.
+- Extensions (image, news, video, `xhtml:link` for hreflang) can be combined in one file; mind the size limits.
+- Small, well-linked sites (about 500 pages or fewer) usually do not need a sitemap. It helps large sites, new sites with few external links and media-rich or news sites.
+
 ## 4. `<changefreq>` — when to use, when to skip
 
-Google has explicitly stated that `<changefreq>` is mostly ignored. Crawl frequency is determined by observed behavior (how often pages actually change) + signal from `<lastmod>`.
+Google's sitemap documentation says `<changefreq>` and `<priority>` are ignored. Crawl frequency is determined by observed behavior (how often pages actually change) + signal from `<lastmod>`.
 
 ### Our recommendation
 
@@ -135,7 +146,7 @@ If `<changefreq>weekly</changefreq>` is set on every URL and 90% don't change we
 
 ## 5. `<priority>` — mostly ignored, use sparingly
 
-`<priority>` (0.0 – 1.0) is Google's least-weighted sitemap signal. Google has publicly said they mostly ignore it.
+`<priority>` (0.0 – 1.0) is ignored by Google. Other engines may still read it.
 
 ### When `<priority>` is actually useful
 
@@ -327,8 +338,8 @@ Google dropped the ping endpoint. They discover sitemaps via `robots.txt` or GSC
 - **SM-7** `<lastmod>` uses ISO 8601 format.
 - **SM-8** `<lastmod>` reflects real content changes (spot-check: compare to `dateModified` in schema or the page's visible "Last updated" date).
 - **SM-9** `<lastmod>` is NOT identical across all URLs (indicates "bumped on rebuild" anti-pattern).
-- **SM-10** `<changefreq>` either omitted, or present with meaningfully different values per URL type.
-- **SM-11** `<priority>` either omitted, or present with meaningfully different values (not `0.8` on everything).
+- **SM-10** `<changefreq>` omitted (Google ignores it). If present, values are accurate; report as `Info` at most.
+- **SM-11** `<priority>` omitted (Google ignores it). `Info` at most.
 - **SM-12** Sitemap size ≤ 50 MB and URL count ≤ 50,000. Split via sitemap index if exceeded.
 - **SM-13** `robots.txt` references the sitemap (`Sitemap: https://...`).
 - **SM-14** Sitemap submitted to GSC (and Bing WMT for GEO-critical sites).
@@ -345,7 +356,7 @@ Google dropped the ping endpoint. They discover sitemaps via `robots.txt` or GSC
 - Sitemap full of 404s or redirects → **High**
 - `<lastmod>` identical across all URLs (nightly rebuild) → **High** (damages a global signal)
 - `noindex` URLs in sitemap → **Medium**
-- `<changefreq>weekly</changefreq>` on every URL regardless of reality → **Medium**
+- `<changefreq>weekly</changefreq>` on every URL regardless of reality → **Info** (Google ignores the field)
 - Missing `<lastmod>` entirely → **Medium**
 - Sitemap not submitted to GSC → **Low**
 - No image/video sitemaps when images/videos drive traffic → **Low**

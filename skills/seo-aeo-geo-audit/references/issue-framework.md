@@ -166,7 +166,7 @@ Use SKILL.md definitions. If torn between two levels, pick the lower one. Over-s
 Tag only the ones genuinely affected. Examples:
 - Missing `<title>` → SEO, AEO, GEO
 - Missing `FAQPage` schema → AEO mainly
-- Missing `llms.txt` → GEO only
+- Missing `llms.txt` → GEO only, `Info` (optional; Google does not use it)
 - Duplicate H1 → SEO; AEO secondary
 
 ### Category
@@ -239,7 +239,7 @@ The generator supports these for syntax highlighting: `html`, `xml`, `svg`, `jso
 
 - **Critical** — Page effectively invisible/broken (noindex shipped, robots blanket-blocking, 5xx, missing `<title>`, server content hidden from bots).
 - **High** — Significant SEO/AEO/GEO value lost (missing canonical, missing H1, no schema on eligible page, CWV well below thresholds).
-- **Medium** — Measurable but recoverable (thin meta, missing OG, inconsistent heading hierarchy, no author schema).
+- **Medium** — Measurable but recoverable (thin meta, missing OG, no author schema).
 - **Low** — Polish (title slightly long, minor alt-text gaps, missing favicon variants).
 - **Info** — Not a defect but worth documenting.
 

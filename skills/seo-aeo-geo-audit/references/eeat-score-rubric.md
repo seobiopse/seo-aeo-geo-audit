@@ -1,8 +1,10 @@
 # E-E-A-T Score Rubric
 
+> **Calibration (checked 2026-11-03):** Google states that E-E-A-T is not itself a ranking factor. Trust is described as the most important part when evaluating quality, and quality-rater data is not used directly in ranking. This score is the plugin's own heuristic proxy for the signals raters look for. Never present it as a Google metric or a ranking prediction. See `google-guidance-alignment.md`.
+
 A 0–100 numeric grade of a page's E-E-A-T signals — Experience, Expertise, Authoritativeness, and Trust — based on Google's public Search Quality Rater Guidelines and the "helpful, reliable, people-first content" documentation.
 
-Runs alongside the SEO Quality Score (see `seo-quality-score-rubric.md`). Where SEO Quality measures *how well the content is written for search*, E-E-A-T measures *whether the content is trustworthy enough to rank*. Both are scored per page; different rubrics apply to Landing/Money vs Blog/Article pages.
+Runs alongside the SEO Quality Score (see `seo-quality-score-rubric.md`). Where SEO Quality measures *how well the content is written for search*, E-E-A-T measures *whether the content shows the trust signals a quality rater would look for*. Both are scored per page; different rubrics apply to Landing/Money vs Blog/Article pages.
 
 ## The four pillars
 

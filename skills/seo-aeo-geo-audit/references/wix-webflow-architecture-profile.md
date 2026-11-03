@@ -297,6 +297,6 @@ Many builder platforms have a native analytics integration AND the client adds G
 - **BLD-15** LCP image file size reasonable (≤ 200KB after platform compression). Check in Chrome DevTools Network tab.
 - **BLD-16** Core Web Vitals assessed via CrUX (field data). If CWV "Poor" on mobile, annotate which issues are **platform constraints** vs **fixable**.
 - **BLD-17** Google Business Profile linked from footer (for local businesses on builder sites).
-- **BLD-18** `llms.txt` deployed via custom page at `/llms.txt` URL, or injected via platform's custom routes.
+- **BLD-18** (optional) `llms.txt` deployed via custom page at `/llms.txt` URL, or injected via platform's custom routes.
 - **BLD-19** All CMS items (blog posts, products, team members) have SEO fields populated — not relying on auto-generated defaults.
 - **BLD-20** Any international stores/languages use the platform's multilingual feature (Wix Multilingual, Webflow Localization) rather than manual translation pages, and hreflang tags are verified as present.

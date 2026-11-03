@@ -1,5 +1,7 @@
 # AEO Audit — Transaction Intent Content
 
+> **Calibration (checked 2026-11-03):** Google says its AI features (AI Overviews, AI Mode) need no special markup, `llms.txt`, AI text files, content "chunking" or rewriting for AI. Eligibility is normal indexing plus snippet eligibility. The methods in this file are heuristics for retrieval-readiness in non-Google systems and for general content quality. Do not present them as Google requirements, and do not promise citations. See `google-guidance-alignment.md`.
+
 Answer Engine Optimization checks specific to **transaction-intent pages** — landing pages, pricing, service detail, product detail, sign-up, comparison.
 
 For informative / editorial content (blog posts, guides, how-to articles), use `aeo.md` instead. For the full commercial playbook (trust signals, E-E-T-T, structured data stack for money pages), read `transaction-intent-playbook.md` first — this file is the AEO-specific subset.
@@ -115,9 +117,9 @@ For multi-city operators, create a hub per city (see `pseo-playbook.md` §F Loca
 
 ## 5. FAQ schema on money pages
 
-FAQPage schema on pricing / service pages is particularly valuable for AEO despite Google's 2023 restriction of FAQ rich results for most sites. Even without rich-result eligibility:
+Google no longer shows FAQ rich results (2026), and says no special markup is needed for its AI features. A visible FAQ section on pricing / service pages is still useful for users; `FAQPage` markup is optional. For the visible content:
 
-- Answer engines STILL extract from FAQPage schema for AIO and other LLMs.
+- Answer engines may extract from visible Q&A text; Google does not document any markup-based benefit for its AI features.
 - Organic CTR on commercial pages benefits when questions match user intent.
 - Converts browsers to buyers by addressing objections upfront.
 
@@ -236,7 +238,7 @@ Low-E-E-T-T pages (e.g., affiliate / doorway pages) rarely appear in AIO source 
 - **TXA-2** First sentence under each H2 gives the direct answer (yes/no/specific number).
 - **TXA-3** Pricing visible on pricing pages. Not "Contact us" alone.
 - **TXA-4** Comparison uses semantic `<table>` with `<caption>`.
-- **TXA-5** FAQPage schema present with every Q/A matching visible page text.
+- **TXA-5** (optional) FAQPage schema present with every Q/A matching visible page text.
 - **TXA-6** `LocalBusiness` + `areaServed` schema on service-area pages.
 - **TXA-7** `Product` schema with required shopping fields (price, availability, shipping, return policy) on ecommerce pages.
 - **TXA-8** `aggregateRating` only if verifiable + matches visible page.

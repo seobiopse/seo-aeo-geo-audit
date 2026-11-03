@@ -1,5 +1,7 @@
 # RAG Engine Optimization (Retrieval-Augmented Generation)
 
+> **Calibration (checked 2026-11-03):** Google says its AI features (AI Overviews, AI Mode) need no special markup, `llms.txt`, AI text files, content "chunking" or rewriting for AI. Eligibility is normal indexing plus snippet eligibility. The methods in this file are heuristics for retrieval-readiness in non-Google systems and for general content quality. Do not present them as Google requirements, and do not promise citations. See `google-guidance-alignment.md`.
+
 This guide details how Retrieval-Augmented Generation (RAG) models index, chunk, and retrieve web content for AI search engines (e.g., Google AI Overviews, Perplexity, ChatGPT Search), and provides auditing strategies for chunk-friendly formatting and retrieval optimization.
 
 ---

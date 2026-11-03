@@ -1,5 +1,7 @@
 # Stateful AI Memory Systems & Site Architecture
 
+> **Calibration (checked 2026-11-03):** Google says its AI features (AI Overviews, AI Mode) need no special markup, `llms.txt`, AI text files, content "chunking" or rewriting for AI. Eligibility is normal indexing plus snippet eligibility. The methods in this file are heuristics for retrieval-readiness in non-Google systems and for general content quality. Do not present them as Google requirements, and do not promise citations. See `google-guidance-alignment.md`.
+
 This guide details the shift from stateless Retrieval-Augmented Generation (RAG) to **Stateful AI Memory Systems**, how sites can structure their data to optimize for memory-augmented search agents, and a conceptual framework for custom stateful retrieval inside our plugin.
 
 ---

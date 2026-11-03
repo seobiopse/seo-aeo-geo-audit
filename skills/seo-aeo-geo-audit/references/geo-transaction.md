@@ -1,5 +1,7 @@
 # GEO Audit — Transaction Intent Content
 
+> **Calibration (checked 2026-11-03):** Google says its AI features (AI Overviews, AI Mode) need no special markup, `llms.txt`, AI text files, content "chunking" or rewriting for AI. Eligibility is normal indexing plus snippet eligibility. The methods in this file are heuristics for retrieval-readiness in non-Google systems and for general content quality. Do not present them as Google requirements, and do not promise citations. See `google-guidance-alignment.md`.
+
 Generative Engine Optimization checks specific to **transaction-intent pages** — landing pages, pricing, service detail, product detail, sign-up, comparison.
 
 For informative content, use `geo.md` instead. For the full commercial playbook, read `transaction-intent-playbook.md` first.
@@ -124,7 +126,7 @@ If you're a newer entrant, "Alternatives to [established competitor]" pages surf
 
 ## 5. Commercial intent + llms.txt
 
-`llms.txt` at the root of your domain is where LLMs discover what you do. For commercial brands, your `llms.txt` should:
+`llms.txt` is an optional convention. Google says it does not use it, and other AI products' support is unverified. If you publish one, for commercial brands it should:
 
 - Open with a one-sentence commercial positioning.
 - List primary money pages (products, services) under "## Docs" or similar.
@@ -205,7 +207,7 @@ Track review count + avg rating quarterly on G2 / Trustpilot / GBP / Glassdoor. 
 ## 8. Audit checklist
 
 - **TXG-1** `Organization` schema includes rich `sameAs`: Wikipedia / Wikidata / Crunchbase / LinkedIn / primary review platform.
-- **TXG-2** `llms.txt` at `/llms.txt` includes a one-sentence commercial positioning.
+- **TXG-2** (optional) `llms.txt` at `/llms.txt` includes a one-sentence commercial positioning.
 - **TXG-3** AI retrieval crawlers allowed in `robots.txt` (ChatGPT-User, Perplexity-User, Claude-SearchBot, Applebot-Extended).
 - **TXG-4** Google Business Profile claimed (for local / service-area brands).
 - **TXG-5** Brand is present on at least one category-relevant review platform (G2, Trustpilot, Capterra, etc.).

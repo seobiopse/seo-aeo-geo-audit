@@ -2,6 +2,8 @@
 
 Scope: what engineers can fix in code, config or infrastructure. Content quality, E-E-A-T, AEO, GEO, AI citation and VDS belong to the `seo-aeo-geo-audit` skill.
 
+Google-sourced limits, retired features and thresholds in this checklist were re-checked on 2026-11-03 against Search Central; sources are in `../seo-aeo-geo-audit/references/google-guidance-alignment.md` (when that skill is installed) and on the pages it cites. Re-check the source page before quoting a number in a client report.
+
 Every item ends as `pass`, `warn`, `fail` or `not measured`. Never guess. If you could not test an item, mark it `not measured` and say why. `warn` and `fail` become findings.
 
 `scripts/tech_probe.py` gives raw-HTML evidence for most items (its hints cite the `TECH-xx` ids below). Items marked **(browser)** need a rendered page or the Network panel.
@@ -18,9 +20,9 @@ Identify the stack from live evidence, record the evidence and a confidence leve
 
 ## TECH-01. Crawl and indexation controls
 
-- **01.1** `robots.txt` returns 200, has no blanket `Disallow: /` for `*`, and lists the sitemap.
+- **01.1** `robots.txt` returns 200 (a 4xx is treated as "no robots.txt"; a 5xx pauses Google's crawling), is under 500 KiB, has no blanket `Disallow: /` for `*`, lists the sitemap, and uses only supported fields (`user-agent`, `allow`, `disallow`, `sitemap`). `crawl-delay` and `noindex` lines are not supported by Google.
 - **01.2** No important section is blocked in `robots.txt`. CSS/JS needed for rendering are not blocked.
-- **01.3** `noindex` (meta robots or `X-Robots-Tag`) is on private and thin pages and absent from money and content pages. Check the sample: every `noindex` found is intended.
+- **01.3** `noindex` (meta robots or `X-Robots-Tag`) is on private and thin pages and absent from money and content pages. Check the sample: every `noindex` found is intended. A noindexed URL must not be blocked in `robots.txt`, or Google never sees the tag.
 - **01.4** Private and transactional URLs (`/cart`, `/checkout`, `/login`, `/register`, `/account`, `/dashboard`) are `noindex` or disallowed and are not in the sitemap. Note `Disallow` stops crawling, not indexing.
 - **01.5** Staging, preview and development hosts return `noindex` or are behind auth.
 - **01.6** AI-crawler policy in `robots.txt` is intentional (GPTBot, ClaudeBot, PerplexityBot, CCBot, Google-Extended). Report what is blocked, not whether it should be.
@@ -30,7 +32,7 @@ Identify the stack from live evidence, record the evidence and a confidence leve
 
 - **02.1** Sampled URLs return 200. Sitemap URLs returning 3xx/4xx/5xx are listed.
 - **02.2** Missing pages return a real 404/410 (not a 200 "not found" page, i.e. a soft 404).
-- **02.3** Redirects are 301/308 for permanent moves, one hop, no chains or loops.
+- **02.3** Redirects are 301/308 for permanent moves, one hop where possible, no chains or loops. Googlebot follows up to 10 hops (robots.txt: 5), but fewer is better. JavaScript and meta-refresh redirects are a last resort.
 - **02.4** One canonical host: HTTP to HTTPS, and www vs non-www, each a single 301.
 - **02.5** Trailing-slash policy is consistent and redirected.
 - **02.6** No 5xx under normal load on the sample.
@@ -40,13 +42,13 @@ Identify the stack from live evidence, record the evidence and a confidence leve
 - **03.1** Sitemap is valid XML, referenced in `robots.txt`, and reachable.
 - **03.2** Every listed URL is canonical, indexable, 200, and on the same host.
 - **03.3** `lastmod` reflects real content changes. If most entries share one date it is probably the generation time.
-- **03.4** `changefreq` and `priority` are ignored by Google. Report as `info`, not as a defect.
+- **03.4** `changefreq` and `priority` are ignored by Google. Report as `info`, not as a defect. `lastmod` counts only if consistently accurate.
 - **03.5** Sitemap index and size limits respected (50,000 URLs or 50 MB uncompressed per file).
 - **03.6** No private, parameterised, redirected or noindex URLs listed.
 
 ## TECH-04. Canonicals and duplicate URLs
 
-- **04.1** Every indexable page has exactly one self-referencing absolute canonical on the final URL.
+- **04.1** Every indexable page has exactly one self-referencing absolute canonical on the final URL, set with the link element or the HTTP header (not both). Canonicals are a hint, not a rule; redirects are the stronger signal.
 - **04.2** Canonical host and protocol match the preferred host.
 - **04.3** Parameter variants (`?sort=`, `?page=`, UTM, session IDs) canonicalise to the clean URL or are blocked from crawl.
 - **04.4** Faceted navigation does not generate unlimited crawlable combinations.
@@ -55,8 +57,8 @@ Identify the stack from live evidence, record the evidence and a confidence leve
 
 ## TECH-05. Document head and basics
 
-- **05.1** One `<title>` and one meta description per page, unique across the sample.
-- **05.2** Exactly one `<h1>`, present in raw HTML.
+- **05.1** One `<title>` and one meta description per page, unique across the sample. Google sets no length limit (it truncates to device width), so flag empty, duplicate, vague, stuffed or boilerplate text, not a character count.
+- **05.2** An `<h1>` is present in raw HTML. Google does not require exactly one and says heading order and count do not matter for Search: multiple H1s or skipped levels are `Low`, a missing H1 is `Medium`.
 - **05.3** `<meta name="viewport">` present. `<html lang>` set.
 - **05.4** Open Graph and Twitter tags on shareable pages (`info`/`low`).
 - **05.5** `charset` declared early. No `<head>` content after `<body>` starts (breaks parsers).
@@ -67,6 +69,7 @@ Identify the stack from live evidence, record the evidence and a confidence leve
 - **06.2** `@type` matches the page type; required properties are present (check with Rich Results Test).
 - **06.3** Ratings, prices and availability in markup match what is visible on the page.
 - **06.4** `Organization`/`WebSite` once at layout level; `BreadcrumbList` on deep pages.
+- **06.5** Markup for features Google no longer shows (FAQ and HowTo rich results, sitelinks search box `SearchAction`, special announcements, practice problems) is `Info` when present and is never reported as missing. `Speakable` is beta and niche. `data-vocabulary.org` markup is outdated.
 
 ## TECH-08. JavaScript and rendering
 
@@ -81,11 +84,13 @@ See `javascript-rendering.md` for the method and the Next.js specifics.
 - **08.7** Soft 404s: client-rendered "not found" views return a real 404 status.
 - **08.8** Hydration errors and failed script/API calls in the console are absent on sampled pages. **(browser)**
 - **08.9** Next.js: router type identified, page components are server-rendered, metadata is set through the framework API, `notFound()` is used, `next/link` is used for navigation.
-- **08.10** Raw HTML size is reasonable and framework payload (for example `__NEXT_DATA__`) is not bloated.
+- **08.10** Raw HTML size is reasonable and framework payload (for example `__NEXT_DATA__`) is not bloated. Googlebot processes only the first 2 MB of an HTML file, so critical content and links must sit within it.
+- **08.11** JavaScript does not change a canonical or robots meta that the HTML already sets (Google may keep the HTML value, and a `noindex` in the HTML can stop rendering). Dynamic rendering is a workaround, not a fix.
+- **08.12** **(browser)** Nothing critical depends on permission prompts, cookies or storage that persist between loads, WebSockets or WebRTC (Googlebot declines prompts, clears storage and does not support those transports).
 
 ## TECH-09. Performance and delivery
 
-- **09.1** If a PageSpeed API key was provided: mobile and desktop scores recorded, with field data (CrUX) preferred over lab data. LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1 at the 75th percentile. Without a key, mark `not measured`.
+- **09.1** Google has no single "page experience signal"; Core Web Vitals are the only part its ranking systems use. If a PageSpeed API key was provided: mobile and desktop scores recorded, with field data (CrUX) preferred over lab data. LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1 at the 75th percentile. Without a key, mark `not measured`.
 - **09.2** TTFB under about 800 ms on the sample (single request, one location: re-test before reporting).
 - **09.3** Compression (`gzip`/`br`) enabled. HTML under about 500 KB uncompressed.
 - **09.4** `Cache-Control` set sensibly: long-lived hashed assets, revalidation for HTML. Public pages are not `no-store` without reason.

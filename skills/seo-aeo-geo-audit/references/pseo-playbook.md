@@ -221,7 +221,7 @@ Generated on-demand from the database. Key rules:
 - Include **only** `status=1` (active) jobs. Inactive jobs have `noindex` — listing them in the sitemap contradicts the `noindex` signal and confuses Googlebot.
 - Use absolute canonical URLs in the new semantic format.
 - `<lastmod>` = `job.updated_at` as ISO 8601 with timezone.
-- `<changefreq>` and `<priority>` are advisory only; set them consistently but don't over-optimise.
+- `<changefreq>` and `<priority>` are ignored by Google; omit them.
 - Cache the response aggressively: `Cache-Control: public, s-maxage=3600, stale-while-revalidate=86400` (1h hard, 24h soft).
 - Split into `sitemap-jobs-1.xml`, `sitemap-jobs-2.xml`, etc. once you cross 50,000 URLs per sitemap (Google's limit is 50K URLs or 50 MB uncompressed).
 
@@ -796,7 +796,7 @@ Different from jobs — courses don't expire in 31 days. But cohorts do:
 - **CO-2** `Offer` includes price + currency + availability.
 - **CO-3** Instructor is a real `Person` with `url` to a bio page.
 - **CO-4** `aggregateRating` only if ratings are verifiable.
-- **CO-5** FAQ section covering common pre-enrollment questions with `FAQPage` schema.
+- **CO-5** FAQ section covering common pre-enrollment questions with optional `FAQPage` schema (no Google rich result).
 - **CO-6** Syllabus visible on the page (not behind "download PDF").
 - **CO-7** Outcomes / testimonials with real attribution (name + role, photo where permitted).
 - **CO-8** `BreadcrumbList` schema: Home › Courses › [Category] › [Course Title].
@@ -996,7 +996,7 @@ No exact schema.org type for assessments — use a combination:
 ```
 
 ### Note
-`Quiz` schema is under-documented compared to `Course` or `JobPosting`. Rich results for quizzes are limited. The main SEO benefit is entity clarity + FAQ rich results for sample questions.
+`Quiz` schema is under-documented compared to `Course` or `JobPosting`. Rich results for quizzes are limited. The main SEO benefit is entity clarity + FAQ rich results are no longer shown by Google.
 
 ## D.5 Audit checklist for skill assessment pages
 
@@ -1004,7 +1004,7 @@ No exact schema.org type for assessments — use a combination:
 - **SA-2** Duration, question count, difficulty visible on page.
 - **SA-3** Start button above the fold.
 - **SA-4** "What this test covers" section with topic breakdown.
-- **SA-5** FAQ section with `FAQPage` schema answering common pre-test questions.
+- **SA-5** FAQ section (optional `FAQPage` schema, no Google rich result) answering common pre-test questions.
 - **SA-6** Sample questions visible (2-3 examples — NOT the real test questions).
 - **SA-7** `about` property in schema links to the skill's Wikipedia/Wikidata entity where possible.
 - **SA-8** If certificate awarded, `educationalCredentialAwarded` present.
@@ -1199,7 +1199,7 @@ Or combined with service:
 - **LH-4** Internal links to individual detail pages in this location.
 - **LH-5** Links to sister location hubs ("Nearby areas") for topical clustering.
 - **LH-6** Local proof (customer stories, testimonials) with location attribution.
-- **LH-7** Location-specific FAQs marked up with `FAQPage`.
+- **LH-7** Location-specific FAQs (optional `FAQPage` markup; no Google rich result).
 - **LH-8** Google Business Profile linked from the page footer (for local queries).
 
 ---

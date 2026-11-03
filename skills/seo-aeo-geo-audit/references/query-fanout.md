@@ -1,5 +1,7 @@
 # Query Fan-Out & Semantic Intent Optimization
 
+> **Calibration (checked 2026-11-03):** Google says its AI features (AI Overviews, AI Mode) need no special markup, `llms.txt`, AI text files, content "chunking" or rewriting for AI. Eligibility is normal indexing plus snippet eligibility. The methods in this file are heuristics for retrieval-readiness in non-Google systems and for general content quality. Do not present them as Google requirements, and do not promise citations. See `google-guidance-alignment.md`.
+
 This reference guide details the concept of **Query Fan-Out** in search engines and AI retrieval architectures, and defines the auditing guidelines to ensure a site's content satisfies fanned-out query networks.
 
 ---
@@ -52,7 +54,7 @@ To audit whether a page or group of pages satisfies a fanned-out query network, 
   * `<h2>What is the cost of AAC blocks?</h2>` (Faceted - Price)
   * `<h2>AAC Blocks vs Red Clay Bricks</h2>` (Comparative)
   * `<h2>AAC Blocks Load Bearing Capacity</h2>` (Technical/Faceted)
-* **FAQ Micro-Formatting:** Include structured Q&A paragraphs using `<details>` tags or standard HTML heading-paragraph pairs, wrapped in `FAQPage` schema.
+* **FAQ Micro-Formatting:** Include structured Q&A paragraphs using `<details>` tags or standard HTML heading-paragraph pairs, optionally wrapped in `FAQPage` schema (no Google rich result).
 
 ---
 

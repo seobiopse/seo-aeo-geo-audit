@@ -375,6 +375,9 @@ def parse_robots(text):
             sitemaps.append(v)
     star = groups.get("*", [])
     return {"sitemaps": sitemaps,
+            "bytes": len(text.encode("utf-8", errors="replace")),
+            "unsupported_noindex": any(re.match(r"\s*noindex\s*:", ln, re.I) for ln in text.splitlines()),
+            "crawl_delay": any(re.match(r"\s*crawl-delay\s*:", ln, re.I) for ln in text.splitlines()),
             "blanket_disallow": ("disallow", "/") in star and ("allow", "/") not in star,
             "disallow_rules": [v for k, v in star if k == "disallow" and v][:20],
             "ai_bots_blocked": sorted(ua for ua in groups if ua in ("gptbot", "claudebot", "ccbot", "perplexitybot", "google-extended")
@@ -446,6 +449,12 @@ def build_hints(pages, robots, rtxt_status, sm_entries, sm_info, tracking_cov, o
         hint("robots-blanket-disallow", "critical", "robots.txt disallows the whole site for all crawlers", ref="TECH-01")
     if rtxt_status == 200 and not robots["sitemaps"]:
         hint("robots-no-sitemap", "low", "robots.txt has no Sitemap: line", ref="TECH-03")
+    if rtxt_status == 200 and robots.get("bytes", 0) > 500 * 1024:
+        hint("robots-over-500kib", "high", "robots.txt is over 500 KiB. Google ignores content past that limit", ref="TECH-01")
+    if robots.get("unsupported_noindex"):
+        hint("robots-noindex-line", "medium", "robots.txt contains a Noindex: line. Google does not support noindex in robots.txt; use a meta robots tag or X-Robots-Tag", ref="TECH-01")
+    if robots.get("crawl_delay"):
+        hint("robots-crawl-delay", "info", "robots.txt uses Crawl-delay. Google does not support it (Bing does)", ref="TECH-01")
 
     for p in pages:
         if p.get("error"):
@@ -467,7 +476,7 @@ def build_hints(pages, robots, rtxt_status, sm_entries, sm_info, tracking_cov, o
     multi_h1 = [p["url"] for p in ok if p.get("h1_count", 0) > 1]
     none_h1 = [p["url"] for p in ok if p.get("h1_count", 0) == 0]
     if none_h1:
-        hint("no-h1", "high", "No <h1> in raw HTML", none_h1, "TECH-05")
+        hint("no-h1", "medium", "No <h1> in raw HTML (Google can use it as a title signal; heading count/order otherwise do not matter for Search)", none_h1, "TECH-05")
     if multi_h1:
         hint("multiple-h1", "low", "More than one <h1>", multi_h1, "TECH-05")
     noidx = [p["url"] for p in ok if "noindex" in ((p.get("meta_robots") or "") + (p.get("headers", {}).get("x-robots-tag") or "")).lower()]
@@ -499,9 +508,16 @@ def build_hints(pages, robots, rtxt_status, sm_entries, sm_info, tracking_cov, o
     b64 = [p["url"] for p in ok if p.get("inline_base64_chars", 0) > 50_000]
     if b64:
         hint("inline-base64", "medium", "More than ~50 KB of inline base64 images in the HTML", b64, "TECH-09")
-    big = [p["url"] for p in ok if p.get("bytes", 0) > 500_000]
+    big = [p["url"] for p in ok if 500_000 < p.get("bytes", 0) <= 2 * 1024 * 1024]
     if big:
         hint("large-html", "medium", "HTML document over 500 KB (uncompressed)", big, "TECH-09")
+    over2 = [p["url"] for p in ok if p.get("bytes", 0) > 2 * 1024 * 1024]
+    if over2:
+        hint("html-over-2mb", "high", "HTML over 2 MB (uncompressed). Googlebot processes only the first 2 MB, so later content and links may be ignored", over2, "TECH-08")
+    retired = {"FAQPage", "HowTo", "SearchAction", "SpecialAnnouncement", "ClaimReview", "PracticeProblem"}
+    ret = [p["url"] for p in ok if retired & set(p.get("jsonld_types", []))]
+    if ret:
+        hint("retired-markup-present", "info", "JSON-LD for features Google no longer shows (FAQPage, HowTo, SearchAction sitelinks search box, SpecialAnnouncement, ClaimReview, PracticeProblem). Harmless, but it earns no Google rich result", ret, "TECH-06")
     slow = [p["url"] for p in ok if (p.get("ttfb_ms") or 0) > 800]
     if slow:
         hint("slow-ttfb", "medium", "Time to first byte over 800 ms from this location. Re-test, since one sample is noisy", slow, "TECH-09")

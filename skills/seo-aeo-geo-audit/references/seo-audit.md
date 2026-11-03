@@ -4,6 +4,8 @@ Use any time an engineer is working on a page — during dev on localhost, on a 
 
 Mark each item `pass`, `warn`, or `fail`. Use the issue framework for anything not a pass.
 
+> Google-sourced facts in this checklist were re-checked on 2026-11-03. See `google-guidance-alignment.md` for sources and for features Google has retired.
+
 ## Table of contents
 
 1. [Crawl & indexation controls](#1-crawl--indexation-controls)
@@ -29,6 +31,7 @@ Mark each item `pass`, `warn`, or `fail`. Use the issue framework for anything n
 - **1.5** `<meta name="googlebot">` and `<meta name="bingbot">` are intentional if present.
 - **1.6** Pages return HTTP 200, not 301/302/307/308/404/410/5xx.
 - **1.7** No `Disallow: /` for critical bot user-agents (Googlebot, Bingbot, DuckDuckBot).
+- **1.8** Noindexed pages are not blocked in `robots.txt` (Google must crawl the page to see the tag). `noindex` inside `robots.txt` is not supported.
 
 ## 2. URL structure & redirects
 
@@ -36,7 +39,7 @@ Mark each item `pass`, `warn`, or `fail`. Use the issue framework for anything n
 - **2.2** Trailing-slash policy consistent (all or none).
 - **2.3** `www` vs `non-www` redirects to one canonical host.
 - **2.4** `http://` 301-redirects to `https://`.
-- **2.5** No redirect chains of more than one hop.
+- **2.5** No redirect chains of more than one hop (Googlebot follows up to 10 hops; fewer is better). Permanent moves use 301/308.
 - **2.6** No internal links point to redirected URLs.
 - **2.7** 404 page returns HTTP 404 (not 200 with a "not found" body).
 
@@ -49,17 +52,18 @@ For React / Next.js codebases, also read `crawlability-react.md` for framework-s
 - **3.3** No critical content inside a `<noscript>` fallback only.
 - **3.4** With JS disabled in Chrome DevTools, the page still shows critical text and navigation.
 - **3.5** No User-Agent-based content swapping ("cloaking") — same URL returns same content for humans and bots.
+- **3.6** JavaScript does not change a canonical or robots meta set in the HTML (Google may keep the HTML value; a `noindex` in HTML can stop rendering). Dynamic rendering is a workaround, not a fix: prefer SSR, static rendering or hydration.
 
 ## 4. `<head>` metadata
 
-- **4.1** `<title>` present, unique per page, 30–60 chars.
-- **4.2** `<meta name="description">` present, 110–160 chars, distinct from title.
+- **4.1** `<title>` present, unique, descriptive and concise. Google sets no length limit and truncates to the device width, so ~60 characters is a display heuristic, not a rule. Flag empty, duplicate, vague, stuffed or boilerplate titles.
+- **4.2** `<meta name="description">` present, unique, distinct from the title. Google sets no length limit and often builds snippets from page content instead; ~110–160 characters is a display heuristic.
 - **4.3** `<link rel="canonical" href="...">` absolute self-URL for unique pages.
 - **4.4** `<meta charset="utf-8">` within the first 1024 bytes.
 - **4.5** `<meta name="viewport" content="width=device-width, initial-scale=1">` present.
 - **4.6** OpenGraph: `og:title`, `og:description`, `og:url`, `og:image`, `og:type`.
 - **4.7** Twitter Card: `twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`.
-- **4.8** Favicon link(s) — PNG + Apple touch.
+- **4.8** Favicon: `<link rel="icon">` on the home page, square, at least 8x8 px (more than 48x48 recommended), one per hostname, crawlable by Googlebot and Googlebot-Image.
 - **4.9** No duplicate tags in `<head>`.
 - **4.10** `<html lang="xx">` set correctly.
 
@@ -71,7 +75,7 @@ For depth on `@graph`, `@id` cross-references, and per-page-type recipes, also r
 - **5.2** Homepage has `Organization` or `LocalBusiness` with name, logo, URL, `sameAs`.
 - **5.3** Article/blog pages have `Article` or `NewsArticle` with `headline`, `image`, `datePublished`, `dateModified`, `author` (typed `Person`), `publisher`.
 - **5.4** Product pages have `Product` with `name`, `image`, `description`, `sku`, `brand`, `offers`.
-- **5.5** FAQ pages have `FAQPage` — visibility requirement (every Q/A visible on the page).
+- **5.5** `FAQPage` markup is optional: Google no longer shows FAQ rich results. If present, every Q/A matches visible text. Absence is `Info`.
 - **5.6** `BreadcrumbList` on pages with visible breadcrumbs.
 - **5.7** Schema passes https://search.google.com/test/rich-results with no errors.
 - **5.8** All `@id` values are absolute URLs.
@@ -79,8 +83,8 @@ For depth on `@graph`, `@id` cross-references, and per-page-type recipes, also r
 
 ## 6. Content & heading hierarchy
 
-- **6.1** Exactly one `<h1>` per page.
-- **6.2** Heading levels don't skip.
+- **6.1** One clear `<h1>` per page. Google does not require exactly one and says heading order and count do not matter for Search, so multiple H1s or skipped levels are `Low` (usability and accessibility). A missing H1 is `Medium`: Google can use it as a title signal.
+- **6.2** Heading levels don't skip (accessibility, `Low`).
 - **6.3** Headings are semantic `<h1>`–`<h6>`, never `<div class="text-2xl font-bold">` used as a heading.
 - **6.4** Main content in `<main>` / `<article>`.
 - **6.5** Content above the fold answers the user's question within the first 100 words where possible.
@@ -91,7 +95,7 @@ Only if the site has multiple languages/regions.
 
 - **7.1** `hreflang` includes every variant + self-referencing tag.
 - **7.2** `x-default` hreflang present.
-- **7.3** ISO 639-1 language codes; ISO 3166-1 region codes.
+- **7.3** ISO 639-1 language codes; ISO 3166-1 region codes. A country code alone is invalid; `es-419` is not supported. Return links are required (unpaired tags are ignored). hreflang can be given in HTML, an HTTP header or a sitemap; all three together add nothing.
 - **7.4** Hreflang URLs return HTTP 200.
 - **7.5** `og:locale` matches `<html lang>`.
 
@@ -117,6 +121,7 @@ Only if the site has multiple languages/regions.
 - **9.6** Critical render-blocking resources minimised.
 - **9.7** Fonts use `font-display: swap` and `<link rel="preload">`.
 - **9.8** Third-party scripts audited.
+- **9.9** Calibrate claims: Google has no single "page experience signal". Core Web Vitals are the only part its ranking systems use. HTTPS, mobile display and interstitials are worth fixing but are not direct ranking inputs.
 
 ## 10. Security & accessibility basics
 

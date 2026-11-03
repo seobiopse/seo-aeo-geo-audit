@@ -88,7 +88,7 @@ Shopify auto-generates `/collections/all` which lists every product. This page i
 
 Shopify paginates collections at `?page=2`. Ensure paginated pages have:
 1. Self-referencing canonical (not canonical → page 1)
-2. `rel="prev"` / `rel="next"` links (deprecated but still used by some crawlers)
+2. `rel="prev"` / `rel="next"` links (Google no longer uses them; other crawlers may)
 
 ---
 

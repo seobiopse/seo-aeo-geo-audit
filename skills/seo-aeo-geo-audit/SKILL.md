@@ -5,7 +5,7 @@ license: MIT-Commons-Clause (see LICENSE; no resale without a commercial license
 compatibility: Works in any Agent Skills host (Claude, Claude Code, Codex/ChatGPT, Antigravity). Live-site checks need web or browser access; report script needs Python 3.8+.
 metadata:
   author: Girish Kumar G
-  version: "2.2.0"
+  version: "2.3.0"
   homepage: https://seobiopse.com
 ---
 
@@ -153,7 +153,7 @@ When running `/full-audit`, also produce two numeric grades:
 
 1. **SEO Quality Score (0–100)** — run the rubric in `seo-quality-score-rubric.md`. Detect page type (Landing/Money vs Blog/Article) from URL + schema + content. Score each of: LSI term coverage, semantic variants, named entities, content depth, sentiment alignment, keyword targeting discipline, trust signal density (for Landing/Money) OR readability (for Blog/Article).
 
-2. **E-E-A-T Score (0–100)** — run the rubric in `eeat-score-rubric.md`. Score each pillar (Experience / Expertise / Authoritativeness / Trust) with its sub-signals. Weights differ by page type (Trust is 35/100 on Landing/Money but 20/100 on Blog/Article; Experience is 30/100 on Blog/Article but 25/100 on Landing/Money).
+2. **E-E-A-T Score (0–100)** — run the rubric in `eeat-score-rubric.md`. Google says E-E-A-T is not itself a ranking factor: present this as the plugin's heuristic proxy for quality-rater signals, never as a Google metric. Score each pillar (Experience / Expertise / Authoritativeness / Trust) with its sub-signals. Weights differ by page type (Trust is 35/100 on Landing/Money but 20/100 on Blog/Article; Experience is 30/100 on Blog/Article but 25/100 on Landing/Money).
 
 Both scores include a `top_improvements` list — 2–3 specific changes that would raise the score most. These are added to the JSON under `scores.seo_quality` and `scores.eeat`. The generator renders them as visual scorecards at the top of the HTML report.
 
@@ -172,13 +172,15 @@ On `/full-audit` and on `/ai-citation-audit`, also emit an **AI Citation Readine
 
 - **Critical** — Page is effectively invisible or broken (noindex shipped, robots blocking, 5xx, missing `<title>`, server content hidden from bots).
 - **High** — Significant SEO/AEO/GEO value lost (missing canonical/H1, no schema on eligible page, CWV well below thresholds).
-- **Medium** — Measurable but recoverable (thin meta description, missing OpenGraph, inconsistent heading hierarchy, no author schema).
-- **Low** — Polish (title slightly long, minor alt-text gaps, missing favicon variants).
+- **Medium** — Measurable but recoverable (thin meta description, missing OpenGraph, no author schema).
+- **Low** — Polish (title slightly long, minor alt-text gaps, missing favicon variants, heading order: Google says heading order and count do not affect Search).
 - **Info** — Not a defect but worth documenting.
 
 ## Things this skill should NOT do
 
 - Don't guess rankings or traffic impact as hard numbers.
+- Don't present this plugin's scores (SEO Quality, E-E-A-T, AI Citation Readiness) as Google metrics, and don't promise AI Overview or LLM citations. Google states its AI features need no special optimization; see `references/google-guidance-alignment.md`.
+- Don't report absence of features Google has retired (FAQ and HowTo rich results, sitelinks search box) or of optional files Google does not use (`llms.txt`) as defects; at most `Info`.
 - Don't provide generic marketing advice. Fixes must be code-level where possible.
 - Don't re-run crawls if the user already provided data.
 - Don't skip the three-pillar impact breakdown. If a pillar isn't affected, say so.
@@ -191,6 +193,7 @@ On `/full-audit` and on `/ai-citation-audit`, also emit an **AI Citation Readine
 
 **Core checklists (always read for the matching mode):**
 - `references/issue-framework.md` — template for every finding (read every time)
+- `references/google-guidance-alignment.md` — what Google Search Central currently says (checked 2026-11-03): retired features, limits, the AI-features position. Read before attributing a claim to Google or setting severity on FAQ/HowTo markup, `llms.txt`, sitemap fields, title/description length or heading order
 - `references/seo-audit.md` — full SEO checklist (informative + transaction both)
 - `references/aeo.md` — AEO checklist for **informative** content (blogs, articles, guides)
 - `references/geo.md` — GEO checklist for **informative** content

@@ -1,5 +1,7 @@
 # GEO Audit Checklist — Generative Engine Optimization
 
+> **Calibration (checked 2026-11-03):** Google says its AI features (AI Overviews, AI Mode) need no special markup, `llms.txt`, AI text files, content "chunking" or rewriting for AI. Eligibility is normal indexing plus snippet eligibility. The methods in this file are heuristics for retrieval-readiness in non-Google systems and for general content quality. Do not present them as Google requirements, and do not promise citations. See `google-guidance-alignment.md`.
+
 GEO is about being *cited by a generative AI* in its response — ChatGPT, Perplexity, Claude, Gemini, Microsoft Copilot, Meta AI, Grok.
 
 Mark each `pass`, `warn`, or `fail`. Use the issue framework for findings not a pass.
@@ -24,7 +26,7 @@ Mark each `pass`, `warn`, or `fail`. Use the issue framework for findings not a 
   - **Retrieval crawlers** (important for live citation): `ChatGPT-User`, `OAI-SearchBot`, `PerplexityBot`, `Perplexity-User`, `ClaudeBot`, `Claude-SearchBot`, `Claude-Web`, `Applebot-Extended`
   - **Training crawlers** (controls inclusion in model training): `GPTBot`, `Google-Extended`, `anthropic-ai`, `CCBot`, `Bytespider`, `Meta-ExternalAgent`
 - **1.2** Not accidentally disallowing retrieval crawlers — blocking these silently removes the brand from live AI answers.
-- **1.3** `llms.txt` at `/llms.txt` follows the emerging spec (https://llmstxt.org/):
+- **1.3** (optional; `Info` if absent. Google does not use it, other AI products' support is unverified) `llms.txt` at `/llms.txt` follows the emerging spec (https://llmstxt.org/):
   ```
   # Brand name
   > One-sentence description.

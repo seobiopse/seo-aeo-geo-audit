@@ -1,5 +1,7 @@
 # AI Citation Audit — The Numbers That Decide If AI Cites Your Page
 
+> **Calibration (checked 2026-11-03):** Google says its AI features (AI Overviews, AI Mode) need no special markup, `llms.txt`, AI text files, content "chunking" or rewriting for AI. Eligibility is normal indexing plus snippet eligibility. The methods in this file are heuristics for retrieval-readiness in non-Google systems and for general content quality. Do not present them as Google requirements, and do not promise citations. See `google-guidance-alignment.md`.
+
 This guide defines a **quantitative** audit for AI citation readiness. It does not
 measure "content quality" in the human sense. It measures whether a page is
 **indexed where it matters**, **retrievable**, and **extractable** by the

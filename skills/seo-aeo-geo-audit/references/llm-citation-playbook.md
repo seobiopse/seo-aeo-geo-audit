@@ -1,5 +1,7 @@
 # LLM Citation Playbook (ChatGPT, Perplexity, Claude, Gemini, Copilot)
 
+> **Calibration (checked 2026-11-03):** Google says its AI features (AI Overviews, AI Mode) need no special markup, `llms.txt`, AI text files, content "chunking" or rewriting for AI. Eligibility is normal indexing plus snippet eligibility. The methods in this file are heuristics for retrieval-readiness in non-Google systems and for general content quality. Do not present them as Google requirements, and do not promise citations. See `google-guidance-alignment.md`.
+
 Optimization for non-Google generative AI citations. Distinct from Google AI Overview (see `ai-overview-playbook.md`) because the mechanics are different — these engines don't inherit Google's index.
 
 Read whenever the audit target wants to appear in ChatGPT browse answers, Perplexity results, Claude web search citations, Gemini responses, or Microsoft Copilot's Bing-backed results.
@@ -239,7 +241,7 @@ For important queries where you'd expect to be cited but aren't:
 
 - **LLM-1** `robots.txt` explicitly allows `ChatGPT-User`, `OAI-SearchBot`, `Perplexity-User`, `Claude-SearchBot`, `Applebot-Extended`, `Meta-ExternalFetcher` (retrieval crawlers).
 - **LLM-2** Training-crawler policy (`GPTBot`, `Google-Extended`, `anthropic-ai`, `CCBot`, `Bytespider`, `Meta-ExternalAgent`) is deliberate — not accidental.
-- **LLM-3** `llms.txt` present and follows the spec (see `robots-llms-txt-playbook.md`).
+- **LLM-3** (optional) `llms.txt` present and follows the spec (see `robots-llms-txt-playbook.md`).
 - **LLM-4** `Organization` schema `sameAs` array includes Wikipedia / Wikidata / Crunchbase / LinkedIn / primary socials.
 - **LLM-5** Author pages have `Person` schema with `sameAs` → LinkedIn / X / published work.
 - **LLM-6** Content is server-rendered (LLM crawlers mostly don't execute JS).

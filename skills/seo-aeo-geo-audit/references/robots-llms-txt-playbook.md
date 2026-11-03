@@ -7,7 +7,7 @@ Read whenever the audit involves crawler access decisions — or any time bot tr
 ## Two files, two jobs
 
 - **`robots.txt`** — the standards-based crawl-control file. Tells bots what they may and may not fetch. Does NOT control indexing (use `noindex` for that).
-- **`llms.txt`** — an emerging standard. Tells LLMs where your most important content lives and how to summarise it. Does NOT control access (use `robots.txt` for that).
+- **`llms.txt`** — an optional, emerging convention. Google says Search does not use it and that no special AI files are needed for AI Overviews or AI Mode; support in other AI products is unverified. It aims to tell LLMs where important content lives. Does NOT control access (use `robots.txt` for that).
 
 They work together, not interchangeably.
 
@@ -141,7 +141,7 @@ Disallow: /assets/
 Disallow: /_next/
 ```
 
-Googlebot needs CSS + JS to render the page. Blocking these breaks Mobile-Friendly test and ranking.
+Googlebot needs CSS + JS to render the page. Blocking these breaks rendering (check with URL Inspection) and can hurt indexing.
 
 ### 4.2 Blocking the sitemap path
 ```
@@ -180,6 +180,17 @@ Always include the trailing slash when you mean "directory".
 
 ### 4.7 Missing `Sitemap:` directive
 The `Sitemap:` directive isn't required, but including it lets bots discover your sitemap without needing to guess `/sitemap.xml`.
+
+## 4b. How Google handles robots.txt (verified 2026-11-03)
+
+- Supported fields: `user-agent`, `allow`, `disallow`, `sitemap`; `*` and `$` wildcards. **`crawl-delay` is not supported by Google.** Other fields are ignored. `noindex` inside robots.txt is not supported.
+- Size limit 500 KiB; content past it is ignored. UTF-8, named `robots.txt`, at the host root; each host, subdomain and port has its own file.
+- The most specific user-agent group wins and matching groups of the same agent are merged; the longest matching rule wins, and on a tie the least restrictive rule (allow) wins. `*` does not match the AdsBot crawlers.
+- Status handling: 2xx parsed; 3xx followed up to 5 hops, then treated as 404; 4xx except 429 treated as "no robots.txt"; 5xx or network failure pauses crawling for 12 hours, then the last good copy is used for up to 30 days.
+- Google caches robots.txt for up to about 24 hours. Use "Request a recrawl" in the Search Console robots.txt report to refresh sooner.
+- robots.txt blocks crawling, not indexing. A blocked URL can still appear without a description if it is linked. To keep a page out of the index, allow crawling and use `noindex`.
+- Fetch limits: Googlebot processes the first 2 MB of an HTML file (64 MB for PDF); Google's crawlers default to 15 MB.
+- `Google-Extended` limits use of content for AI training and grounding in other Google systems. It does not remove a page from Search or AI Overviews; use `nosnippet`, `data-nosnippet`, `max-snippet` or `noindex` to limit display.
 
 ## 5. llms.txt — the spec
 
@@ -225,7 +236,7 @@ A few paragraphs explaining what the site covers and who it's for. Keep under ~5
 
 ### Purpose
 
-`llms.txt` is to LLMs what `sitemap.xml` is to search engines — but curated and summarised. When an LLM needs to understand your site, it can read 50 lines of Markdown instead of crawling 10,000 pages.
+`llms.txt` is a proposed convention (llmstxt.org), not something Google Search uses. Do not describe it as the LLM equivalent of `sitemap.xml`. When an LLM needs to understand your site, it can read 50 lines of Markdown instead of crawling 10,000 pages.
 
 ## 6. llms-full.txt — when and how
 
@@ -279,7 +290,7 @@ Keep under 500 KB. Most LLMs cap the retrievable-file size around 1 MB but chunk
 ### llms.txt validation
 - Open https://llmstxt.org/ for the reference spec.
 - Fetch your file: `curl https://example.com/llms.txt` — should return HTTP 200 and Markdown.
-- Try asking Claude / ChatGPT / Perplexity a question about your product; if it cites your llms.txt URLs, it's working.
+- Try asking Claude / ChatGPT / Perplexity a question about your product; a citation of your llms.txt URLs would be anecdotal, not proof that the file is used.
 
 ### Cross-bot consistency check
 
@@ -303,7 +314,7 @@ All bots should see the same file. If your CDN or WAF serves a different version
 - **RL-7** AI retrieval crawlers (ChatGPT-User, OAI-SearchBot, Perplexity-User, Claude-SearchBot, Applebot-Extended) explicitly allowed (or covered by `User-agent: *` with no disallow).
 - **RL-8** AI training crawler policy (GPTBot, Google-Extended, CCBot, Bytespider, anthropic-ai) deliberate — not accidental.
 - **RL-9** No cloaking: same `robots.txt` served to all user agents (cross-bot check above).
-- **RL-10** `llms.txt` present at `/llms.txt`, HTTP 200, `text/markdown`.
+- **RL-10** (optional) `llms.txt` present at `/llms.txt`, HTTP 200, `text/markdown`.
 - **RL-11** `llms.txt` follows the spec: one `#` H1, `>` blockquote description, `##` sections, markdown links with descriptions.
 - **RL-12** `llms.txt` contains no internal URLs, no unpublished content, no PII.
 - **RL-13** `llms-full.txt` (if used): < 500 KB, well-structured Markdown.
@@ -316,6 +327,6 @@ All bots should see the same file. If your CDN or WAF serves a different version
 - Blanket `Disallow: /` in prod `robots.txt` → **Critical** (page does not exist for search)
 - CSS/JS blocked in `robots.txt` → **High** (breaks Googlebot rendering)
 - Missing `Sitemap:` directive → **Low**
-- No `llms.txt` → **Medium** (missed GEO opportunity)
+- No `llms.txt` → **Info** (optional; Google does not use it)
 - AI retrieval bots disallowed → **High** (silent drop in AI citations)
 - User-agent typo → **Medium** (rule has no effect)

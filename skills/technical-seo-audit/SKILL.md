@@ -5,7 +5,7 @@ license: MIT-Commons-Clause (see LICENSE; no resale without a commercial license
 compatibility: Works in any Agent Skills host (Claude, Claude Code, Codex/ChatGPT, Antigravity). Needs web or browser access for live checks and Python 3.8+ for the probe script. Best with the sibling seo-aeo-geo-audit skill installed (stack profiles, report generator, PageSpeed runner); works without it.
 metadata:
   author: Girish Kumar G
-  version: "2.2.0"
+  version: "2.3.0"
   homepage: https://seobiopse.com
 ---
 
@@ -20,6 +20,7 @@ Engineering-only scope: what can be fixed in code, config or infrastructure so t
 3. **Sample, and say so.** Coverage statements (tags on all pages, canonicals on all pages) apply to the sampled pages. State the sample size and templates covered.
 4. **Only audit what the user is authorised to test.** One request per page, small sample, no crawling beyond the target host.
 5. **Credentials stay out of files.** See the PageSpeed step.
+6. **Calibrate claims about Google.** Limits, retired features and thresholds were checked against Google Search Central on 2026-11-03. When the sibling skill is installed, read `../seo-aeo-geo-audit/references/google-guidance-alignment.md` before attributing anything to Google. Features Google no longer shows (FAQ and HowTo rich results, sitelinks search box) and optional files Google does not use (`llms.txt`) are `Info`, never defects. Google says heading order and count do not affect Search, so heading findings are `Low`.
 
 ## Inputs
 
@@ -99,4 +100,4 @@ Fallback without the generator: write `technical-seo-audit-<date>.md` with these
 - `references/javascript-rendering.md`: raw versus rendered method, framework anti-patterns, Next.js App/Pages Router checks
 - `references/tracking-tags.md`: tag coverage method, browser verification, how to judge results
 - `scripts/tech_probe.py`: sampled raw-HTML probe (stdlib only)
-- Sibling skill `seo-aeo-geo-audit` (optional): stack profiles, `references/issue-framework.md`, `scripts/generate_report.py`, `pagespeed.py`, `pagespeed.md`, `tracking-validation.md`
+- Sibling skill `seo-aeo-geo-audit` (optional): `references/google-guidance-alignment.md`, stack profiles, `references/issue-framework.md`, `scripts/generate_report.py`, `pagespeed.py`, `pagespeed.md`, `tracking-validation.md`

@@ -1,6 +1,8 @@
 # Google AI Overview Playbook
 
-Google AI Overview (AIO, formerly SGE) is the AI-generated answer box that appears above organic search results for ~30% of queries. Getting cited in an AIO is a different problem from generic AEO — it has its own signal weighting that's distinct from ChatGPT / Perplexity / Claude citation (see `llm-citation-playbook.md`).
+> **Calibration (checked 2026-11-03):** Google says its AI features (AI Overviews, AI Mode) need no special markup, `llms.txt`, AI text files, content "chunking" or rewriting for AI. Eligibility is normal indexing plus snippet eligibility. The methods in this file are heuristics for retrieval-readiness in non-Google systems and for general content quality. Do not present them as Google requirements, and do not promise citations. See `google-guidance-alignment.md`.
+
+Google AI Overview (AIO, formerly SGE) is the AI-generated answer box that appears above organic search results for a subset of queries (Google says it often does not trigger). Getting cited in an AIO is a different problem from generic AEO — it has its own signal weighting that's distinct from ChatGPT / Perplexity / Claude citation (see `llm-citation-playbook.md`).
 
 Read whenever the audit target is a page that should appear in Google search results and the team wants to be cited in AI Overviews.
 
@@ -45,7 +47,7 @@ Your page gets cited if:
 2. It contains a passage that directly answers the user's question.
 3. Google's quality systems rate the page as reliable.
 
-**No ranking in top 10 = no AIO citation.** AIO doesn't rescue low-ranking pages.
+Google says AI Overviews and AI Mode use query fan-out (several related searches), so a cited page may not rank in the top 10 for the typed query, and ranking highly does not guarantee a citation. Eligibility is being indexed and eligible to show with a snippet; Google lists no additional technical requirements. Do not promise citations.
 
 ## 2. Passage Indexing — the specific unit AIO quotes
 
@@ -169,6 +171,8 @@ AIO source selection heavily weighs E-E-A-T. Pages with strong signals (named ex
 For queries with time-sensitive answers (pricing, "current best", latest version), AIO heavily prefers recently-updated sources. `dateModified` within the last 3 months is a strong signal.
 
 ## 6. Measurement — seeing your AIO presence
+
+Google: AI Overviews and AI Mode clicks are counted in the Search Console Performance report under the "Web" search type, and `ai-optimization-guide` describes a Generative AI performance report. Controls to limit display: `nosnippet`, `data-nosnippet`, `max-snippet`, `noindex` (Googlebot access is governed by robots.txt). One Google page says the site must be included in "Search generative AI features" in Search Console; another does not mention it, so verify in the property.
 
 ### Google Search Console
 - **Performance** report — click through rate for queries where your page ranks #1–8. If CTR is lower than expected for your position, AIO may be taking the clicks.

@@ -95,7 +95,7 @@ Run this checklist to verify a page's readiness for AI agents and agentic browse
 * **[ ] AXO-1.5: Keyboard Tab Accessibility** — All interactive components can be reached and activated using the `Tab` and `Enter`/`Space` keys. No hidden modal elements capture focus.
 * **[ ] AXO-1.6: Dynamic JS Hydration Resiliency** — If JavaScript execution is blocked or experiences an origin error, the main text layout, product catalog, and images remain completely visible (fails gracefully).
 * **[ ] AXO-1.7: robots.txt Live Bots Access** — robots.txt permits live user-triggered agents (`Perplexity-User`, `Claude-SearchBot`, `Applebot-Extended`) to access indexable pages.
-* **[ ] AXO-1.8: llms.txt & llms-full.txt** — Plat Markdown indexes are present at `/llms.txt` and `/llms-full.txt` to guide model context discovery.
+* **[ ] AXO-1.8 (optional, unproven): llms.txt & llms-full.txt** — Plat Markdown indexes are present at `/llms.txt` and `/llms-full.txt` to guide model context discovery.
 
 ---
 

@@ -253,7 +253,7 @@ FAQ sections on money pages are uniquely valuable. They:
 1. Answer objections that silently kill conversion.
 2. Feed Google AI Overviews for commercial queries.
 3. Give LLMs structured Q/A to cite.
-4. Get indexed as `FAQPage` schema (rich result eligibility — though Google narrowed this in 2023).
+4. Optionally mark up as `FAQPage` (no Google rich result: Google stopped showing FAQ rich results in 2026).
 
 ### Money-page FAQ pattern
 
@@ -374,7 +374,7 @@ Transaction-intent-specific checks. Run in addition to the regular SEO/AEO/GEO c
 - **TX-6** `LocalBusiness` or `Organization` schema present with full address + phone + sameAs.
 - **TX-7** `Service` or `Product` schema with `offers` (price + currency + availability).
 - **TX-8** `aggregateRating` in schema ONLY if verifiable ratings exist. Values match what's visible on page.
-- **TX-9** `FAQPage` schema present on pricing / product detail pages. Every Q/A matches visible text.
+- **TX-9** (optional) `FAQPage` schema present on pricing / product detail pages. Every Q/A matches visible text.
 - **TX-10** Semantic `<table>` used for pricing comparisons (not div-based).
 - **TX-11** Address, phone, email visible in footer as text + `tel:` / `mailto:` links.
 - **TX-12** Privacy policy + Terms of Service + Refund Policy (if e-commerce) linked from footer.

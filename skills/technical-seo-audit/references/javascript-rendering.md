@@ -6,6 +6,8 @@ Goal: find out what a crawler gets from the server alone, what it gets after Jav
 
 - Googlebot fetches the HTML first and renders JavaScript later in a separate step. Content that exists only after rendering is indexed later and less reliably.
 - Many other crawlers, including most AI crawlers, do not run JavaScript. Treat raw HTML as the safe baseline and verify each crawler's current documentation before claiming otherwise.
+- Google renders with an evergreen headless Chromium; pages with HTTP 200 enter a render queue (no numeric timeout is published), and non-200 pages may skip rendering.
+- Googlebot processes only the first 2 MB of an HTML file.
 - So: anything SEO-critical (title, canonical, robots, H1, main copy, internal links, JSON-LD) should be in the server response.
 
 ## 2. Method: raw vs rendered
@@ -43,6 +45,10 @@ State plainly in the report which side each fact came from (raw or rendered). Th
 | Content or redirects differ by user agent | Cloaking risk | Same content for all agents |
 | Client-fetched data behind CORS or auth that fails for bots | Blank sections | Fetch on the server |
 | Hydration errors | Page may blank or re-render differently | Fix mismatch; monitor |
+| JS changes a canonical or robots meta that the HTML sets | Google may keep the HTML value; a `noindex` in HTML can stop rendering, so JS removal may fail | Set both on the server; JS only if the HTML has none |
+| Permission prompts, cookies/storage between loads, WebSockets/WebRTC | Googlebot declines prompts, clears storage, and does not support those transports | Provide a non-permission, HTTP fallback path |
+| Fragment (`#/route`) routing | Unreliable for crawling; the AJAX-crawling scheme was deprecated in 2015 | History API with real paths |
+| Lazy loading that needs scroll or click | Google does not scroll or click | Native `loading="lazy"`/IntersectionObserver, nothing above the fold lazy; infinite scroll needs a unique URL per chunk |
 
 Dynamic rendering (serving bots a prerendered copy) is a workaround, not a recommendation. Prefer SSR/SSG.
 
