@@ -4,6 +4,24 @@ All notable changes to the SEO Audit Plugin are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] — 2026-11-03
+
+### Added
+
+- **Dedicated technical SEO audit skill** (`skills/technical-seo-audit/`, command `/technical-seo-audit`). Engineering-only scope with a 13-section `TECH-01` to `TECH-13` checklist: crawl and indexation, status codes and redirects, sitemaps, canonicals, document head, structured-data validity, stack detection, JavaScript and rendering, performance, security hygiene, tracking tags, international, images. Every item ends as pass, warn, fail or `not measured`.
+- **`scripts/tech_probe.py`**: samples pages from the sitemap and reports, from raw HTML and headers, status and redirects, head metadata, JSON-LD, framework signals (Next.js App/Pages Router, Nuxt, Angular, Laravel, WordPress, Shopify, Wix, Webflow), JS-shell suspects, robots.txt and sitemap sanity, and rule-based hints that cite checklist ids. Same-site requests only; standard library only.
+- **Tracking-tag validation across pages.** The probe reports per-tag coverage (GTM, GA4, Google Ads, Meta, Microsoft UET, LinkedIn, TikTok, Hotjar, Clarity, Segment, HubSpot, Plausible), IDs, pages missing a tag, duplicate or retired tags. `references/tracking-tags.md` adds the browser verification steps, since tag managers inject tags the raw HTML does not show.
+- **JavaScript and Next.js audit method** (`references/javascript-rendering.md`): raw versus rendered comparison, framework anti-patterns, and App Router and Pages Router checks.
+- PageSpeed Insights is part of the technical flow (optional key; `not measured` without one).
+- `generate_report.py` accepts `mode: "technical"`. The main skill points to the new one for technical-only requests.
+
+### Changed
+
+- `tools/package.sh` builds one zip per skill. README, INSTALL.md and AGENTS.md describe both skills.
+
+### Contributors
+
+- Claude (Anthropic) co-authored the technical SEO audit skill.
 ## [2.1.0] — 2026-11-03
 
 ### Added

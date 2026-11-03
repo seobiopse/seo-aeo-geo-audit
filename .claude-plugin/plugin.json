@@ -1,8 +1,8 @@
 {
   "name": "seo-aeo-geo-audit",
   "displayName": "SEO + AEO + GEO Audit",
-  "version": "2.1.0",
-  "description": "SEO audit skill for AI agents: technical SEO, AEO, GEO and AI search optimization audits for any website. Markdown + interactive HTML SEO audit reports with before/after code and 0-100 scoring (SEO Quality, E-E-A-T, AI Citation Readiness).",
+  "version": "2.2.0",
+  "description": "SEO audit skills for AI agents: a full SEO/AEO/GEO suite plus a dedicated technical SEO audit (JavaScript/Next.js rendering, tracking-tag coverage, optional PageSpeed) for any website. Markdown + interactive HTML SEO audit reports with before/after code and 0-100 scoring (SEO Quality, E-E-A-T, AI Citation Readiness).",
   "author": {
     "name": "Girish Kumar G",
     "url": "https://in.linkedin.com/in/girish-theseoguy"

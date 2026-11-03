@@ -5,7 +5,7 @@ license: MIT-Commons-Clause (see LICENSE; no resale without a commercial license
 compatibility: Works in any Agent Skills host (Claude, Claude Code, Codex/ChatGPT, Antigravity). Live-site checks need web or browser access; report script needs Python 3.8+.
 metadata:
   author: Girish Kumar G
-  version: "2.1.0"
+  version: "2.2.0"
   homepage: https://seobiopse.com
 ---
 
@@ -47,6 +47,8 @@ If the request touches SEO/AEO/GEO even loosely, prefer this skill over answerin
 | **agentic-browsing** | Agentic Browsing (SXO / AXO) readiness | `references/agentic-browsing.md` | `/agentic-browsing-audit` |
 | **full** | All pillars in sequence (pre-ship sign-off) | All reference guides | `/full-audit` |
 | **crawl-check** | Scoped to React/Next.js/SPA rendering — what each crawler actually sees | `references/crawlability-react.md` | `/crawl-check` |
+
+For a technical-only audit (crawl, indexation, redirects, sitemaps, canonicals, JavaScript/Next.js rendering, tracking-tag coverage, optional PageSpeed), the sibling `technical-seo-audit` skill (`/technical-seo-audit`) is the focused option. This skill remains the choice for content, AEO, GEO, AI citation and VDS.
 
 ## The two input methods
 

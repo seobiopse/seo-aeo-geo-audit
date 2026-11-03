@@ -17,7 +17,7 @@ Usage:
 Input JSON schema (v2):
 {
   "audit": {
-    "mode": "seo" | "aeo" | "geo" | "full" | "crawl-check",
+    "mode": "seo" | "aeo" | "geo" | "full" | "crawl-check" | "technical",
     "target": "https://example.com",
     "date": "YYYY-MM-DD",
     "input_method": "live-url" | "code-snippet",

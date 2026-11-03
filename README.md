@@ -1,9 +1,9 @@
 # SEO Audit Skill for AI Agents: Technical SEO + AEO + GEO + AI Search Optimization
 
-**v2.1.0** — a free, open Agent Skill that runs a complete search-engine-ready audit on any website: **technical SEO audit**, **answer engine optimization (AEO)**, **generative engine optimization (GEO)** and **AI citation readiness** (ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews, Bing Copilot). It works in Claude, Claude Code, Codex/ChatGPT agents and Google Antigravity, and outputs a ticket-ready Markdown **SEO audit report** plus an interactive HTML report with before/after code.
+**v2.2.0** — a free, open Agent Skill that runs a complete search-engine-ready audit on any website: **technical SEO audit**, **answer engine optimization (AEO)**, **generative engine optimization (GEO)** and **AI citation readiness** (ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews, Bing Copilot). It works in Claude, Claude Code, Codex/ChatGPT agents and Google Antigravity, and outputs a ticket-ready Markdown **SEO audit report** plus an interactive HTML report with before/after code.
 
 [![License: MIT + Commons Clause](https://img.shields.io/badge/License-MIT%20%2B%20Commons%20Clause-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.2.0-blue.svg)](CHANGELOG.md)
 [![Agent Skills](https://img.shields.io/badge/format-Agent%20Skills-navy.svg)](https://agentskills.io/specification)
 
 ## Quick facts
@@ -11,7 +11,7 @@
 | | |
 |---|---|
 | **What it is** | An AI-agent SEO audit tool: a skill folder that tells your agent how to audit a site, plus a report generator |
-| **Audits** | Technical SEO (~80 checks), AEO, GEO, AI citation readiness, agentic-browsing readiness, VDS (visibility-to-demand), optional PageSpeed Insights (Lighthouse + real-user Core Web Vitals) |
+| **Audits** | Technical SEO (~80 checks, plus a dedicated `technical-seo-audit` skill with JavaScript/Next.js rendering and tracking-tag coverage checks), AEO, GEO, AI citation readiness, agentic-browsing readiness, VDS (visibility-to-demand), optional PageSpeed Insights (Lighthouse + real-user Core Web Vitals) |
 | **Scores** | SEO Quality (0-100), E-E-A-T (0-100), AI Citation Readiness (0-100) |
 | **Stacks** | React, Next.js, WordPress, Shopify, static HTML, Angular, PHP, Wix, Webflow |
 | **Site types** | 10 archetypes: marketing, blog, e-commerce, SaaS, job board, staffing, course platform, docs, multi-product, personal |
@@ -77,7 +77,7 @@ The core audit methodology (SEO/AEO/GEO checklists, scoring, issue framework) is
 
 ### Installation (end users)
 
-One skill folder (`skills/seo-aeo-geo-audit/`) follows the open [Agent Skills](https://agentskills.io/specification) format, so it runs on several platforms. Full steps, Windows commands and a capability matrix are in [INSTALL.md](INSTALL.md).
+Two skill folders (`skills/seo-aeo-geo-audit/` and the focused `skills/technical-seo-audit/`) follow the open [Agent Skills](https://agentskills.io/specification) format, so it runs on several platforms. Full steps, Windows commands and a capability matrix are in [INSTALL.md](INSTALL.md).
 
 | Platform | Quick install |
 |---|---|
@@ -105,7 +105,7 @@ Claude asks a few clarifying questions, detects your site's archetype and stack,
 
 Open the HTML. Tick off findings as you ship fixes. A "Ready to re-run" panel appears when you've addressed every finding.
 
-### Eight slash commands
+### Nine slash commands
 
 | Command | Purpose |
 |---|---|
@@ -117,6 +117,7 @@ Open the HTML. Tick off findings as you ship fixes. A "Ready to re-run" panel ap
 | `/vds-audit` | Visibility-to-Demand System — maps crawl presence to conversion + authority |
 | `/full-audit` | All pillars + scoring + comprehensive deep-dives |
 | `/crawl-check` | Fast 14-check rendering-only audit for React/Next.js/SPA sites |
+| `/technical-seo-audit` | Dedicated technical SEO audit: crawl/indexation, redirects, sitemaps, canonicals, JavaScript and Next.js rendering, tracking-tag coverage across sampled pages, optional PageSpeed |
 
 ---
 
@@ -139,7 +140,7 @@ seo-aeo-geo-audit/
 ├── CHANGELOG.md                        # Version history
 ├── CONTRIBUTING.md                     # How to contribute + governance
 ├── LICENSE                             # MIT + Commons Clause
-├── commands/                           # 8 slash-command definitions
+├── commands/                           # 9 slash-command definitions
 │   ├── seo-audit.md
 │   ├── aeo-audit.md
 │   ├── geo-audit.md
@@ -147,8 +148,13 @@ seo-aeo-geo-audit/
 │   ├── agentic-browsing-audit.md
 │   ├── vds-audit.md
 │   ├── full-audit.md
-│   └── crawl-check.md
+│   ├── crawl-check.md
+│   └── technical-seo-audit.md
 └── skills/
+    ├── technical-seo-audit/            # Dedicated technical SEO skill
+    │   ├── SKILL.md
+    │   ├── references/                 # technical-checklist, javascript-rendering, tracking-tags
+    │   └── scripts/tech_probe.py       # Sampled raw-HTML probe (stdlib only)
     └── seo-aeo-geo-audit/
         ├── SKILL.md                    # The skill's "brain"
         ├── assets/
@@ -277,6 +283,7 @@ It is free to use, modify and self-host. You may not resell the software or offe
 
 See [CHANGELOG.md](CHANGELOG.md) for the full history. Highlights:
 
+- **v2.2.0 (2026-11-03)** — Dedicated technical SEO audit skill (`technical-seo-audit`, `/technical-seo-audit`). 13-section TECH checklist, a probe script that samples sitemap pages and reports raw-HTML facts and tracking-tag coverage, a JavaScript/Next.js rendering method (raw vs rendered, App and Pages Router), and PageSpeed integration. Anything untested is reported as `not measured`.
 - **v2.1.0 (2026-11-03)** — PageSpeed Insights + Laravel. New optional PageSpeed audit (`scripts/pagespeed.py`, `references/pagespeed.md`): asks for your API key, skips cleanly without one, keeps the key in memory only, and adds Lighthouse scores, Core Web Vitals field data and top fixes to the SEO and Full audit reports. The PHP profile gains Laravel live-site detection, Livewire/Inertia rendering checks and custom-store checks (PHP-21 to PHP-26).
 - **v2.0.0 (2026-10-19)** — Portable Agent Skill. The skill folder now follows the open Agent Skills spec and runs in Claude, Claude Code, Codex/ChatGPT agents and Google Antigravity. Renamed the skill, plugin and repo to `seo-aeo-geo-audit` (marketplace: `seobiopse-skills`), rewrote the README with quick facts and an FAQ, and added `INSTALL.md`, `AGENTS.md`, `docs/CHAT-PROMPT.md`, `tools/package.sh` and `CITATION.cff`.
 - **v1.9.1 (2026-10-19)** — Fixed author-name and title typos across docs, examples and the generated HTML report footer; bumped manifests for marketplace submission.
