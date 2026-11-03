@@ -335,7 +335,7 @@ def load_fanout(path, brands):
             qs.append(q)
         if qs:
             out.append({"name": name, "queries": qs})
-    return {"query": str(data.get("query", "")).strip(), "aspects": out,
+    return {"query": str(data.get("query", "")).strip(), "aspects": out, "sources": data.get("sources", []),
             "removed_branded": removed_brand, "removed_duplicates": removed_dupe}
 
 
@@ -383,6 +383,20 @@ def analyse(fanout, page, covered, partial):
     missing_terms = [{"term": display.get(t, t), "queries": n} for t, n in all_missing_terms.most_common(40)]
     return {"overall": overall, "total": total, "covered": c, "partial": p, "missing": total - c - p,
             "aspects": aspect_rows, "results": results, "gaps": gaps, "missing_terms": missing_terms}
+
+
+def describe_sources(fanout):
+    parts = []
+    for s in fanout.get("sources", []):
+        t = s.get("type")
+        if t == "serper_google_serp":
+            parts.append(f"Google SERP features (People also ask, Related searches) via Serper on {s.get('date', '')} "
+                         f"({s.get('gl', '')}/{s.get('hl', '')}, {s.get('requests', '?')} requests)")
+        elif t == "pasted":
+            parts.append(f"queries pasted from {s.get('label', 'another source')} on {s.get('date', '')}")
+        else:
+            parts.append(str(s.get("label") or t or "other source"))
+    return "Sub-queries: agent-generated estimates" + (" plus " + "; ".join(parts) if parts else ", with no real-search data added") + "."
 
 
 def grade(v):
@@ -502,6 +516,7 @@ li{{margin:6px 0}}li small{{color:var(--muted);display:block}}.two{{display:grid
 <p class="sub">Query: <b>{esc(fanout['query'])}</b> &middot; Page: {esc(page.get('source',''))} &middot; {today}</p>
 <section><div class="top"><div class="ring" {ring}><span>{res['overall']}%</span></div>
 <div><b>{grade(res['overall'])}</b><p class="sub">{res['total']} sub-queries in {len(res['aspects'])} aspects &middot; {fanout['removed_branded']} branded and {fanout['removed_duplicates']} duplicate removed &middot; {page['words']} words on the page</p>
+<p class="sub">{esc(describe_sources(fanout))}</p>
 <div class="stats"><div class="stat"><b style="color:var(--ok)">{res['covered']}</b>covered</div><div class="stat"><b style="color:var(--mid)">{res['partial']}</b>partial</div><div class="stat"><b style="color:var(--bad)">{res['missing']}</b>missing</div></div></div></div></section>
 <section><h2>Coverage by aspect</h2><p class="sub">Counts are covered / partial / missing. Score counts a partial as half.</p>{bars(res)}</section>
 <section><h2>Heat map</h2><p class="sub">One square per sub-query. Hover for the query.</p>{heat(res)}</section>
@@ -517,7 +532,7 @@ def render_md(fanout, page, res, comp, cres, bat, today):
     L = [f"# Fan-out coverage map", "", f"**Query:** {fanout['query']}  ", f"**Page:** {page.get('source','')}  ", f"**Date:** {today}", "",
          f"**Coverage score: {res['overall']}%** ({grade(res['overall'])}). {res['total']} sub-queries in {len(res['aspects'])} aspects: "
          f"{res['covered']} covered, {res['partial']} partial, {res['missing']} missing. "
-         f"Removed {fanout['removed_branded']} branded and {fanout['removed_duplicates']} duplicate sub-queries.", "",
+         f"Removed {fanout['removed_branded']} branded and {fanout['removed_duplicates']} duplicate sub-queries. {describe_sources(fanout)}", "",
          "## Coverage by aspect", "", "| Aspect | Score | Covered | Partial | Missing |", "|---|---|---|---|---|"]
     L += [f"| {a['name']} | {a['pct']}% | {a['covered']} | {a['partial']} | {a['missing']} |" for a in res["aspects"]]
     if bat:
@@ -574,6 +589,7 @@ def main():
     outdir = Path(a.output_dir); outdir.mkdir(parents=True, exist_ok=True)
     slug = a.name or ("fanout-map-" + re.sub(r"[^a-z0-9]+", "-", fanout["query"].lower()).strip("-")[:40] + "-" + today)
     payload = {"status": "ok", "query": fanout["query"], "page": page.get("source"), "date": today,
+               "sources": fanout["sources"], "sources_text": describe_sources(fanout),
                "removed_branded": fanout["removed_branded"], "removed_duplicates": fanout["removed_duplicates"],
                "result": res, "scores_block": scores_block(fanout, res)}
     if bat:

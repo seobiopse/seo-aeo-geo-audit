@@ -21,6 +21,7 @@ to the output, to a file, or into error messages.
 import argparse
 import json
 import os
+import re
 import sys
 import time
 import urllib.error
@@ -184,7 +185,9 @@ def main():
     args = p.parse_args()
 
     stdin_key = sys.stdin.readline() if args.key_stdin else ""
-    key = (stdin_key or args.key or os.environ.get("PAGESPEED_API_KEY") or "").strip()
+    key = (stdin_key or args.key or os.environ.get("PAGESPEED_API_KEY") or "")
+    # Keep printable ASCII only: Windows PowerShell prepends a hidden BOM (U+FEFF) to piped text, which corrupts a key.
+    key = re.sub(r"[^\x21-\x7e]", "", key)
     if not key:
         result = {
             "status": "skipped",

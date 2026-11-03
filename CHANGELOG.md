@@ -4,6 +4,23 @@ All notable changes to the SEO Audit Plugin are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.0] — 2026-11-03
+
+### Added
+
+- **Real-search data for the Fan-Out Mapper** (`scripts/fanout_enrich.py`, Step 2a of `references/fanout-mapper.md`). Same pattern as the PageSpeed key: `/fanout-map` asks for a Serper API key in the first message and waits ("skip" is accepted; the agent never skips on its own). With a key, the script adds Google's People Also Ask and Related Searches (plus a few second-level expansions) as labelled aspects, merges them idempotently into `fanout.json`, supports `--dry-run`, and returns competitor candidates (the user's own domain excluded) for battle mode.
+- **Connector fallback with permission.** With no key, the agent checks for connected Ahrefs, Semrush, SerpApi or OpenRush tools and asks before using any, naming what it will pull and that it may use credits. Results are labelled by source. Nothing is used without a clear yes.
+- **Paste-in import** (`--provider import --label ...`) for queries observed elsewhere.
+- Reports now state where the sub-queries came from (agent estimates, Serper, a connector, pasted queries).
+- Key safety matches PageSpeed: session-only, stdin or environment variable, never printed, written to a file or put in an error message, and the user is asked at the end whether to discard it. Test endpoint overrides are accepted only for localhost.
+
+### Fixed
+
+- **Keys piped from Windows PowerShell arrived corrupted.** PowerShell prepends a hidden byte-order mark to piped text, so a valid key sent with `--key-stdin` was rejected. Keys are now reduced to printable ASCII in `pagespeed.py` (both skill copies) and the new script.
+
+### Contributors
+
+- Claude (Anthropic) co-authored these changes.
 ## [2.5.0] — 2026-11-03
 
 ### Added

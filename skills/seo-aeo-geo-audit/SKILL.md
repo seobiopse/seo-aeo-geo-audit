@@ -5,7 +5,7 @@ license: MIT-Commons-Clause (see LICENSE; no resale without a commercial license
 compatibility: Works in any Agent Skills host (Claude, Claude Code, Codex/ChatGPT, Antigravity). Live-site checks need web or browser access; report script needs Python 3.8+.
 metadata:
   author: Girish Kumar G
-  version: "2.5.0"
+  version: "2.6.0"
   homepage: https://seobiopse.com
 ---
 
@@ -247,6 +247,7 @@ On `/full-audit` and on `/ai-citation-audit`, also emit an **AI Citation Readine
 - `scripts/generate_report.py`
 - `scripts/pagespeed.py` — PageSpeed Insights API v5 runner (optional; skipped when no key)
 - `scripts/fanout_coverage.py` — fan-out coverage scorer (stdlib only; no key needed)
+- `scripts/fanout_enrich.py` — optional real-search data for the fan-out set: Google People Also Ask and Related Searches via the user's Serper key, or pasted queries (key asked first; skipped cleanly without one)
 
 ### When to read which deep-dive
 
