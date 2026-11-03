@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "SEO, AEO, GEO and AI Citation audit skills by Girish Kumar G (SEOBiopse). Works in Claude Code; the same skill folder also runs in Claude, Codex/ChatGPT and Antigravity.",
-    "version": "2.0.0"
+    "version": "2.1.0"
   },
   "plugins": [
     {
       "name": "seo-aeo-geo-audit",
       "source": "./",
       "description": "SEO audit skill for AI agents: technical SEO, AEO, GEO and AI search optimization audits for any website. Markdown + interactive HTML reports with before/after code and 0-100 scoring.",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "author": {
         "name": "Girish Kumar G",
         "url": "https://in.linkedin.com/in/girisshgk"

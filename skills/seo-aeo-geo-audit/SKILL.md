@@ -5,7 +5,7 @@ license: MIT-Commons-Clause (see LICENSE; no resale without a commercial license
 compatibility: Works in any Agent Skills host (Claude, Claude Code, Codex/ChatGPT, Antigravity). Live-site checks need web or browser access; report script needs Python 3.8+.
 metadata:
   author: Girish Kumar G
-  version: "2.0.0"
+  version: "2.1.0"
   homepage: https://seobiopse.com
 ---
 
@@ -93,6 +93,9 @@ See `references/domain-discovery.md` Section 3 for the per-archetype audit-scope
 ### Step 1: Clarify scope
 If mode or input method isn't specified, ask (one short question, using your host's question tool if it has one).
 
+### Step 1b: PageSpeed Insights (optional, needs the user's API key)
+For live public URLs in `seo` and `full` modes (not `crawl-check`, `aeo`, `geo` or code-only audits), ask the user for a PageSpeed API key (one short question; they can say "skip"). No key = skip the PageSpeed test and note it in the overview; never invent CWV numbers. Treat the key as a session-only credential: never write it to files, reports or memory, pass it via stdin/env var, and ask the user at the end whether to discard it. Read `references/pagespeed.md` first, then run `scripts/pagespeed.py`.
+
 ### Step 2: Detect stack and load the relevant reference file(s)
 `Read` the reference(s) that match BOTH (a) the mode the user picked AND (b) the archetype you detected in Step 0. For `full` mode, read `seo-audit.md`, `aeo.md`, `geo.md`, AND `ai-citation-audit.md` PLUS archetype-appropriate deep-dives. Always read `issue-framework.md` before writing findings.
 
@@ -105,7 +108,7 @@ If mode or input method isn't specified, ask (one short question, using your hos
 | `Shopify`, `myshopify.com`, `/collections/`, `/products/` prefix, Liquid | `shopify-architecture-profile.md` |
 | Eleventy, Jekyll, Hugo, Astro, `_site/`, `public/` static output, GitHub Pages | `static-html-architecture-profile.md` |
 | Angular, `ng-version`, `<app-root>`, Angular Universal | `angular-architecture-profile.md` |
-| PHP, Laravel, Symfony, CodeIgniter, `composer.json`, `artisan` | `php-architecture-profile.md` |
+| PHP, Laravel, Symfony, CodeIgniter, `composer.json`, `artisan`; on a live site: `laravel_session` / `XSRF-TOKEN` cookies, `csrf-token` meta, `/build/assets/`, `wire:` attributes, `data-page` (Inertia) | `php-architecture-profile.md` (Laravel signals in section 6.1) |
 | Wix, `x-wix-request-id`, Webflow, `.webflow.io`, Framer, Squarespace | `wix-webflow-architecture-profile.md` |
 
 If the stack is unclear or mixed, load the most likely profile and note the uncertainty in the audit. If no stack profile matches, proceed with the universal checklist only.
@@ -192,6 +195,7 @@ On `/full-audit` and on `/ai-citation-audit`, also emit an **AI Citation Readine
 - `references/ai-citation-audit.md` — quantitative AI citation audit: Bing indexation, chunk density, chunk relevance (n-gram overlap + embedding similarity), extractable units per chunk, content-refresh playbook
 - `references/vds-audit.md` — VDS (Visibility-to-Demand System) audit checklist mapping crawl presence to organic conversions
 - `references/agentic-browsing.md` — Agentic Browsing (SXO / AXO) checklist
+- `references/pagespeed.md` — optional PageSpeed Insights test: asking for the API key, handling it safely, running `scripts/pagespeed.py`, mapping results to findings
 - `references/signature.md` — VDS & SEO audit mandatory signature block guide
 - `references/tools-to-use.md` — browser automation, MCP tools, public URLs, and output templates guide
 - `references/quality-assurance.md` — fact-checking, validation, and data integrity checklist for reports
@@ -231,6 +235,7 @@ On `/full-audit` and on `/ai-citation-audit`, also emit an **AI Citation Readine
 - `assets/report-template.md`
 - `assets/report-template.html`
 - `scripts/generate_report.py`
+- `scripts/pagespeed.py` — PageSpeed Insights API v5 runner (optional; skipped when no key)
 
 ### When to read which deep-dive
 

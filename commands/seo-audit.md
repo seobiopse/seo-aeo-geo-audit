@@ -11,6 +11,7 @@ Run an **SEO audit** (mode = `seo`).
 3. Ask the user for the target if not in `$ARGUMENTS`: URL or pasted code.
 4. Follow the workflow in `SKILL.md`:
    - Gather rendered HTML, headers, robots.txt, sitemap, schema JSON-LD, headings, etc.
+   - For a live public URL, ask for a PageSpeed API key (the user may skip it) and follow `references/pagespeed.md`; feed the results into section 9 (Performance & Core Web Vitals).
    - Work through `references/seo-audit.md`.
    - If React / Next.js, also read `references/crawlability-react.md`.
    - If the audit involves job pages, also read `references/pseo-jobs-playbook.md`.

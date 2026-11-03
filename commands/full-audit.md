@@ -13,6 +13,7 @@ Use when the user says "full audit", "pre-launch check", "is this ready to ship"
 3. Ask for target if not in `$ARGUMENTS`.
 4. Follow SKILL.md workflow:
    - Gather ALL data: rendered HTML, raw (no-JS) HTML, headers, robots.txt, sitemap.xml, llms.txt, schema JSON-LD, author/org data, headings, Bing vs Google indexed counts, etc.
+   - For a live public URL, ask for a PageSpeed API key (the user may skip it) and follow `references/pagespeed.md`; include `scores.pagespeed` in the combined report.
    - Work through `references/seo-audit.md`, `references/aeo.md`, `references/geo.md`, AND `references/ai-citation-audit.md`.
    - Load relevant deep-dives: `crawlability-react.md`, `structured-data-advanced.md`, `ai-content-safety.md`, `query-fanout.md`, `rag-optimization.md`, `pseo-playbook.md` (if jobs), `react-nextjs-architecture-profile.md` (for React / Next.js sites).
    - Use `references/issue-framework.md` for every finding. Tag each with every pillar it affects.

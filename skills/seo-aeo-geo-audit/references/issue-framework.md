@@ -128,6 +128,8 @@ On `/full-audit` mode or on explicit user request, findings JSON also carries a 
 
 The generator renders this as a dedicated scorecard section at the top of the HTML report — with visual progress bars per dimension, color-coded sub-signals (green/amber/red based on % of max), and a "Top improvements" list under each grader.
 
+An optional `scores.pagespeed` object (same shape: `overall`, `grade`, `page_type`, `breakdown[{label,value,max,note}]`, `top_improvements`) is produced by `scripts/pagespeed.py` as `scores_block`. See `pagespeed.md`.
+
 See `seo-quality-score-rubric.md` and `eeat-score-rubric.md` for the full scoring methodology.
 
 ## Interactive checklist in HTML reports

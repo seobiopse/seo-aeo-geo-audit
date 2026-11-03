@@ -272,6 +272,24 @@ def render_markdown(data):
             out.append(f"- **{card.get('label', '')}:** {vf} → **{vt}** — {card.get('hint', '')}")
         out.append("")
 
+    ps = (data.get("scores") or {}).get("pagespeed")
+    if ps:
+        out.append("### PageSpeed Insights")
+        out.append("")
+        out.append(f"Headline performance score: **{ps.get('overall', '—')}/100** ({ps.get('grade', '')})")
+        out.append("")
+        out.append("| Test | Score | Notes |")
+        out.append("|---|---|---|")
+        for b in ps.get("breakdown") or []:
+            out.append(f"| {b.get('label', '')} | {b.get('value', '—')}/{b.get('max', 100)} | {b.get('note', '') or ''} |")
+        out.append("")
+        if ps.get("top_improvements"):
+            out.append("Top improvements:")
+            out.append("")
+            for imp in ps["top_improvements"]:
+                out.append(f"- {imp}")
+            out.append("")
+
     if data.get("overview"):
         out.append("### Overview")
         out.append("")
@@ -613,6 +631,8 @@ def render_scores_block(data):
         parts.append(render_score_grader("E-E-A-T Score", {**scores["eeat"], "name": "E-E-A-T Score"}, pillar_field="breakdown"))
     if "ai_citation" in scores:
         parts.append(render_score_grader("AI Citation Readiness", {**scores["ai_citation"], "name": "AI Citation Readiness"}, pillar_field="breakdown"))
+    if "pagespeed" in scores:
+        parts.append(render_score_grader("PageSpeed Insights", {**scores["pagespeed"], "name": "PageSpeed Insights"}, pillar_field="breakdown"))
     if not parts:
         return ""
     return f"""

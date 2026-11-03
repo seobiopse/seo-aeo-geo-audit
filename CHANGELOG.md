@@ -4,6 +4,19 @@ All notable changes to the SEO Audit Plugin are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] — 2026-11-03
+
+### Added
+
+- **PageSpeed Insights audit (optional).** `scripts/pagespeed.py` runs the PageSpeed Insights API v5 for mobile and desktop and returns Lighthouse category scores, lab metrics (FCP, LCP, TBT, CLS, Speed Index, TTI), CrUX field data and the top performance opportunities. New `references/pagespeed.md` covers asking for the key, severity mapping and turning results into findings.
+- The skill asks for a PageSpeed API key and skips the test cleanly when none is given. It is wired into `/seo-audit` and `/full-audit` (SEO checklist section 9). It is not run for `/crawl-check`, AEO, GEO or code-only audits.
+- **Key handling.** The key is session-only and held in memory: read from stdin (`--key-stdin`) or `PAGESPEED_API_KEY`, never written to disk, reports, memory or error output. The agent asks whether to discard it after the run.
+- `scores.pagespeed` renders as a "PageSpeed Insights" grader in the HTML report and as a table in the Markdown report.
+- **Laravel enhancements** in `php-architecture-profile.md`: live-site detection signals (6.1), Livewire and Inertia rendering checks (6.2), custom Laravel store checks (6.3) and checklist items PHP-21 to PHP-26. The SKILL.md stack table now lists the live-site Laravel signals.
+
+### Contributors
+
+- Claude (Anthropic) co-authored the PageSpeed audit and the Laravel enhancements.
 ## [2.0.0] — 2026-10-19
 
 ### Changed

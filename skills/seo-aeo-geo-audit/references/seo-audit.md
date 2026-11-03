@@ -107,6 +107,8 @@ Only if the site has multiple languages/regions.
 
 ## 9. Performance & Core Web Vitals
 
+> If the user provided a PageSpeed API key, run `scripts/pagespeed.py` (see `pagespeed.md`) and score 9.1-9.4 from its field data (lab data when no field data exists). Without a key, mark 9.1-9.4 "not measured" rather than guessing.
+
 - **9.1** LCP ≤ 2.5s mobile 4G throttled.
 - **9.2** CLS ≤ 0.1.
 - **9.3** INP ≤ 200ms.

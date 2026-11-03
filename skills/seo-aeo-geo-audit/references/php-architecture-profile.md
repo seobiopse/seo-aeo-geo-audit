@@ -11,7 +11,7 @@ Site-level audit patterns for PHP-based sites — Laravel, Symfony, CodeIgniter,
 3. [Meta and schema injection patterns](#3-meta-and-schema)
 4. [Caching layers and crawlability](#4-caching-layers)
 5. [Session-based URLs — a critical SEO risk](#5-session-urls)
-6. [Laravel-specific patterns](#6-laravel)
+6. [Laravel-specific patterns](#6-laravel-specific-patterns) (live detection, Livewire/Inertia, custom stores)
 7. [Symfony-specific patterns](#7-symfony)
 8. [Common anti-patterns](#8-anti-patterns)
 9. [Audit checklist](#9-audit-checklist)
@@ -24,6 +24,7 @@ Load this file when:
 - `composer.json` is present in the repo.
 - Response headers contain `X-Powered-By: PHP` or similar.
 - URL patterns suggest a PHP framework (`/public/`, `/index.php?route=`, `artisan` commands).
+- A live site shows Laravel signals (see [6.1 Detecting Laravel from a live URL](#61-detecting-laravel-from-a-live-url)).
 - The site uses Laravel (check for `/storage/`, `App\Http\Controllers`), Symfony (`/var/`, `bin/console`), CodeIgniter (`/application/`, `/system/`), or custom PHP.
 
 Do NOT use for WordPress (separate profile) or PHP sites running a Shopify-compatible setup.
@@ -221,6 +222,49 @@ session_start();
 
 ## 6. Laravel-specific patterns
 
+### 6.1 Detecting Laravel from a live URL
+
+On a live site you rarely see `artisan` or `composer.json`. Look for these instead, and report the confidence level in the audit overview. One signal is a hint, two or more is a likely match, and none is "unknown, not Laravel".
+
+```bash
+curl -sI https://example.com/ | grep -i "set-cookie\|x-powered-by\|server"
+curl -s https://example.com/ | grep -oiE 'name="csrf-token"|/build/assets/[^"]+|wire:[a-z.:-]+|data-page="|livewire'
+```
+
+| Signal | Meaning |
+|---|---|
+| `Set-Cookie: laravel_session=...` and `XSRF-TOKEN=...` | Strong. Default Laravel cookie names (renameable via `SESSION_COOKIE`). |
+| `<meta name="csrf-token" content="...">` in `<head>` | Strong. Standard Laravel layout snippet. |
+| `/build/assets/app-<hash>.js` or `.css` | Laravel with Vite (v9.19+). `/js/app.js?id=` or `/mix-manifest.json` means Laravel Mix (older). |
+| `wire:` attributes or `/livewire/livewire.js`, `/livewire/update` | Livewire. See 6.2. |
+| `<div id="app" data-page='{...}'>` | Inertia.js. See 6.2. |
+| Default Laravel 404/419/500 page ("Page Expired", "Server Error") | Strong. Request a bad URL and a POST without a token. |
+| `/storage/...` public file URLs, `/sanctum/csrf-cookie`, `/up` health route | Moderate. |
+| `X-Powered-By: PHP/x.y` only | Weak. Any PHP app. Use the generic PHP checks. |
+
+If nothing matches, say so. Do not assume Laravel from URL shapes such as `/product/<slug>`, `/dashboard` or `/login`, which custom PHP apps use as well.
+
+### 6.2 Livewire and Inertia rendering
+
+Livewire renders the first view on the server, so crawlers normally see the content. Inertia can render client-side only unless SSR is enabled. Check both:
+
+- Fetch the raw HTML (`curl -s`) and confirm the H1, main copy and internal links are present without JavaScript.
+- Livewire: content that loads through `wire:init` or lazy components (`lazy`) is absent from the first HTML. Flag it if it is SEO-critical.
+- Inertia: the page is empty or only has `<div id="app" data-page=...>` unless Inertia SSR is on. Treat it like the CSR cases in `crawlability-react.md`.
+- Links to other pages must be real `<a href>` elements. `wire:click` or JS-only navigation is not crawlable.
+
+### 6.3 Laravel stores and catalogues (custom e-commerce)
+
+Custom Laravel shops often ship without the controls a platform like Shopify adds by default. Check:
+
+- **Private areas kept out of the index.** `/cart`, `/checkout`, `/login`, `/register`, `/dashboard`, `/account` and `/get-quote`-style form pages should return `noindex` (meta robots or `X-Robots-Tag`) or be in `robots.txt`. A single `Disallow: /dashboard/` leaves the others crawlable. Note that `Disallow` stops crawling, not indexing, so use `noindex` where the URL is linked publicly.
+- **Sitemap honesty.** Google ignores `changefreq` and `priority`; they add no value. If `lastmod` is the same on most products, it is probably set at generation time instead of from `updated_at` (PHP-13). Confirm against a few product edit dates.
+- **Inline base64 images.** `data:image/...;base64,` in the HTML inflates document size and delays first render. Move to files with `loading="lazy"` plus `width`/`height`, and keep the LCP image as a real file with `fetchpriority="high"` (see `image-optimization.md`).
+- **Images on object storage / CDN.** Images on a separate host (for example DigitalOcean Spaces or S3) need correct `Cache-Control` and descriptive filenames. Check alt text and that the host is not blocked in `robots.txt`.
+- **Product and category schema.** `Product` with `offers`, `Organization`, and `BreadcrumbList` on products and categories. Check `aggregateRating` against visible reviews. Do not mark up ratings that are not shown on the page.
+- **Faceted and sorted category URLs.** Filters and pagination (`?page=`, `?sort=`) canonicalise per PHP-5.
+- **Clean slugs.** Product URLs resolve through route-model-binding slugs, and the old ID or alternate URLs 301 to the canonical slug (see below).
+
 ### Route model binding and canonical URLs
 
 Laravel's route model binding automatically resolves slugs:
@@ -381,3 +425,9 @@ N+1 queries in Blade/Twig templates slow TTFB significantly. Move all queries to
 - **PHP-18** `robots.txt` HTTP 200, contains `Sitemap:` directive, does not `Disallow: /`.
 - **PHP-19** HSTS header present. `curl -sI https://example.com/ | grep -i "strict-transport"`.
 - **PHP-20** `/api/` paths or any non-HTML endpoints blocked in robots.txt or returning `X-Robots-Tag: noindex`.
+- **PHP-21** (Laravel) Stack detection recorded with its evidence and confidence (6.1). Not asserted from URL shape alone.
+- **PHP-22** (Laravel) Raw HTML contains the H1, main copy and `<a href>` links. Livewire lazy components and Inertia without SSR are flagged (6.2).
+- **PHP-23** (Laravel) Cart, checkout, login, register, dashboard and account URLs return `noindex` or are disallowed, and are not in the sitemap.
+- **PHP-24** (Laravel) No large inline `data:` images in the HTML. The LCP image is a real file.
+- **PHP-25** (Laravel) Session cookies (`laravel_session`, `XSRF-TOKEN`) are not set on cacheable public pages in a way that disables CDN caching. Check `Set-Cookie` and `Cache-Control` on a product or category page.
+- **PHP-26** (Laravel) `Product` schema and `aggregateRating` match what is visible on the page.
